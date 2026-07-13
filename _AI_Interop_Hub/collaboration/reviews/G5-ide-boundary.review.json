@@ -1,0 +1,32 @@
+{
+  "$schema": "manual-review-v1",
+  "rule_id": "G5-ide-boundary",
+  "severity": "high",
+  "task_id": "task_docgov_20260712",
+  "reviewer_role": "OpenClaw",
+  "status": "approved",
+  "rule": "三IDE各守作业目录不越界；共享根唯一交接区；回执禁路径+正文+多方式同发",
+  "authority_doc": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\三IDE协作边界与回执流转规范.md",
+  "checklist": [
+    {
+      "item": "Codex仅改研究/文档治理/规则，未动Cursor代码区",
+      "verdict": "pass",
+      "evidence": "Codex本轮仅操作AI_Workspace_OS系统级文档重命名/INDEX建设+AI-Agent-Interop治理扫描产出，未进入G:\\CURSOR\\"
+    },
+    {
+      "item": "本次产物只落共享根collaboration/，未写入对方私有项目",
+      "verdict": "pass",
+      "evidence": "产物全部写入G:\\_AI_Interop_Hub\\collaboration\\，未触及AI_Workspace_OS或Cursor私有区"
+    },
+    {
+      "item": "回执未同发路径+正文+多执行方式",
+      "verdict": "pass",
+      "evidence": "回执通过清单.md+自治审计.md单一路径交付，未重复同发"
+    }
+  ],
+  "verdict": "approved",
+  "reviewed_at": "2026-07-12 22:34:28",
+  "created_at": "2026-07-12 22:25:06",
+  "created_by": "Codex(模板)",
+  "note": "OpenClaw填写checklist各项verdict(pass/fail)与整体status(approved/rejected)后，闸门据此判定；pending视为待办不放行blocker"
+}

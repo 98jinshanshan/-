@@ -1,0 +1,58 @@
+{
+  "$schema": "gov-update-manifest-v1",
+  "title": "规则更新后全部更新文档清单(带变更声明校验)",
+  "generated": "2026-07-12 21:58:38",
+  "generated_by": "Codex",
+  "baseline": "rules.json 更新时刻 2026-07-12 21:57:47",
+  "rule_basis": [
+    "G11-lineage(谱系/引用声明)",
+    "G13-change-mapping",
+    "doc-governance.md changelog机制",
+    "DOC_VECTOR_MANDATE governance_status"
+  ],
+  "declaration_rule": "每份更新后文档必须自带变更声明(声明标记见 declaration_marker)",
+  "total": 5,
+  "all_declared": true,
+  "documents": [
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\rules.json",
+      "size": 17340,
+      "mtime": "2026-07-12 21:57:47",
+      "sha256_12": "1c0c9b60a9b0",
+      "declaration_marker": "change_declaration",
+      "declared": true
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\scripts\\gang_gate.py",
+      "size": 12927,
+      "mtime": "2026-07-12 21:57:59",
+      "sha256_12": "25150e7125ef",
+      "declaration_marker": "变更声明",
+      "declared": true
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\global-layer-rules.md",
+      "size": 6856,
+      "mtime": "2026-07-12 21:58:10",
+      "sha256_12": "d5d924523b8d",
+      "declaration_marker": "变更声明",
+      "declared": true
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\CHANGELOG.md",
+      "size": 4246,
+      "mtime": "2026-07-12 21:40:38",
+      "sha256_12": "36648a77bab5",
+      "declaration_marker": "开发总纲治理变更日志",
+      "declared": true
+    },
+    {
+      "path": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\总纲框架文档梳理成果.md",
+      "size": 4076,
+      "mtime": "2026-07-12 21:38:23",
+      "sha256_12": "dd73e1a2c8c3",
+      "declaration_marker": "governance_status",
+      "declared": true
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch05",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch05.spec.json"
+    ]
+  },
+  "chapter": 5,
+  "title": "第五章 小说家",
+  "output_file": "第05章_小说家.txt",
+  "chars": 2748
+}

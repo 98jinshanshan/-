@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch01",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch01.spec.json"
+    ]
+  },
+  "chapter": 1,
+  "title": "第一章 邀请函",
+  "output_file": "第01章_邀请函.txt",
+  "chars": 2721
+}

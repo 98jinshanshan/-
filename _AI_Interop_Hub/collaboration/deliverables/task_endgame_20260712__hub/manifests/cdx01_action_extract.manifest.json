@@ -1,0 +1,12 @@
+{
+  "module": "cdx01_action_extract",
+  "abs_path": "G:\\CURSOR\\\\cursor-novel-writer\\engine\\story_analysis\\cdx01.py",
+  "rel_path": "cursor-novel-writer/engine/story_analysis/cdx01.py",
+  "serves_node": "N5/CDX-01",
+  "change": "_extract_actions 过滤<4字碎片",
+  "gate": "禁止抽象动作",
+  "test_status": "3/3 pass",
+  "updated": "2026-07-13",
+  "upstream": "整合_产线全节点图_路径一.json",
+  "downstream": "s1e01_ch01_ch02_platform_final.mp4"
+}

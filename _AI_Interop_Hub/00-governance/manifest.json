@@ -1,0 +1,54 @@
+{
+  "module": "00-governance",
+  "role": "开发总纲唯一权威源(SSOT)",
+  "migrated_at": "2026-07-12T19:47:11",
+  "shared_root": "G:\\_AI_Interop_Hub",
+  "source_origin": "C:\\Users\\admin\\Desktop\\开发总纲指导文档",
+  "docs": [
+    {
+      "name": "AGENT_INSTRUCTION.md",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\AGENT_INSTRUCTION.md",
+      "status": "authoritative",
+      "sha1": "67cf2850a5aa",
+      "size": 6373
+    },
+    {
+      "name": "Agent子节点沟通模板.md",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\Agent子节点沟通模板.md",
+      "status": "authoritative",
+      "sha1": "7e494fe33421",
+      "size": 46911
+    },
+    {
+      "name": "orchestrator.js",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\orchestrator.js",
+      "status": "authoritative",
+      "sha1": "df7c06bbe322",
+      "size": 16083
+    },
+    {
+      "name": "开发总纲_人类可读版.md",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_人类可读版.md",
+      "status": "authoritative",
+      "sha1": "6c84e7f554a4",
+      "size": 8126
+    },
+    {
+      "name": "开发总纲_可执行版.json",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_可执行版.json",
+      "status": "authoritative",
+      "sha1": "881cb3646c82",
+      "size": 25391
+    },
+    {
+      "name": "开发总纲_问答题框架.md",
+      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_问答题框架.md",
+      "status": "authoritative",
+      "sha1": "f7873b9c15cf",
+      "size": 19409,
+      "role": "提问回退协议(运行时组件，被JSON trigger_question_conditions引用)",
+      "version": "V3.0"
+    }
+  ],
+  "updated_at": "2026-07-12T20:00:24"
+}

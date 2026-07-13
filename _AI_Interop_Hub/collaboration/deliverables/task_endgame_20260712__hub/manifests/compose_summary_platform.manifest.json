@@ -1,0 +1,12 @@
+{
+  "module": "compose_summary_platform",
+  "abs_path": "G:\\CURSOR\\\\cursor-novel-video\\engine\\scripts\\compose_ffmpeg.py",
+  "rel_path": "cursor-novel-video/engine/scripts/compose_ffmpeg.py",
+  "serves_node": "N6/S4-compose",
+  "change": "compose_summary 套用 FFMPEG_*_ARGS 平台规格",
+  "gate": "平台QC",
+  "test_status": "2/2 pass",
+  "updated": "2026-07-13",
+  "upstream": "整合_产线全节点图_路径一.json",
+  "downstream": "s1e01_ch01_ch02_platform_final.mp4"
+}

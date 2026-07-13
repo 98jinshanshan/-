@@ -1,0 +1,44 @@
+{
+  "task_id": "task_endgame_20260712",
+  "original_input": "两个项目走两条路最终得到一个结果：一句话→Agent自主完成全部开发",
+  "path": "路径一(个人工作流系统)",
+  "clarified_requirement": {
+    "one_liner": "一句话直达自主开发(工作流路)",
+    "detailed": "AI_Workspace_OS 以可信文档中枢为地基，建自己的一句话执行链，终点同样=输入一句话自主产出成品；当前只有调度方案文档，缺可运行执行器。",
+    "target_module": "(待建)workflow_executor",
+    "task_type": "create",
+    "key_parameters": {
+      "existing": "OpenClaw_总控调度方案.md(仅方案)",
+      "missing": "可运行执行器/触发器"
+    }
+  },
+  "scope": {
+    "included": [
+      "把总控调度方案落成可运行执行器",
+      "文档中枢生来即合规(防漂移)作为地基",
+      "一句话→拆解→执行链"
+    ],
+    "excluded": [
+      "AI-Agent-Interop的MCP实现(另一条路)",
+      "归档区内容重写"
+    ],
+    "assumed": [
+      "文档中枢已100%元数据覆盖(前序已达)",
+      "可借鉴路径二auto_executor架构"
+    ]
+  },
+  "endpoint_gap": {
+    "已具备": [
+      "文档中枢元数据100%",
+      "规则集全自动gang_gate",
+      "INDEX全量"
+    ],
+    "尚缺(到终点差)": [
+      "无可运行执行器(只有方案文档)",
+      "无一句话入口",
+      "无自动拆解引擎",
+      "生成即合规的写入闸门(防漂移)未落地"
+    ]
+  },
+  "generated": "2026-07-12T23:35:55"
+}

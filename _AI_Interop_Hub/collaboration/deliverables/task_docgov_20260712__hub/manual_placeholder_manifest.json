@@ -1,0 +1,68 @@
+{
+  "$schema": "manual-placeholder-manifest-v2",
+  "title": "人工/占位规则 — 路径清单与证据判定(v2:全部approved后)",
+  "generated": "2026-07-12 22:37:54",
+  "gate_note": "OpenClaw已审核4份review.json=approved；闸门实测 EXIT=0 全绿；G6占位已转git真检测",
+  "gate_last_run": "blocker级失败0，ALL PASS，EXIT=0",
+  "reviews_dir": "G:\\_AI_Interop_Hub\\collaboration\\reviews",
+  "items": [
+    {
+      "id": "G5-ide-boundary",
+      "type": "人工审核",
+      "severity": "high",
+      "review_json": "G:\\_AI_Interop_Hub\\collaboration\\reviews\\G5-ide-boundary.review.json",
+      "review_status": "approved",
+      "gate_result": "PASS",
+      "action_needed": "已通过(OpenClaw approved)"
+    },
+    {
+      "id": "P-A-workspace",
+      "type": "人工审核",
+      "severity": "high",
+      "review_json": "G:\\_AI_Interop_Hub\\collaboration\\reviews\\P-A-workspace.review.json",
+      "review_status": "approved",
+      "gate_result": "PASS",
+      "action_needed": "已通过(OpenClaw approved)"
+    },
+    {
+      "id": "T1-handoff",
+      "type": "人工审核",
+      "severity": "medium",
+      "review_json": "G:\\_AI_Interop_Hub\\collaboration\\reviews\\T1-handoff.review.json",
+      "review_status": "approved",
+      "gate_result": "PASS",
+      "action_needed": "已通过(OpenClaw approved)"
+    },
+    {
+      "id": "G13-change-mapping",
+      "type": "人工审核",
+      "severity": "blocker",
+      "review_json": "G:\\_AI_Interop_Hub\\collaboration\\reviews\\G13-change-mapping.review.json",
+      "review_status": "approved",
+      "gate_result": "PASS",
+      "action_needed": "已通过(OpenClaw approved)"
+    },
+    {
+      "id": "G6-mirror-readonly",
+      "type": "实测(git)",
+      "severity": "blocker",
+      "policy_doc": "G:\\AI-Agent-Interop\\00-methodology\\doc-governance\\upstream-mirror-policy.md",
+      "mirror_dir": "G:\\AI-Agent-Interop\\98-upstream-mirror",
+      "git_tracked_in_mirror": 0,
+      "gate_result": "PASS",
+      "action_needed": "无(占位已转真检测)"
+    },
+    {
+      "id": "G8-token-context",
+      "type": "advisory",
+      "severity": "advisory",
+      "plan_doc": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\04_Token效率与上下文治理方案.md",
+      "context_files": [
+        "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\CONTEXT.md",
+        "G:\\AI-Agent-Interop\\CONTEXT.md"
+      ],
+      "gate_result": "PASS",
+      "action_needed": "无(仅告警)"
+    }
+  ]
+}

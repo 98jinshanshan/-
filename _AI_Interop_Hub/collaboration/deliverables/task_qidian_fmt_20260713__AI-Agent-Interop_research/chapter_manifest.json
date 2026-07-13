@@ -1,0 +1,72 @@
+[
+  {
+    "num": 1,
+    "file": "第01章_邀请函.txt",
+    "title": "第一章 邀请函",
+    "paras": 33,
+    "chars": 2721
+  },
+  {
+    "num": 2,
+    "file": "第02章_地产商.txt",
+    "title": "第二章 地产商",
+    "paras": 37,
+    "chars": 2563
+  },
+  {
+    "num": 3,
+    "file": "第03章_记者.txt",
+    "title": "第三章 记者",
+    "paras": 24,
+    "chars": 2631
+  },
+  {
+    "num": 4,
+    "file": "第04章_律师.txt",
+    "title": "第四章 律师",
+    "paras": 17,
+    "chars": 2356
+  },
+  {
+    "num": 5,
+    "file": "第05章_小说家.txt",
+    "title": "第五章 小说家",
+    "paras": 22,
+    "chars": 2748
+  },
+  {
+    "num": 6,
+    "file": "第06章_守夜人.txt",
+    "title": "第六章 守夜人",
+    "paras": 25,
+    "chars": 2821
+  },
+  {
+    "num": 7,
+    "file": "第07章_外科医生.txt",
+    "title": "第七章 外科医生",
+    "paras": 18,
+    "chars": 3044
+  },
+  {
+    "num": 8,
+    "file": "第08章_码头.txt",
+    "title": "第八章 码头",
+    "paras": 15,
+    "chars": 2372
+  },
+  {
+    "num": 9,
+    "file": "第09章_渡轮上.txt",
+    "title": "第九章 渡轮上",
+    "paras": 9,
+    "chars": 2635
+  },
+  {
+    "num": 10,
+    "file": "第10章_雾中岛.txt",
+    "title": "第十章 雾中岛",
+    "paras": 38,
+    "chars": 3101
+  }
+]

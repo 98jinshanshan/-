@@ -1,0 +1,35 @@
+{
+  "goal_trace": {
+    "root_goal": "调研起点AI小说创作要求与上传格式，据此将小说大纲与前十章章节改为贴合起点发布模型的格式，并把前十章拆为每章一个文档",
+    "trace_path": [
+      "spec.json",
+      "path.json",
+      "nodes.json"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "n1_research",
+      "name": "起点格式调研",
+      "maps_to_root_goal": "纠偏上传格式",
+      "status": "done",
+      "artifact": "RESEARCH_qidian_format.md"
+    },
+    {
+      "id": "n2_extract",
+      "name": "docx十章提取",
+      "maps_to_root_goal": "拆分前置:取正文",
+      "status": "done"
+    },
+    {
+      "id": "n3_chapter_fmt",
+      "name": "逐章格式化为txt",
+      "maps_to_root_goal": "十章拆分每章一文档+纯文本格式"
+    },
+    {
+      "id": "n4_outline_fmt",
+      "name": "大纲纯文本/MD版",
+      "maps_to_root_goal": "据调研改大纲格式"
+    }
+  ]
+}

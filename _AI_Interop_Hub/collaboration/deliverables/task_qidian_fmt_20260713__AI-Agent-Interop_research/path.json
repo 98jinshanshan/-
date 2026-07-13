@@ -1,0 +1,22 @@
+{
+  "goal_trace": {
+    "root_goal": "调研起点AI小说创作要求与上传格式，据此将小说大纲与前十章章节改为贴合起点发布模型的格式，并把前十章拆为每章一个文档",
+    "trace_path": [
+      "spec.json",
+      "path.json"
+    ]
+  },
+  "data_flow": "docx解包→XML提取10章→逐章渲染txt(缩进) + 大纲HTML→纯文本/MD → 落 output/",
+  "input_sources": [
+    "第七声钟响_前十章.docx",
+    "mystery-novel-outline.html"
+  ],
+  "output_root": "G:\\_AI_Interop_Hub\\collaboration\\deliverables\\task_qidian_fmt_20260713__AI-Agent-Interop_code",
+  "stages": [
+    "extract",
+    "format_chapters",
+    "format_outline",
+    "verify",
+    "deliver"
+  ]
+}

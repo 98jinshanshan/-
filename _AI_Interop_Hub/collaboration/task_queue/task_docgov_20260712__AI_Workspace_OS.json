@@ -1,0 +1,16 @@
+{
+  "task_id": "task_docgov_20260712",
+  "project": "AI_Workspace_OS",
+  "description": "用开发总纲8Phase框架对本项目做递归文档梳理与治理",
+  "status": "completed",
+  "created_at": "2026-07-12T19:30:02",
+  "pipeline": [
+    "ask",
+    "review",
+    "develop"
+  ],
+  "current_stage": "all",
+  "updated_at": "2026-07-12T19:40:10",
+  "hub_path": "G:\\_AI_Interop_Hub",
+  "namespace": "task_docgov_20260712__AI_Workspace_OS"
+}

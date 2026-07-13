@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch09",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch09.spec.json"
+    ]
+  },
+  "chapter": 9,
+  "title": "第九章 渡轮上",
+  "output_file": "第09章_渡轮上.txt",
+  "chars": 2635
+}

@@ -1,0 +1,275 @@
+{
+  "$schema": "self-governance-audit-v1",
+  "title": "总纲对自身运行规则的自治审计(dogfooding)",
+  "generated": "2026-07-12 22:14:50",
+  "question": "读取总纲及规则集，对治理文档本身运行规则，查遗漏",
+  "finding_before": "6条元数据类规则(G3b/G9/G10/G11/G14/G8)原仅扫两项目，豁免了总纲本体；11份治理.md无front-matter/DOC_VECTOR——规则未施于规则本身",
+  "fix": "给11份Hub .md注入合规front-matter；G3b/G9/G10/G11扩展扫描Hub本体；.json/.js机器产物在rules.json显式声明豁免",
+  "hub_md_total": 11,
+  "hub_md_all_compliant": true,
+  "documents": [
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\AGENT_INSTRUCTION.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\Agent子节点沟通模板.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\CHANGELOG.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_人类可读版.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_问答题框架.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\global-layer-rules.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\project-layer-rules.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\README.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\task-layer-rules.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\WORKSPACE_ROOT.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\INDEX.md",
+      "kind": "治理文档.md",
+      "front_matter": true,
+      "missing": [],
+      "status": "active"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\manifest.json",
+      "kind": "机器产物(.json)",
+      "front_matter": "exempt",
+      "missing": [],
+      "status": "exempt-declared"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\orchestrator.js",
+      "kind": "机器产物(.js)",
+      "front_matter": "exempt",
+      "missing": [],
+      "status": "exempt-declared"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_可执行版.json",
+      "kind": "机器产物(.json)",
+      "front_matter": "exempt",
+      "missing": [],
+      "status": "exempt-declared"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\rules-index.json",
+      "kind": "机器产物(.json)",
+      "front_matter": "exempt",
+      "missing": [],
+      "status": "exempt-declared"
+    },
+    {
+      "path": "G:\\_AI_Interop_Hub\\00-governance\\rules\\rules.json",
+      "kind": "机器产物(.json)",
+      "front_matter": "exempt",
+      "missing": [],
+      "status": "exempt-declared"
+    }
+  ],
+  "rule_self_coverage": [
+    {
+      "id": "G1-naming",
+      "validator": "gate_naming",
+      "severity": "blocker",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G2-ssot",
+      "validator": "gate_ssot_no_dup",
+      "severity": "blocker",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G3-index-meta",
+      "validator": "gate_index_meta",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G4-path",
+      "validator": "gate_path",
+      "severity": "blocker",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G5-ide-boundary",
+      "validator": "manual_review",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G6-mirror-readonly",
+      "validator": "gate_mirror_ro",
+      "severity": "blocker",
+      "applies_to_hub_self": false,
+      "note": "占位:靠git diff，无镜像写入即PASS"
+    },
+    {
+      "id": "G7-delivery-selfcheck",
+      "validator": "gate_anchor_chain",
+      "severity": "blocker",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G8-token-context",
+      "validator": "gate_context_exists",
+      "severity": "advisory",
+      "applies_to_hub_self": false,
+      "note": "项目级CONTEXT.md；Hub以INDEX+WORKSPACE_ROOT承载"
+    },
+    {
+      "id": "P-A-workspace",
+      "validator": "manual_review",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "P-B-partition",
+      "validator": "gate_partition_numbered",
+      "severity": "high",
+      "applies_to_hub_self": false,
+      "note": "项目层规则，不适用Hub本体(Hub非编号分区/无子项目/无回执)"
+    },
+    {
+      "id": "P-C-subproject",
+      "validator": "gate_airules_mapping",
+      "severity": "medium",
+      "applies_to_hub_self": false,
+      "note": "项目层规则，不适用Hub本体(Hub非编号分区/无子项目/无回执)"
+    },
+    {
+      "id": "T1-handoff",
+      "validator": "manual_review",
+      "severity": "medium",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "T2-receipt",
+      "validator": "gate_receipt_fields",
+      "severity": "medium",
+      "applies_to_hub_self": false,
+      "note": "项目层规则，不适用Hub本体(Hub非编号分区/无子项目/无回执)"
+    },
+    {
+      "id": "T3-node-batch",
+      "validator": "gate_path",
+      "severity": "medium",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G3b-metadata-fields",
+      "validator": "gate_metadata_fields",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G9-vector-semantic",
+      "validator": "gate_vector_gene",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G10-lifecycle",
+      "validator": "gate_lifecycle",
+      "severity": "high",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G11-lineage",
+      "validator": "gate_lineage",
+      "severity": "medium",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G12-section-ref",
+      "validator": "gate_section_ref",
+      "severity": "medium",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G13-change-mapping",
+      "validator": "manual_review",
+      "severity": "blocker",
+      "applies_to_hub_self": true,
+      "note": ""
+    },
+    {
+      "id": "G14-redundancy",
+      "validator": "gate_redundancy",
+      "severity": "high",
+      "applies_to_hub_self": false,
+      "note": ""
+    }
+  ],
+  "auto_rules_covering_self": 15,
+  "verified": "python gang_gate.py -> blocker 0, ALL PASS(含Hub本体元数据校验)"
+}

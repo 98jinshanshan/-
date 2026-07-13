@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch02",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch02.spec.json"
+    ]
+  },
+  "chapter": 2,
+  "title": "第二章 地产商",
+  "output_file": "第02章_地产商.txt",
+  "chars": 2563
+}

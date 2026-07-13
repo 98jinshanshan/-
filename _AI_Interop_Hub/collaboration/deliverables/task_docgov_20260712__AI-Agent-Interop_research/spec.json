@@ -1,0 +1,295 @@
+{
+  "task_id": "task_docgov_20260712",
+  "original_input": "用开发总纲框架对两个项目做文档梳理",
+  "clarified_requirement": {
+    "one_liner": "递归梳理并治理项目文档达总纲就绪态",
+    "detailed": "按decomposition.recursion_rule做L0到叶子递归扫描，修复索引/命名/manifest/归档断点，落盘并通过validation。",
+    "target_module": "doc-governance",
+    "task_type": "research",
+    "key_parameters": {
+      "active_docs": 93
+    }
+  },
+  "scope": {
+    "included": [
+      "递归层级扫描",
+      "命名铁律治理",
+      "INDEX全量重建",
+      "manifest生成",
+      "validation实测"
+    ],
+    "excluded": [
+      "镜像98-upstream-mirror(只读隔离)",
+      "历史归档区内容改写",
+      "代码级功能开发"
+    ],
+    "assumed": [
+      "归档区标archived不计入活跃基数"
+    ]
+  },
+  "architecture": {
+    "modules": [
+      {
+        "name": "recursive_scanner",
+        "type": "new",
+        "tech": "python",
+        "desc": "L0→叶子递归扫描"
+      },
+      {
+        "name": "rename_governor",
+        "type": "new",
+        "tech": "python",
+        "desc": "命名违规改名+引用改写+归档"
+      },
+      {
+        "name": "index_builder",
+        "type": "new",
+        "tech": "python",
+        "desc": "全量INDEX重建"
+      },
+      {
+        "name": "manifest_generator",
+        "type": "new",
+        "tech": "python",
+        "desc": "分区manifest生成"
+      },
+      {
+        "name": "validator",
+        "type": "new",
+        "tech": "python",
+        "desc": "Phase8 validation实测"
+      }
+    ],
+    "dataflow": [
+      {
+        "from": "recursive_scanner",
+        "to": "rename_governor",
+        "data_type": "文件清单",
+        "format": "json"
+      },
+      {
+        "from": "rename_governor",
+        "to": "index_builder",
+        "data_type": "改名映射",
+        "format": "json"
+      },
+      {
+        "from": "index_builder",
+        "to": "manifest_generator",
+        "data_type": "活跃文档树",
+        "format": "md/json"
+      },
+      {
+        "from": "manifest_generator",
+        "to": "validator",
+        "data_type": "manifest集合",
+        "format": "json"
+      }
+    ]
+  },
+  "interfaces": {
+    "schemas": {
+      "recursive_scanner": {
+        "input_schema": {
+          "root": "string",
+          "exclude": "array"
+        },
+        "output_schema": {
+          "total_md": "number",
+          "by_top": "object",
+          "bad_names": "array"
+        }
+      },
+      "rename_governor": {
+        "input_schema": {
+          "bad_files": "array"
+        },
+        "output_schema": {
+          "renamed": "number",
+          "archived": "number",
+          "refs_updated": "number"
+        }
+      },
+      "index_builder": {
+        "input_schema": {
+          "active_docs": "array"
+        },
+        "output_schema": {
+          "registered": "number",
+          "coverage_pct": "number"
+        }
+      },
+      "manifest_generator": {
+        "input_schema": {
+          "partition": "string"
+        },
+        "output_schema": {
+          "count": "number",
+          "path": "string"
+        }
+      },
+      "validator": {
+        "input_schema": {
+          "root": "string"
+        },
+        "output_schema": {
+          "naming": "pass|fail",
+          "index": "pass|fail",
+          "manifest": "pass|fail"
+        }
+      }
+    },
+    "exception_matrix": {
+      "rename_governor": [
+        {
+          "type": "目标名冲突",
+          "strategy": "保留最新版,旧版移归档并标替代关系"
+        },
+        {
+          "type": "引用断裂风险",
+          "strategy": "操作前全量备份可回滚"
+        }
+      ]
+    },
+    "storage_paths": {
+      "intermediate": "G:/AI-Agent-Interop/_workspace/intermediate"
+    }
+  },
+  "modules": {
+    "module_tree": {
+      "doc-governance": {
+        "sub_modules": [
+          "recursive_scanner",
+          "rename_governor",
+          "index_builder",
+          "manifest_generator",
+          "validator"
+        ],
+        "leaf_nodes": [
+          {
+            "name": "walk_md",
+            "function_signature": "walk_md(root,exclude)->iter",
+            "input": {},
+            "output": {}
+          },
+          {
+            "name": "strip_suffix",
+            "function_signature": "strip_suffix(stem)->str",
+            "input": {},
+            "output": {}
+          },
+          {
+            "name": "rebuild_index",
+            "function_signature": "rebuild_index(root)->int",
+            "input": {},
+            "output": {}
+          }
+        ]
+      }
+    },
+    "total_leaf_nodes": 3,
+    "max_depth": 2
+  },
+  "execution_order": {
+    "batches": [
+      {
+        "batch_number": 1,
+        "nodes": [
+          "recursive_scanner"
+        ],
+        "parallel": false
+      },
+      {
+        "batch_number": 2,
+        "nodes": [
+          "rename_governor"
+        ],
+        "parallel": false
+      },
+      {
+        "batch_number": 3,
+        "nodes": [
+          "index_builder",
+          "manifest_generator"
+        ],
+        "parallel": true
+      },
+      {
+        "batch_number": 4,
+        "nodes": [
+          "validator"
+        ],
+        "parallel": false
+      }
+    ],
+    "total_batches": 4,
+    "has_cycles": false
+  },
+  "test_results": {
+    "total": 3,
+    "passed": 3,
+    "failed": 0,
+    "auto_fixed": 0,
+    "coverage": 1.0,
+    "details": [
+      {
+        "node": "naming_rule",
+        "status": "pass",
+        "fix_attempts": 0,
+        "note": "违规8→0"
+      },
+      {
+        "node": "index_coverage",
+        "status": "pass",
+        "fix_attempts": 0,
+        "note": "92%→92%"
+      },
+      {
+        "node": "manifest",
+        "status": "pass",
+        "fix_attempts": 0,
+        "note": "1份"
+      }
+    ]
+  },
+  "acceptance_criteria": [
+    "命名违规=0",
+    "INDEX覆盖率达标",
+    "manifest存在",
+    "validation ALL PASS"
+  ],
+  "downstream_handoff": {
+    "deliverable_doc": "总纲框架文档梳理成果.md",
+    "next_role": "OpenClaw审核",
+    "verdict": "就绪态(样板实现)",
+    "spec_abs_path": "G:\\_AI_Interop_Hub\\collaboration\\deliverables\\task_docgov_20260712__AI-Agent-Interop_research\\spec.json",
+    "delivery_report_abs_path": "G:\\_AI_Interop_Hub\\collaboration\\deliverables\\task_docgov_20260712__AI-Agent-Interop_DELIVERY_REPORT.md",
+    "review_abs_path": "G:\\_AI_Interop_Hub\\collaboration\\reviews\\task_docgov_20260712__AI-Agent-Interop\\review.json",
+    "deliverable_doc_abs_path": "G:\\AI-Agent-Interop\\01-research\\01-总纲框架文档梳理成果.md",
+    "read_instruction": "下游Agent以绝对路径读取: G:\\_AI_Interop_Hub\\collaboration\\deliverables\\task_docgov_20260712__AI-Agent-Interop_research\\spec.json"
+  },
+  "storage_location": {
+    "type": "local_shared_hub",
+    "note": "三IDE共享挂载根(本地G盘,非云端)。Codex/OpenClaw/Cursor均以此绝对路径直读。",
+    "shared_root": "G:\\_AI_Interop_Hub",
+    "os": "Windows",
+    "path_style": "absolute",
+    "project_namespace": "task_docgov_20260712__AI-Agent-Interop",
+    "source_project_root": "G:\\AI-Agent-Interop"
+  },
+  "_meta": {
+    "updated_at": "2026-07-12T19:40:10",
+    "migrated_to_hub": true,
+    "governance_linked_at": "2026-07-12T19:48:09"
+  },
+  "governance_ref": {
+    "authority": "SSOT",
+    "governance_dir": "G:\\_AI_Interop_Hub\\00-governance",
+    "executable_spec": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_可执行版.json",
+    "agent_instruction": "G:\\_AI_Interop_Hub\\00-governance\\AGENT_INSTRUCTION.md",
+    "templates": "G:\\_AI_Interop_Hub\\00-governance\\Agent子节点沟通模板.md",
+    "orchestrator": "G:\\_AI_Interop_Hub\\00-governance\\orchestrator.js",
+    "version": "2.0.0",
+    "read_rule": "总纲一律从此绝对路径读取，禁用/workspace裸路径与桌面旧目录"
+  }
+}

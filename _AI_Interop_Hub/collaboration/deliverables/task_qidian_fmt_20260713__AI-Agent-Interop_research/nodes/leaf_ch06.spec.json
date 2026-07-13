@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch06",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch06.spec.json"
+    ]
+  },
+  "chapter": 6,
+  "title": "第六章 守夜人",
+  "output_file": "第06章_守夜人.txt",
+  "chars": 2821
+}

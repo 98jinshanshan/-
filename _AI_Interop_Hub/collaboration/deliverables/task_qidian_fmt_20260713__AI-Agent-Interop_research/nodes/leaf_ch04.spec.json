@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch04",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch04.spec.json"
+    ]
+  },
+  "chapter": 4,
+  "title": "第四章 律师",
+  "output_file": "第04章_律师.txt",
+  "chars": 2356
+}

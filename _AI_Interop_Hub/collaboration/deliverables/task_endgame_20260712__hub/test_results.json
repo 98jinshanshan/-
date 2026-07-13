@@ -1,0 +1,56 @@
+{
+  "total": 8,
+  "passed": 8,
+  "failed": 0,
+  "auto_fixed": 0,
+  "details": [
+    {
+      "node": "cdx01._extract_actions",
+      "kind": "normal",
+      "status": "pass",
+      "detail": "passed=True actions=196"
+    },
+    {
+      "node": "cdx01._extract_actions",
+      "kind": "boundary",
+      "status": "pass",
+      "detail": "<4字碎片数=0(应0)"
+    },
+    {
+      "node": "cdx01._extract_actions",
+      "kind": "abnormal",
+      "status": "pass",
+      "detail": "空segments→[]不崩溃"
+    },
+    {
+      "node": "registry.build_canonical_registry",
+      "kind": "normal",
+      "status": "pass",
+      "detail": "cdx02 passed=True"
+    },
+    {
+      "node": "registry.build_canonical_registry",
+      "kind": "boundary",
+      "status": "pass",
+      "detail": "core_conflict含vs: '陈琪想要推进当前阶段目标 vs 体制程序/上级阻力/旧案阴影'"
+    },
+    {
+      "node": "registry.build_canonical_registry",
+      "kind": "abnormal",
+      "status": "pass",
+      "detail": "空desires→core='核心冲突待补'"
+    },
+    {
+      "node": "compose_ffmpeg.platform",
+      "kind": "normal",
+      "status": "pass",
+      "detail": "成片存在 127MB"
+    },
+    {
+      "node": "compose_ffmpeg.platform",
+      "kind": "boundary",
+      "status": "pass",
+      "detail": "QC=PASS failures=[]"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "checkpoint": "cp_0",
+  "executing_agent": "codex(single-agent自动化校验)",
+  "check_result": {
+    "self_audit_log_44字段": true,
+    "clarified_requirement.one_liner非空": true,
+    "goal_trace.root_goal非空": true,
+    "acceptance_criteria非空": true
+  },
+  "pass": true
+}

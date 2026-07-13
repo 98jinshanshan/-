@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch10",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch10.spec.json"
+    ]
+  },
+  "chapter": 10,
+  "title": "第十章 雾中岛",
+  "output_file": "第10章_雾中岛.txt",
+  "chars": 3101
+}

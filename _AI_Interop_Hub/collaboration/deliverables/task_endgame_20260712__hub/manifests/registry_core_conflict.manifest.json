@@ -1,0 +1,12 @@
+{
+  "module": "registry_core_conflict",
+  "abs_path": "G:\\CURSOR\\\\cursor-novel-writer\\engine\\story_analysis\\registry.py",
+  "rel_path": "cursor-novel-writer/engine/story_analysis/registry.py",
+  "serves_node": "N5/CDX-02",
+  "change": "elif prot 分支补 ' vs 阻碍'",
+  "gate": "core_conflict戏剧发动机",
+  "test_status": "3/3 pass",
+  "updated": "2026-07-13",
+  "upstream": "整合_产线全节点图_路径一.json",
+  "downstream": "s1e01_ch01_ch02_platform_final.mp4"
+}

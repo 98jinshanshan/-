@@ -1,0 +1,413 @@
+{
+  "generated": "2026-07-12T20:32:42",
+  "shared_root": "G:\\_AI_Interop_Hub",
+  "projects": {
+    "AI_Workspace_OS": {
+      "root": "G:\\Users\\admin\\Documents\\AI_Workspace_OS",
+      "count": 60,
+      "rules": [
+        {
+          "name": "003_新项目创建SOP.md",
+          "rel": "003_新项目创建SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\003_新项目创建SOP.md"
+        },
+        {
+          "name": "00_2工作区的命名与架构规范.md",
+          "rel": "00_2工作区的命名与架构规范.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_2工作区的命名与架构规范.md"
+        },
+        {
+          "name": "04_Token效率与上下文治理方案.md",
+          "rel": "04_Token效率与上下文治理方案.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\04_Token效率与上下文治理方案.md"
+        },
+        {
+          "name": "07_资产与提示词库规范.md",
+          "rel": "07_资产与提示词库规范.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\07_资产与提示词库规范.md"
+        },
+        {
+          "name": "C_跨域索引系统与归档边界.md",
+          "rel": "C_跨域索引系统与归档边界.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\C_跨域索引系统与归档边界.md"
+        },
+        {
+          "name": "DOC_VECTOR_MANDATE_强制规范.md",
+          "rel": "DOC_VECTOR_MANDATE_强制规范.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\DOC_VECTOR_MANDATE_强制规范.md"
+        },
+        {
+          "name": "G_文档向量化治理与向量关联矩阵.md",
+          "rel": "G_文档向量化治理与向量关联矩阵.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\G_文档向量化治理与向量关联矩阵.md"
+        },
+        {
+          "name": "文档治理方案.md",
+          "rel": "00_System\\文档治理方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\文档治理方案.md"
+        },
+        {
+          "name": "AGENTS.md",
+          "rel": "00_System\\Shared_Project_Rules\\AGENTS.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\AGENTS.md"
+        },
+        {
+          "name": "三IDE协作边界与回执流转规范.md",
+          "rel": "00_System\\Shared_Project_Rules\\三IDE协作边界与回执流转规范.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\三IDE协作边界与回执流转规范.md"
+        },
+        {
+          "name": "向量化索引治理规范.md",
+          "rel": "00_System\\Shared_Project_Rules\\向量化索引治理规范.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\向量化索引治理规范.md"
+        },
+        {
+          "name": "文档索引治理规范_稳定ID与脚本化索引.md",
+          "rel": "00_System\\Shared_Project_Rules\\文档索引治理规范_稳定ID与脚本化索引.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\文档索引治理规范_稳定ID与脚本化索引.md"
+        },
+        {
+          "name": "每次会话结束文档治理SOP.md",
+          "rel": "00_System\\Shared_Project_Rules\\每次会话结束文档治理SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\每次会话结束文档治理SOP.md"
+        },
+        {
+          "name": "项目启动与接手SOP.md",
+          "rel": "00_System\\Shared_Project_Rules\\项目启动与接手SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\项目启动与接手SOP.md"
+        },
+        {
+          "name": "项目结束写回SOP.md",
+          "rel": "00_System\\Shared_Project_Rules\\项目结束写回SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules\\项目结束写回SOP.md"
+        },
+        {
+          "name": "Codex回答规范_5S标准.md",
+          "rel": "01_IDE_Rules\\Codex\\Codex回答规范_5S标准.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\01_IDE_Rules\\Codex\\Codex回答规范_5S标准.md"
+        },
+        {
+          "name": "V7_P0强制自检规则.md",
+          "rel": "01_IDE_Rules\\Codex\\V7_P0强制自检规则.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\01_IDE_Rules\\Codex\\V7_P0强制自检规则.md"
+        },
+        {
+          "name": "AGENTS.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\AGENTS.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\AGENTS.md"
+        },
+        {
+          "name": "U0-3_suite_doctor规则一致性检查设计.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\U0-3_suite_doctor规则一致性检查设计.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\U0-3_suite_doctor规则一致性检查设计.md"
+        },
+        {
+          "name": "Cursor防卡死强制规则.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\Cursor防卡死强制规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\Cursor防卡死强制规则.md"
+        },
+        {
+          "name": "VideoRender-3_S3回退规则修订说明_S0Blocker优先级强化.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\VideoRender-3_S3回退规则修订说明_S0Blocker优先级强化.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\VideoRender-3_S3回退规则修订说明_S0Blocker优先级强化.md"
+        },
+        {
+          "name": "命名规则与目录重排方案.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\命名规则与目录重排方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\命名规则与目录重排方案.md"
+        },
+        {
+          "name": "文档唯一承继链规范.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\文档唯一承继链规范.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\文档唯一承继链规范.md"
+        },
+        {
+          "name": "文档链路治理执行方案.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\文档链路治理执行方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\文档链路治理执行方案.md"
+        },
+        {
+          "name": "视频侧总架构缺陷治理总纲.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\视频侧总架构缺陷治理总纲.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\00_总索引与规则\\视频侧总架构缺陷治理总纲.md"
+        },
+        {
+          "name": "归档区_ai_rules映射处理SOP.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\归档区_ai_rules映射处理SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\归档区_ai_rules映射处理SOP.md"
+        },
+        {
+          "name": "项目启动与接手SOP.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\项目启动与接手SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\项目启动与接手SOP.md"
+        },
+        {
+          "name": "项目结束写回SOP.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\项目结束写回SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\10_SOP与工作流基础\\项目结束写回SOP.md"
+        },
+        {
+          "name": "VR-Repair-GLM节点定义与接入规范.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\20_研究与调研\\AI短剧工业化融合注入_20260621\\VR-Repair-GLM节点定义与接入规范.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\20_研究与调研\\AI短剧工业化融合注入_20260621\\VR-Repair-GLM节点定义与接入规范.md"
+        },
+        {
+          "name": "10_视频质量自动检测与人工复核边界.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\20_研究与调研\\AI短剧视频生成能力研究_20260611\\10_视频质量自动检测与人工复核边界.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\20_研究与调研\\AI短剧视频生成能力研究_20260611\\10_视频质量自动检测与人工复核边界.md"
+        },
+        {
+          "name": "核心内核与适配层边界.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\30_三项目评审与统一集成\\核心内核与适配层边界.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\30_三项目评审与统一集成\\核心内核与适配层边界.md"
+        },
+        {
+          "name": "08_外部来源治理方案.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\08_外部来源治理方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\08_外部来源治理方案.md"
+        },
+        {
+          "name": "11_核心与第三方适配器隔离规范.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\11_核心与第三方适配器隔离规范.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\11_核心与第三方适配器隔离规范.md"
+        },
+        {
+          "name": "商业核心禁入规则.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\商业核心禁入规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\商业核心禁入规则.md"
+        },
+        {
+          "name": "第三方适配器默认关闭规则.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\第三方适配器默认关闭规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\第三方适配器默认关闭规则.md"
+        },
+        {
+          "name": "风险边界说明.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\风险边界说明.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\风险边界说明.md"
+        },
+        {
+          "name": "商业核心禁入规则.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\PROMPT_PACK\\99_发布门禁\\商业核心禁入规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\PROMPT_PACK\\99_发布门禁\\商业核心禁入规则.md"
+        },
+        {
+          "name": "第三方适配器默认关闭规则.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\PROMPT_PACK\\99_发布门禁\\第三方适配器默认关闭规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\40_外部来源治理与合规\\交付包候选\\PROMPT_PACK\\99_发布门禁\\第三方适配器默认关闭规则.md"
+        },
+        {
+          "name": "Skill_Pack与Prompt_Pack生成规范.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\Skill_Pack与Prompt_Pack生成规范.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\Skill_Pack与Prompt_Pack生成规范.md"
+        },
+        {
+          "name": "世界观规则系统_模板.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\世界观规则系统_模板.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\世界观规则系统_模板.md"
+        },
+        {
+          "name": "章节写作SOP_自有版.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\章节写作SOP_自有版.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\章节写作SOP_自有版.md"
+        },
+        {
+          "name": "世界观规则系统_模板.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\P0_创作者入门包\\03_世界观与人物\\世界观规则系统_模板.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\P0_创作者入门包\\03_世界观与人物\\世界观规则系统_模板.md"
+        },
+        {
+          "name": "章节写作SOP_自有版.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\P0_创作者入门包\\04_章节写作\\章节写作SOP_自有版.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\P0_创作者入门包\\04_章节写作\\章节写作SOP_自有版.md"
+        },
+        {
+          "name": "Skill_Pack与Prompt_Pack生成规范.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\PROMPT_PACK\\00_README\\Skill_Pack与Prompt_Pack生成规范.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\50_资产模板与PromptPack\\交付包候选\\PROMPT_PACK\\00_README\\Skill_Pack与Prompt_Pack生成规范.md"
+        },
+        {
+          "name": "Cursor执行交接提示词_DocRouter-1_规则级文档路由与向量化防卡死AgentSkill.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\60_Cursor交接提示词\\Cursor执行交接提示词_DocRouter-1_规则级文档路由与向量化防卡死AgentSkill.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\60_Cursor交接提示词\\Cursor执行交接提示词_DocRouter-1_规则级文档路由与向量化防卡死AgentSkill.md"
+        },
+        {
+          "name": "Cursor执行交接提示词_合并版_L1L2L3_人工结果导入预检与导入规范包.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\60_Cursor交接提示词\\Cursor执行交接提示词_合并版_L1L2L3_人工结果导入预检与导入规范包.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\60_Cursor交接提示词\\Cursor执行交接提示词_合并版_L1L2L3_人工结果导入预检与导入规范包.md"
+        },
+        {
+          "name": "Cursor阶段DocRouter-1规则级文档路由与防卡死AgentSkill执行回执.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\70_Cursor执行回执\\Cursor阶段DocRouter-1规则级文档路由与防卡死AgentSkill执行回执.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\70_Cursor执行回执\\Cursor阶段DocRouter-1规则级文档路由与防卡死AgentSkill执行回执.md"
+        },
+        {
+          "name": "OpenClaw_C03-C11_治理批次执行回执.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\70_Cursor执行回执\\U0-3_doc_chain_governance\\OpenClaw_C03-C11_治理批次执行回执.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\70_Cursor执行回执\\U0-3_doc_chain_governance\\OpenClaw_C03-C11_治理批次执行回执.md"
+        },
+        {
+          "name": "P10_P0_governance_video_novel.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_P0_governance_video_novel.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_P0_governance_video_novel.md"
+        },
+        {
+          "name": "P10_P1_工具与规则一致性审计.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_P1_工具与规则一致性审计.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_P1_工具与规则一致性审计.md"
+        },
+        {
+          "name": "P10_深层压力边界测试回执.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_深层压力边界测试回执.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_深层压力边界测试回执.md"
+        },
+        {
+          "name": "P10_算法深层压力边界测试回执.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_算法深层压力边界测试回执.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_算法深层压力边界测试回执.md"
+        },
+        {
+          "name": "P10_缺陷修复与未覆盖治理方案.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_缺陷修复与未覆盖治理方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\P10_缺陷修复与未覆盖治理方案.md"
+        },
+        {
+          "name": "云端模型与本地CPU-GPU边界及IDE卡顿优化整合方案.md",
+          "rel": "02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\云端模型与本地CPU-GPU边界及IDE卡顿优化整合方案.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_10_Workflow_OS\\docs\\80_阶段报告与验证记录\\云端模型与本地CPU-GPU边界及IDE卡顿优化整合方案.md"
+        },
+        {
+          "name": "AGENTS.md",
+          "rel": "02_Projects_项目区\\Project_11_AI_Workbench\\AGENTS.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_11_AI_Workbench\\AGENTS.md"
+        },
+        {
+          "name": "工具选择规则.md",
+          "rel": "02_Projects_项目区\\Project_11_AI_Workbench\\docs\\工具选择规则.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_11_AI_Workbench\\docs\\工具选择规则.md"
+        },
+        {
+          "name": "AGENTS.md",
+          "rel": "02_Projects_项目区\\Project_12_GDrive_Project_Indexer_G盘项目扫描器\\AGENTS.md",
+          "layer": "global",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_12_GDrive_Project_Indexer_G盘项目扫描器\\AGENTS.md"
+        },
+        {
+          "name": "候选项目人工复核SOP.md",
+          "rel": "02_Projects_项目区\\Project_12_GDrive_Project_Indexer_G盘项目扫描器\\docs\\候选项目人工复核SOP.md",
+          "layer": "project",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\02_Projects_项目区\\Project_12_GDrive_Project_Indexer_G盘项目扫描器\\docs\\候选项目人工复核SOP.md"
+        },
+        {
+          "name": "PROMPT-文档治理方案补件_总纲8Phase框架.md",
+          "rel": "EXEC_PROMPTS_V1\\PROMPT-文档治理方案补件_总纲8Phase框架.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\EXEC_PROMPTS_V1\\PROMPT-文档治理方案补件_总纲8Phase框架.md"
+        },
+        {
+          "name": "PROMPT-W3-D1D2_CLN-P1治理深化并行组.md",
+          "rel": "EXEC_PROMPTS_V1\\WEEK_03\\PROMPT-W3-D1D2_CLN-P1治理深化并行组.md",
+          "layer": "task",
+          "abs": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\EXEC_PROMPTS_V1\\WEEK_03\\PROMPT-W3-D1D2_CLN-P1治理深化并行组.md"
+        }
+      ]
+    },
+    "AI-Agent-Interop": {
+      "root": "G:\\AI-Agent-Interop",
+      "count": 5,
+      "rules": [
+        {
+          "name": "doc-governance.md",
+          "rel": "00-methodology\\doc-governance\\doc-governance.md",
+          "layer": "global",
+          "abs": "G:\\AI-Agent-Interop\\00-methodology\\doc-governance\\doc-governance.md"
+        },
+        {
+          "name": "storage-path-policy.md",
+          "rel": "00-methodology\\doc-governance\\storage-path-policy.md",
+          "layer": "global",
+          "abs": "G:\\AI-Agent-Interop\\00-methodology\\doc-governance\\storage-path-policy.md"
+        },
+        {
+          "name": "upstream-mirror-policy.md",
+          "rel": "00-methodology\\doc-governance\\upstream-mirror-policy.md",
+          "layer": "global",
+          "abs": "G:\\AI-Agent-Interop\\00-methodology\\doc-governance\\upstream-mirror-policy.md"
+        },
+        {
+          "name": "EXE-P1-05_novel-subagents.md",
+          "rel": "03-implementation\\EXEC-STEPS\\EXE-P1-05_novel-subagents.md",
+          "layer": "task",
+          "abs": "G:\\AI-Agent-Interop\\03-implementation\\EXEC-STEPS\\EXE-P1-05_novel-subagents.md"
+        },
+        {
+          "name": "Agnes-集成与密钥防泄漏规范.md",
+          "rel": "04-configs\\ide\\Agnes-集成与密钥防泄漏规范.md",
+          "layer": "project",
+          "abs": "G:\\AI-Agent-Interop\\04-configs\\ide\\Agnes-集成与密钥防泄漏规范.md"
+        }
+      ]
+    }
+  },
+  "layer_counts": {
+    "global": 16,
+    "project": 40,
+    "task": 9
+  }
+}

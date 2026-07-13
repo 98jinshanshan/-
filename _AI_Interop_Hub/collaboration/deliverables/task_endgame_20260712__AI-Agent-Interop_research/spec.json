@@ -1,0 +1,50 @@
+{
+  "task_id": "task_endgame_20260712",
+  "original_input": "两个项目走两条路最终得到一个结果：一句话→Agent自主完成全部开发",
+  "path": "路径二(多智能体MCP互通)",
+  "clarified_requirement": {
+    "one_liner": "一句话直达自主开发(MCP路)",
+    "detailed": "AI-Agent-Interop 以 auto_executor 为执行核，把'一句话'经总纲8阶段(锚定→拆解→执行→验证→交付)自主跑完，MCP总线串起多能力，终点=输入一句话、无人工搬运产出成品。",
+    "target_module": "auto_executor",
+    "task_type": "modify",
+    "key_parameters": {
+      "executor": "05-scripts/auto_executor/main.py",
+      "entry": "一句话task参数",
+      "already_has": "decompose+MCP+自动修复+resume"
+    }
+  },
+  "scope": {
+    "included": [
+      "auto_executor与总纲8阶段/spec.json对接",
+      "一句话→spec.json自动产出",
+      "MCP总线连各能力",
+      "交付闸门gang_gate作为Phase8终检"
+    ],
+    "excluded": [
+      "AI_Workspace_OS内部实现(另一条路)",
+      "上游镜像改写",
+      "历史归档区内容重写"
+    ],
+    "assumed": [
+      "auto_executor现有decompose可复用为Phase5拆解",
+      "LLM provider已配置"
+    ]
+  },
+  "endpoint_gap": {
+    "已具备": [
+      "吃一句话task",
+      "自动拆解decompose",
+      "MCP调用",
+      "代码生成/文件写/验证",
+      "3次自动修复",
+      "resume续跑"
+    ],
+    "尚缺(到终点差)": [
+      "auto_executor产出/消费总纲spec.json的字段",
+      "Phase1意图锚定与unknown_concept触发提问对接",
+      "三IDE真通信(现文件轮询)",
+      "一句话→自动分派Codex/OpenClaw/Cursor"
+    ]
+  },
+  "generated": "2026-07-12T23:35:55"
+}

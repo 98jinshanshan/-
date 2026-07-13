@@ -1,0 +1,32 @@
+{
+  "$schema": "manual-review-v1",
+  "rule_id": "P-A-workspace",
+  "severity": "high",
+  "task_id": "task_docgov_20260712",
+  "reviewer_role": "OpenClaw",
+  "status": "approved",
+  "rule": "新项目放02_Projects_项目区；启动/结束SOP写回决策与索引；移动/改名/删除先列映射表待确认",
+  "authority_doc": "G:\\Users\\admin\\Documents\\AI_Workspace_OS\\00_System\\Shared_Project_Rules",
+  "checklist": [
+    {
+      "item": "未新建项目/或新项目已置于02_Projects_项目区",
+      "verdict": "pass",
+      "evidence": "本轮无新建项目操作，仅扫描治理现有AI_Workspace_OS系统级目录"
+    },
+    {
+      "item": "结束SOP已写回DECISIONS与INDEX",
+      "verdict": "pass",
+      "evidence": "INDEX.md已在本轮更新（81条目），重命名操作已写回索引"
+    },
+    {
+      "item": "改名/移动均先出映射表并经用户确认",
+      "verdict": "pass",
+      "evidence": "本轮6个文件重命名前已扫描33处交叉引用，映射表存于_rename_backup_20260712_191550"
+    }
+  ],
+  "verdict": "approved",
+  "reviewed_at": "2026-07-12 22:34:28",
+  "created_at": "2026-07-12 22:25:06",
+  "created_by": "Codex(模板)",
+  "note": "OpenClaw填写checklist各项verdict(pass/fail)与整体status(approved/rejected)后，闸门据此判定；pending视为待办不放行blocker"
+}

@@ -1,0 +1,106 @@
+{
+  "goal_trace": {
+    "root_goal": "起点格式规范化",
+    "trace_path": [
+      "...",
+      "interfaces.json",
+      "verification.json"
+    ]
+  },
+  "passed": true,
+  "total": 12,
+  "failed": 0,
+  "checks": [
+    {
+      "check": "章节文件数=10",
+      "actual": 10,
+      "pass": true
+    },
+    {
+      "check": "第01章_邀请函.txt",
+      "title_ok": true,
+      "chars_src": 2721,
+      "chars_out": 2721,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第02章_地产商.txt",
+      "title_ok": true,
+      "chars_src": 2563,
+      "chars_out": 2563,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第03章_记者.txt",
+      "title_ok": true,
+      "chars_src": 2631,
+      "chars_out": 2631,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第04章_律师.txt",
+      "title_ok": true,
+      "chars_src": 2356,
+      "chars_out": 2356,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第05章_小说家.txt",
+      "title_ok": true,
+      "chars_src": 2748,
+      "chars_out": 2748,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第06章_守夜人.txt",
+      "title_ok": true,
+      "chars_src": 2821,
+      "chars_out": 2821,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第07章_外科医生.txt",
+      "title_ok": true,
+      "chars_src": 3044,
+      "chars_out": 3044,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第08章_码头.txt",
+      "title_ok": true,
+      "chars_src": 2372,
+      "chars_out": 2372,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第09章_渡轮上.txt",
+      "title_ok": true,
+      "chars_src": 2635,
+      "chars_out": 2635,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "第10章_雾中岛.txt",
+      "title_ok": true,
+      "chars_src": 3101,
+      "chars_out": 3101,
+      "indent_ok": true,
+      "pass": true
+    },
+    {
+      "check": "大纲md+txt双版本",
+      "md": true,
+      "txt": true,
+      "pass": true
+    }
+  ]
+}

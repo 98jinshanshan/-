@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch08",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch08.spec.json"
+    ]
+  },
+  "chapter": 8,
+  "title": "第八章 码头",
+  "output_file": "第08章_码头.txt",
+  "chars": 2372
+}

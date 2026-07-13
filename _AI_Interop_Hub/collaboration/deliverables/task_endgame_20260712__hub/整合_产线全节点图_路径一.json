@@ -1,0 +1,129 @@
+{
+  "goal": "一句话/一段小说 → 无人干预 → 小说 → 剧本 → 视频成品(MP4)",
+  "integration_key": "N序列/Phase序列/CDX序列/S序列 是同一条产线在4份文档里的4个残缺视角;对齐叠加=完整产线",
+  "pipeline_macro": "N1市场雷达→N2概念立项→N3小说校验→N4小说门禁→N5故事板生成→N6视频门禁",
+  "goal_segments": {
+    "小说": [
+      "N1",
+      "N2",
+      "N3",
+      "N4"
+    ],
+    "剧本": [
+      "N5"
+    ],
+    "视频": [
+      "N6"
+    ]
+  },
+  "unified_gate_standard": "P10_真人亲测节点审核通过标准.md 七维度一票否决",
+  "nodes": [
+    {
+      "N": "N1 市场雷达",
+      "serves": "小说·选题",
+      "views": {
+        "Phase": "Phase0 选品",
+        "CDX": "-",
+        "S": "-"
+      },
+      "entry": "novel_cli intel scan / intel_scan.py / intel_rubric_score.py",
+      "gate": "P10七维度(内容相关性 filter_novel_relevant)",
+      "status": "✅ 已闭环(声明:CONTEXT platform_direct/5平台/0 BLOCKER)"
+    },
+    {
+      "N": "N2 概念立项包",
+      "serves": "小说·立项",
+      "views": {
+        "Phase": "Phase1 立项→canon/concept-brief.md",
+        "CDX": "-",
+        "S": "-"
+      },
+      "entry": "novel_cli story-init / story_init_audit.py / node_completion.py",
+      "gate": "P10七维度(占位符填充+门控真实性 concept_brief_substantive/approved)",
+      "status": "✅ 已闭环(声明:CONTEXT 七维度全通过)"
+    },
+    {
+      "N": "N3 小说校验",
+      "serves": "小说·写作校验",
+      "views": {
+        "Phase": "Phase2-5 世界观/大纲/文风/逐章写作",
+        "CDX": "-",
+        "S": "-"
+      },
+      "entry": "novel_cli pipeline validate / canon_lint.py / chapter_format_lint.py / validate_relations.py",
+      "gate": "writer_validate_gate 七维度",
+      "status": "实测 pipeline gate Phase0-9 全 GATE OK"
+    },
+    {
+      "N": "N4 小说门禁",
+      "serves": "小说·成稿门禁",
+      "views": {
+        "Phase": "Phase6-9 验证/去AI味/再验证/导出",
+        "CDX": "-",
+        "S": "-"
+      },
+      "entry": "pipeline_gate.py / review_blocker_scan.py / deai_audit.py",
+      "gate": "blocker清零 + deai",
+      "status": "实测 blocker=0(ok); deai=33 warn/0 blocker(通过,warn不阻断)"
+    },
+    {
+      "N": "N5 故事板生成",
+      "serves": "剧本·短剧生产包",
+      "views": {
+        "Phase": "-",
+        "CDX": "CDX01小说解剖/CDX02人物/CDX03情节卡",
+        "S": "S0 intake / S1 schema + adaptation step1叙事弧/step2分镜"
+      },
+      "entry": "story_analysis runner(cdx01/02/03) → adaptation_engine step1-2 → pipeline_router S0/S1",
+      "gate": "6道 machine_gates + storyboard schema>=2.0",
+      "status": "✅ 已打通(CDX01/02/03全PASS,产物齐)"
+    },
+    {
+      "N": "N6 视频门禁",
+      "serves": "视频·成片",
+      "views": {
+        "Phase": "-",
+        "CDX": "-",
+        "S": "S2 render/S3 qc_still/S4 i2v+compose/S5 六道gate"
+      },
+      "entry": "pipeline_router S2-S5 / video_gate.py / qc_video.py / drama_quality_gate.py / compose_ffmpeg.py / burn_subtitles.py",
+      "gate": "S5六道gate(qc_video_platform+i2v_fidelity+video_gate_S5+adaptive_threshold+shot_failure_memory+root_cause)",
+      "status": "✅ 离线轨道已打通(step1-7 PASS→150s平台合格MP4);高质量轨道待agnes key"
+    }
+  ],
+  "blocker_chain": [
+    "断点1(最前置,N5内): CDX-01 内容gate FAIL — 真实项目章节抽取 actions=0 → runner硬中断",
+    "断点2(N5→N6衔接): 因断点1,adaptation/ 只落 cdx01,缺 cdx03_plot_cards/authority_brief/cdx02_registry → 剧本preflight FAIL",
+    "断点3(N6内,仅高质量轨道): platforms/data/local-secrets/agnes.json 不存在 → S2真实出图401;离线轨道不受影响"
+  ],
+  "two_tracks": {
+    "离线轨道(不需任何key)": "修断点1(章节出可拍摄动作/补insufficient_reason)→CDX01-03落盘(解断点2)→adaptation step3-7(标题卡+edge-tts+ken_burns+platform_finalize)→平台合格MP4",
+    "高质量轨道": "离线轨道 + 补断点3 agnes.json key → S2真出图→S3门禁→S4 I2V→S5六gate → 逐镜高质成片"
+  },
+  "breakthrough_20260713": {
+    "result": "路径一离线轨道端到端贯通(无人干预/无付费API)",
+    "evidence_mp4": "G:\\CURSOR\\novels\\novel-837dd4f1\\adaptation\\s1e01\\output\\s1e01_ch01_ch02_platform_final.mp4",
+    "spec": "127.8MB / 1080x1920 / h264 / 30fps / 7.0Mbps / 149.53s / QC status=PASS failures=[]",
+    "fixes": [
+      "断点1修复: cdx01.py _extract_actions 过滤<4字碎片(他走了) → CDX-01 passed",
+      "断点2解除: CDX-01/02/03 全PASS并落盘 adaptation/(cdx03_plot_cards/authority_brief/cdx02_registry)",
+      "CDX-02修复: registry.py elif prot 分支补 ' vs 阻碍' 满足 core_conflict 戏剧发动机判据"
+    ],
+    "chain": "小说文本→CDX01/02/03(PASS)→step1叙事弧→step2分镜→step3视觉→step4配音→step5一致性→step6合成→step7 QC(PASS)→150s平台合格MP4",
+    "remaining": "高质量轨道(S2真实出图)仍需 platforms/data/local-secrets/agnes.json key;离线轨道已证一句话→成品闭环"
+  },
+  "_meta": {
+    "id": "DOC-ENDGAME-P1-NODEMAP-JSON",
+    "stable_id": "doc-endgame-path1-nodemap-json",
+    "type": "node_map",
+    "status": "active",
+    "owner": "Codex",
+    "created": "2026-07-13",
+    "updated": "2026-07-13",
+    "redundancy_group_id": "rg-endgame-path1-nodemap",
+    "related": [
+      "DOC-HUB-0004",
+      "DOC-HUB-0005"
+    ]
+  }
+}

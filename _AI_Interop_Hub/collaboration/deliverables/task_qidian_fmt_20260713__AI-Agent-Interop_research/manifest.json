@@ -1,0 +1,82 @@
+{
+  "task_id": "task_qidian_fmt_20260713__AI-Agent-Interop",
+  "goal_trace": {
+    "root_goal": "起点格式规范化",
+    "trace_path": [
+      "spec.json",
+      "path.json",
+      "nodes.json",
+      "interfaces.json",
+      "nodes/",
+      "verification.json",
+      "manifest.json"
+    ]
+  },
+  "upstream": [
+    "第七声钟响_前十章.docx",
+    "mystery-novel-outline.html"
+  ],
+  "downstream": "output/ (10章txt + 大纲md/txt)",
+  "outputs": [
+    {
+      "file": "小说大纲_第七声钟响.md",
+      "bytes": 32074,
+      "sha1": "5f99130b3a6b"
+    },
+    {
+      "file": "小说大纲_第七声钟响.txt",
+      "bytes": 31754,
+      "sha1": "79e9c36fbf1a"
+    },
+    {
+      "file": "第01章_邀请函.txt",
+      "bytes": 8339,
+      "sha1": "bc3ca044c4cb"
+    },
+    {
+      "file": "第02章_地产商.txt",
+      "bytes": 7909,
+      "sha1": "c02f3792a1ac"
+    },
+    {
+      "file": "第03章_记者.txt",
+      "bytes": 8004,
+      "sha1": "499ba2df3dbe"
+    },
+    {
+      "file": "第04章_律师.txt",
+      "bytes": 7151,
+      "sha1": "9842c75e23b1"
+    },
+    {
+      "file": "第05章_小说家.txt",
+      "bytes": 8382,
+      "sha1": "a88855bf9552"
+    },
+    {
+      "file": "第06章_守夜人.txt",
+      "bytes": 8633,
+      "sha1": "284be368db54"
+    },
+    {
+      "file": "第07章_外科医生.txt",
+      "bytes": 9203,
+      "sha1": "fd612778b8b1"
+    },
+    {
+      "file": "第08章_码头.txt",
+      "bytes": 7187,
+      "sha1": "530fb72cecf6"
+    },
+    {
+      "file": "第09章_渡轮上.txt",
+      "bytes": 7948,
+      "sha1": "82942006a967"
+    },
+    {
+      "file": "第10章_雾中岛.txt",
+      "bytes": 9551,
+      "sha1": "ea974f8a1491"
+    }
+  ]
+}

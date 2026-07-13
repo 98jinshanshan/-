@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch03",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch03.spec.json"
+    ]
+  },
+  "chapter": 3,
+  "title": "第三章 记者",
+  "output_file": "第03章_记者.txt",
+  "chars": 2631
+}

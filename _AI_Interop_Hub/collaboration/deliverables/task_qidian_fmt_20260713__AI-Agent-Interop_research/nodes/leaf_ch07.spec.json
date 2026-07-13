@@ -1,0 +1,15 @@
+{
+  "node_id": "leaf_ch07",
+  "goal_trace": {
+    "root_goal": "每章一文档",
+    "parent": "n3_chapter_fmt",
+    "trace_path": [
+      "nodes.json",
+      "nodes/leaf_ch07.spec.json"
+    ]
+  },
+  "chapter": 7,
+  "title": "第七章 外科医生",
+  "output_file": "第07章_外科医生.txt",
+  "chars": 3044
+}

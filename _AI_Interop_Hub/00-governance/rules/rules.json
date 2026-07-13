@@ -1,0 +1,320 @@
+{
+  "$schema": "gang-rules-v1",
+  "generated": "2026-07-12T20:41:39",
+  "config_priority": [
+    "task_level",
+    "project_level",
+    "global_level"
+  ],
+  "note": "协助总纲的机器可执行规则集。每条规则可被gang_gate.py按detect/validator自动判定。",
+  "rules": [
+    {
+      "id": "G1-naming",
+      "layer": "global",
+      "rule": "知识文档文件名禁止版本号后缀(_V2/_v1.1)与日期后缀(_20260712)；一个主题一个文档。运行期task_id派生实例除外。",
+      "severity": "blocker",
+      "detect": "regex on filename: (_[Vv]\\d+(\\.\\d+)?|20\\d{6}|_\\d{8})",
+      "action": "block",
+      "validator": "gate_naming",
+      "source": [
+        "总纲.doc_standards.naming_rule",
+        "00_2工作区的命名与架构规范.md"
+      ]
+    },
+    {
+      "id": "G2-ssot",
+      "layer": "global",
+      "rule": "内容只存一份，引用而非复制；禁止创建与已有文档重叠的新文档；跨项目共享规则集中共享根。",
+      "severity": "blocker",
+      "detect": "同主题多文档检测 / 项目内重复协作目录检测",
+      "action": "block",
+      "validator": "gate_ssot_no_dup",
+      "source": [
+        "AI-Agent-Interop/doc-governance.md",
+        "总纲禁止行为清单"
+      ]
+    },
+    {
+      "id": "G3-index-meta",
+      "layer": "global",
+      "rule": "每工作区须有INDEX(Phase1电源)；文档须带可机读元数据(YAML front-matter+稳定ID 或 DOC_VECTOR块)；落盘前查INDEX防重。",
+      "severity": "high",
+      "detect": "INDEX存在性 + 首行元数据标记检测",
+      "action": "warn_then_fix",
+      "validator": "gate_index_meta",
+      "source": [
+        "文档索引治理规范_稳定ID与脚本化索引.md",
+        "DOC_VECTOR_MANDATE_强制规范.md"
+      ]
+    },
+    {
+      "id": "G4-path",
+      "layer": "global",
+      "rule": "交接产物写完整绝对路径；禁用省略号路径(…/)、相对路径、云端URL裸引用；禁止硬编码绝对路径应走解析器。",
+      "severity": "blocker",
+      "detect": "regex: …[/\\\\] ; spec.downstream_handoff.*_abs_path须isabs且存在",
+      "action": "block",
+      "validator": "gate_path",
+      "source": [
+        "AI-Agent-Interop/storage-path-policy.md",
+        "WORKSPACE_ROOT.md"
+      ]
+    },
+    {
+      "id": "G5-ide-boundary",
+      "layer": "global",
+      "rule": "三IDE各守作业目录不越界改对方私有项目；共享根是唯一合法交接区；回执禁止路径+正文+多执行方式同发。",
+      "severity": "high",
+      "detect": "人工/审核检查(OpenClaw review.json)",
+      "action": "review",
+      "validator": "gate_ide_boundary",
+      "source": [
+        "三IDE协作边界与回执流转规范.md"
+      ],
+      "auto": true,
+      "automation_note": "人工项已机检化: 交接产物路径白名单+越界哨兵"
+    },
+    {
+      "id": "G6-mirror-readonly",
+      "layer": "global",
+      "rule": "上游镜像只读，任何人(含AI)不得增删改；不回推；体检豁免；SBOM留痕。",
+      "severity": "blocker",
+      "detect": "镜像目录写入检测(git diff on 98-upstream-mirror)",
+      "action": "block",
+      "validator": "gate_mirror_ro",
+      "source": [
+        "AI-Agent-Interop/upstream-mirror-policy.md"
+      ]
+    },
+    {
+      "id": "G7-delivery-selfcheck",
+      "layer": "global",
+      "rule": "完成前必须本地命令核验关键字段；交付前必须跑gang_gate至全绿；不得让用户充当验证者。",
+      "severity": "blocker",
+      "detect": "gang_gate退出码；锚点链完整性",
+      "action": "block",
+      "validator": "gate_anchor_chain",
+      "source": [
+        "V7_P0强制自检规则.md",
+        "AGENT_INSTRUCTION.Phase8闸门"
+      ]
+    },
+    {
+      "id": "G8-token-context",
+      "layer": "global",
+      "rule": "上下文分层(入口/决策/细节)；每项目维护CONTEXT.md压缩背景。",
+      "severity": "advisory",
+      "detect": "CONTEXT.md存在性",
+      "action": "warn",
+      "validator": "gate_context_exists",
+      "source": [
+        "04_Token效率与上下文治理方案.md"
+      ],
+      "auto": true
+    },
+    {
+      "id": "P-A-workspace",
+      "layer": "project",
+      "rule": "AI_Workspace_OS: 新项目放02_Projects_项目区；启动/结束SOP写回决策与索引；移动/重命名/删除先列映射表待确认。",
+      "severity": "high",
+      "detect": "项目层SOP流程检查",
+      "action": "review",
+      "validator": "gate_workspace_sop",
+      "source": [
+        "Shared_Project_Rules/*.md"
+      ],
+      "auto": true,
+      "automation_note": "项目编号+DECISIONS.md(SOP写回)机检"
+    },
+    {
+      "id": "P-B-partition",
+      "layer": "project",
+      "rule": "AI-Agent-Interop: 编号分区00~05强制(编号即语义)；三层存储职责互斥；front-matter状态机+稳定ID+脚本化索引。",
+      "severity": "high",
+      "detect": "分区编号合规 + front-matter率",
+      "action": "warn_then_fix",
+      "validator": "gate_partition_numbered",
+      "source": [
+        "00-methodology/doc-governance/*.md"
+      ],
+      "auto": true
+    },
+    {
+      "id": "P-C-subproject",
+      "layer": "project",
+      "rule": "子项目通过.ai_rules/_shared映射系统级共享规则(引用非复制)；子项目专属规则本地维护。",
+      "severity": "medium",
+      "detect": ".ai_rules映射一致性检查",
+      "action": "warn",
+      "validator": "gate_airules_mapping",
+      "source": [
+        "02_Projects_项目区/*/.ai_rules/*"
+      ],
+      "auto": true
+    },
+    {
+      "id": "T1-handoff",
+      "layer": "task",
+      "rule": "交接提示词是一次性任务契约含目标/边界/验收；完成后按生命周期转archived。",
+      "severity": "medium",
+      "detect": "任务状态机 status流转",
+      "action": "warn",
+      "validator": "gate_handoff_contract",
+      "source": [
+        "docs/60_Cursor交接提示词/*"
+      ],
+      "auto": true,
+      "automation_note": "人工项已机检化: 交接单目标/边界/验收三要素字段校验"
+    },
+    {
+      "id": "T2-receipt",
+      "layer": "task",
+      "rule": "回执标准字段: 文件清单(路径+行数+说明)、越界确认、交接状态。",
+      "severity": "medium",
+      "detect": "回执字段完整性",
+      "action": "warn",
+      "validator": "gate_receipt_fields",
+      "source": [
+        "docs/70_Cursor执行回执/*"
+      ],
+      "auto": true
+    },
+    {
+      "id": "T3-node-batch",
+      "layer": "task",
+      "rule": "节点定义/批次执行规范；任务实例产物落共享根collaboration/deliverables/{task_id}__{project}/。",
+      "severity": "medium",
+      "detect": "产物落盘路径检查",
+      "action": "warn",
+      "validator": "gate_path",
+      "source": [
+        "03-implementation/EXEC-STEPS/*"
+      ]
+    },
+    {
+      "id": "G3b-metadata-fields",
+      "layer": "global",
+      "rule": "元数据必须含完整必填字段：AI-Agent-Interop的front-matter(id/title/project/partition/status/owner/summary等)；AI_Workspace_OS的DOC_VECTOR 9个Mandatory字段+语义指纹。仅有分隔符不算合规。",
+      "severity": "high",
+      "detect": "解析front-matter/DOC_VECTOR块，校验必填字段齐全",
+      "action": "warn_then_fix",
+      "validator": "gate_metadata_fields",
+      "auto": true,
+      "source": [
+        "AI-Agent-Interop/doc-governance.md §2",
+        "DOC_VECTOR_MANDATE_强制规范.md §2.1"
+      ]
+    },
+    {
+      "id": "G9-vector-semantic",
+      "layer": "global",
+      "rule": "向量化基因：每个文档自带可机器读取的语义指纹(semantic_fingerprint)，支持语义检索；生成文档与向量化治理是同一动作，缺失视为未完成。",
+      "severity": "high",
+      "detect": "检测DOC_VECTOR块的semantic_fingerprint字段/或front-matter tags+summary",
+      "action": "warn_then_fix",
+      "validator": "gate_vector_gene",
+      "auto": true,
+      "source": [
+        "DOC_VECTOR_MANDATE_强制规范.md 第零条",
+        "doc-governance.md 支柱四"
+      ]
+    },
+    {
+      "id": "G10-lifecycle",
+      "layer": "global",
+      "rule": "生命周期状态机：文档须标状态(当前有效/阶段历史/待复核/已替代/禁止执行)；被替代的旧文档须归档并登记替代关系，不得滞留活跃区与向量索引。",
+      "severity": "high",
+      "detect": "检测status字段合法值；归档区替代关系登记检查",
+      "action": "warn_then_fix",
+      "validator": "gate_lifecycle",
+      "auto": true,
+      "source": [
+        "每次会话结束文档治理SOP.md",
+        "doc-governance.md 生命周期支柱"
+      ]
+    },
+    {
+      "id": "G11-lineage",
+      "layer": "global",
+      "rule": "谱系与承继：维护文档谱系与引用声明(上游/下游/引用图)，说明从研究→决策→执行→回执的演进链；新增/修改docs须同步谱系。",
+      "severity": "medium",
+      "detect": "存在文档谱系与引用声明.md或总索引可追溯上下游",
+      "action": "warn",
+      "validator": "gate_lineage",
+      "auto": true,
+      "source": [
+        "每次会话结束文档治理SOP.md Step3",
+        "文档索引治理规范"
+      ]
+    },
+    {
+      "id": "G12-section-ref",
+      "layer": "global",
+      "rule": "段落级引用：跨文档引用必须用stable_id+section_id指向具体段落，禁止只引整个文件；改版后可脚本检测引用有效性。",
+      "severity": "medium",
+      "detect": "引用锚点解析(如trigger_anchor/section id)有效性",
+      "action": "warn",
+      "validator": "gate_section_ref",
+      "auto": true,
+      "source": [
+        "文档索引治理规范_稳定ID与脚本化索引.md 规则2"
+      ]
+    },
+    {
+      "id": "G13-change-mapping",
+      "layer": "global",
+      "rule": "移动/重命名/删除文档前，必须先生成映射表(旧路径→新路径)并取得用户确认，禁止无映射表的批量改动。",
+      "severity": "blocker",
+      "detect": "批量rename/move操作是否有配套映射表记录",
+      "action": "block",
+      "validator": "gate_change_mapping",
+      "auto": true,
+      "source": [
+        "每次会话结束文档治理SOP.md",
+        "00_2工作区的命名与架构规范.md §6"
+      ],
+      "automation_note": "人工项已机检化: rename_mapping.json(旧->新)存在且条目完整",
+      "manual_fallback": "仅不可逆物理删除(非改名/归档)仍需人工确认;改名/移动由映射表自动判定"
+    },
+    {
+      "id": "G14-redundancy",
+      "layer": "global",
+      "rule": "冗余检测：同主题多文档须标redundancy_group_id并归为冗余组，保留唯一真相源，其余合并或归档；反冗余是落盘前置检查。",
+      "severity": "high",
+      "detect": "redundancy-report/同主题聚类检测",
+      "action": "warn_then_fix",
+      "validator": "gate_redundancy",
+      "auto": true,
+      "source": [
+        "DOC_VECTOR_MANDATE_强制规范.md V1.2反冗余",
+        "doc-governance.md"
+      ]
+    }
+  ],
+  "change_declaration": {
+    "updated": "2026-07-12T22:54:57",
+    "by": "Codex",
+    "session": "人工规则机检化(规则不能全自动→改规则)",
+    "change": "G5/T1/G13 由 manual_review 改为自动 validator;P-A 保留人工(SOP流程判断);G13新增rename_mapping.json为机器证据",
+    "safety_invariant": "仅保留不可逆物理删除为人工红线;其余转机器可判定",
+    "verified": "gang_gate.py 待跑"
+  },
+  "self_governance": {
+    "principle": "治理文档本体(Hub .md)必须自我遵守全部元数据类规则(G3b/G9/G10/G11)；机器产物显式豁免元数据(非静默跳过)",
+    "metadata_exempt_extensions": [
+      ".json",
+      ".js"
+    ],
+    "metadata_exempt_reason": "rules.json/rules-index.json/manifest.json/orchestrator.js 为机器可读/可执行产物，元数据以自身schema承载(如\\/change_declaration)，不套用front-matter",
+    "self_governed_md_count": 11,
+    "still_manual": [
+      "G5-ide-boundary",
+      "P-A-workspace",
+      "T1-handoff",
+      "G13-change-mapping"
+    ],
+    "auto_placeholder": [
+      "G6-mirror-readonly(需git diff，无镜像写入即PASS)"
+    ]
+  }
+}

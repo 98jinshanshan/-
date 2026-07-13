@@ -1,0 +1,699 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "novelcraft-dev-workflow-v3",
+  "name": "开发总纲",
+  "version": "3.6.0",
+  "type": "dual_pass_recursive_tree_with_supervisor",
+  "description": "双程递归自相似开发工作流，含目标对齐监督者。三IDE实例独立运行，通过共享文件系统异步通信。Phase 1全自动自问自答，去程逐层拆解，回程逐层合成。监督者全程校验目标对齐。一句话输入→全自动执行→开发完成。",
+
+  "change_log_v3_6_0": {
+    "S5_execution_engine": "新增 Phase 门禁引擎。解决'Agent 系统性跳过中间 Phase'的根因。每个 Phase 有 gate_file（前置条件）和 produce_file（强制产出），形成不可跳过的执行链。Agent 启动任何任务前必须先读取并执行门禁检车。"
+  },
+
+  "change_log_v3_5_0": {
+    "S1_supervisor_independence": "监督者独立于执行Agent，在独立IDE实例中运行。三IDE架构确保设计和审核物理分离。禁止执行Agent在产物中预填alignment_check。",
+    "S2_forced_recursion": "Phase 5递归拆解改为强制产出，每个子节点必须创建独立目录和spec.json。cp_4自动化检查nodes/子目录。",
+    "P4_1_interface_consistency": "Phase 4增加迭代规则：spec更新时Phase 4必须重新执行。cp_3改为自动化数值比对。",
+    "P7_2_content_verification": "cp_6增加自动化内容校验（Section数、章节数、字数）。Phase 7失败时禁止降标声明。",
+    "S3_blueprint_enforcement": "Phase 6增加蓝图对照步骤：实现前读取path/nodes确认蓝图，实现后对照实际产出。",
+    "P1_1_44_structured_format": "self_audit_log改为44个独立字段强制格式，cp_0自动化检查字段数。",
+    "S4_versioning": "产物版本化：更新时旧版本移至archive/，manifest记录版本历史。",
+    "P3_1_necessity_audit": "必要性审计从Agent自评改为自动化规则检查：节点与acceptance_criteria对应关系校验。",
+    "health_check": "Phase 8后新增产物体检报告，自动检查文件完整性、数值一致性、goal_trace链路、实际产出vs承诺。",
+    "task_type_grading": "level_definitions增加applicable_task_types，区分创作类(递归2层)和开发类(递归4层)。"
+  },
+
+  "growth_metaphor": {
+    "forward_pass": "种子 → 扎根 → 发芽 → 长大（去程：拆解，从粗到细）",
+    "backward_pass": "成熟 → 开花 → 结果（回程：合成，从细到粗）",
+    "supervisor": "三个IDE实例独立运行，监督者(OpenClaw)在独立IDE中全程值守，通过共享文件系统异步校验"
+  },
+
+  "core_contract": {
+    "user_input": "一句话（模糊想法）",
+    "user_participation": "0。全程不需要用户参与。",
+    "execution_mode": "three_ide_polling",
+    "phase_1": "Codex Agent 调用 44 问自审清单，自问自答，产出根目标 spec.json。全自动。",
+    "supervisor_start": "Phase 1 完成后，OpenClaw Agent 通过轮询检测到 .pending 文件，锁定根目标为唯一校验基准。",
+    "forward_pass": "Phase 2-5 去程：Codex 产出设计文档，OpenClaw 轮询校验。全自动。",
+    "backward_pass": "Phase 6-8 回程：Cursor 按蓝图实现，OpenClaw 轮询校验。全自动。",
+    "communication": "三个IDE通过共享文件系统异步通信。详见 三IDE角色自动化联通协议_V1.0.md。",
+    "completion_signal": "全链路通路验证通过 + 全节点目标对齐通过 → 通知用户"
+  },
+
+  "phase_gate_engine": {
+    "description": "Phase 门禁引擎（V3.6 新增）。解决'Agent 系统性跳过中间 Phase'的根因。每个 Phase 读取 gate_file（前置条件），写入 produce_file（强制产出）。Agent 在启动任何任务前，必须先读取本引擎，按 gate_file 列表逐项检查，不满足则拒绝执行。",
+    "version": "1.0.0",
+    "principle": "门禁即执行。Agent 不需要'理解'Phase 的价值——它只需要知道：不产出 gate_file 就无法进入下一 Phase。",
+
+    "mandatory_on_startup": {
+      "step_1": "Agent 读取本 phase_gate_engine 章节",
+      "step_2": "Agent 列出当前任务所有 phase 的 gate_file 和 produce_file",
+      "step_3": "Agent 从 Phase 1 开始，逐个检查 gate_file 是否存在",
+      "step_4": "如果 gate_file 不存在 → 该 Phase 是当前 Phase，开始执行",
+      "step_5": "执行完成后，写入 produce_file → 自动进入下一 Phase",
+      "step_6": "重复直到 Phase 8 produce_file 全部存在",
+      "step_7": "任何时候不得跳过 Phase。连续 2 个 produce_file 缺失 → 认定为系统性故障"
+    },
+
+    "anti_skip_mechanism": {
+      "description": "防止 Agent 跳过中间 Phase 直接执行 Phase 6。",
+      "rule": "如果 Phase 6 的 gate_file_1（interfaces.json）不存在，Agent 不得执行 Phase 6，必须从缺失的最早 Phase 开始。",
+      "check_before_phase_6": "必须确认 gate_file_1 到 gate_file_5 全部存在。缺任一个 → 拒绝执行 Phase 6，回退到缺失 Phase。"
+    },
+
+    "gates": {
+      "phase_1": {
+        "phase_name": "意图锚定",
+        "gate_file": "无（Phase 1 是起点，不需要前置文件）",
+        "produce_file": "{task_dir}/spec.json",
+        "produce_check": { "fields": ["clarified_requirement.one_liner", "goal_trace.root_goal", "self_audit_log", "acceptance_criteria"] },
+        "checkpoint_self": {
+          "description": "单 Agent 模式下自检（替代 OpenClaw cp_0）",
+          "checks": [
+            "spec.json 存在且包含 44 个独立字段的 self_audit_log",
+            "inferred_ratio < 0.30",
+            "goal_trace.root_goal 非空",
+            "acceptance_criteria 非空且可测量"
+          ],
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_0.self_check.json"
+        },
+        "cannot_skip": "Phase 1 是起点。如果 spec.json 不存在，所有后续 Phase 的 gate_file 都不存在。"
+      },
+      "phase_2": {
+        "phase_name": "路径锚定",
+        "gate_file": "{task_dir}/spec.json（必须存在）",
+        "produce_file": "{task_dir}/path.json",
+        "produce_check": { "fields": ["path.start", "path.end", "path.nodes", "path.is_connected"] },
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_1.self_check.json",
+          "checks": ["path.json 存在", "path 终点与 spec.json.one_liner 一致", "path 无断点"]
+        },
+        "cannot_skip": "如果 path.json 不存在，Phase 3 的 gate_file 不存在。"
+      },
+      "phase_3": {
+        "phase_name": "节点识别",
+        "gate_file": "{task_dir}/path.json（必须存在）",
+        "produce_file": "{task_dir}/nodes.json",
+        "produce_check": { "fields": ["nodes", "每个节点含 maps_to_root_goal"] },
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_2.self_check.json",
+          "checks": ["nodes.json 存在", "每个节点 maps_to_root_goal 非空", "无 extraneous 节点", "无 missing 维度"]
+        },
+        "cannot_skip": "如果 nodes.json 不存在，Phase 4 的 gate_file 不存在。"
+      },
+      "phase_4": {
+        "phase_name": "接口契约",
+        "gate_file": "{task_dir}/nodes.json（必须存在）",
+        "produce_file": "{task_dir}/interfaces.json",
+        "produce_check": { "fields": ["interfaces", "每个接口含 schema_match", "interface_chain_validation"] },
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_3.self_check.json",
+          "checks": ["interfaces.json 存在", "每个接口 schema_match: true", "数值约束与 spec 一致"]
+        },
+        "cannot_skip": "如果 interfaces.json 不存在，Phase 5 的 gate_file 不存在。"
+      },
+      "phase_5": {
+        "phase_name": "递归拆解",
+        "gate_file": "{task_dir}/interfaces.json（必须存在）",
+        "produce_file": "{task_dir}/nodes/（至少 1 个子节点 spec.json）",
+        "produce_check": { "condition": "nodes/ 目录存在且包含至少 1 个 {node_id}/spec.json" },
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_4.self_check.json",
+          "checks": ["nodes/ 子目录存在", "至少 1 个子节点 spec.json", "每个子节点含 goal_trace"]
+        },
+        "创作类_简化": "创作类任务（如小说大纲）递归深度为 2 层。如果 nodes.json 中节点数 ≤ 6 且每个节点可直接映射到内容单元，可以不递归，但必须显式声明叶节点列表并写入 {task_dir}/leaf_nodes.json。",
+        "cannot_skip": "如果 nodes/ 和 leaf_nodes.json 都不存在，Phase 5 未完成。"
+      },
+      "phase_6": {
+        "phase_name": "实现集成",
+        "gate_file_1": "{task_dir}/interfaces.json（必须存在）",
+        "gate_file_2": "{task_dir}/nodes/ 或 {task_dir}/leaf_nodes.json（必须存在）",
+        "produce_file": "{task_dir}/../code/ 或 最终产出文件",
+        "produce_check": { "condition": "最终产出文件存在且内容非空" },
+        "blueprint_check_on_start": "Agent 在开始实现前，必须先读取 path.json 和 nodes.json，列出蓝图要求的 Section 清单，打印到日志中。",
+        "blueprint_check_on_end": "Agent 在实现完成后，必须列出实际产出的 Section，与蓝图对照，写入 {task_dir}/blueprint_comparison.json。",
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_5.self_check.json",
+          "checks": ["最终产出存在", "实际 Section 数 ≥ 蓝图 Section 数", "blueprint_comparison.json 存在"]
+        },
+        "cannot_skip": "Phase 6 是回程唯一的内容产出阶段。无法跳过。"
+      },
+      "phase_7": {
+        "phase_name": "通路验证",
+        "gate_file": "Phase 6 的最终产出文件（必须存在）",
+        "produce_file": "{task_dir}/verification.json",
+        "produce_check": { "fields": ["verification_results", "所有模块 status 为 passed"] },
+        "content_verification": {
+          "description": "自动化内容校验：不依赖 Agent 自评，直接读取最终产出文件进行数值比对。",
+          "checks": [
+            "提取产出中所有章节/Section 数量，与 nodes.json 的节点数比对",
+            "提取产出中实际内容条目数，与 spec.json 的 target 比对",
+            "提取产出中文本字数，与 spec.json 的 target_word_count 比对（±30%）",
+            "所有比对结果写入 verification.json 的 actual_vs_target 字段"
+          ]
+        },
+        "prohibition": "如果实际产出 < 承诺量 70%，verification.json 必须标记为 failed，不得写 passed。",
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_6.self_check.json",
+          "checks": ["verification.json 存在", "all_checkpoints 非空", "实际产出 ≥ 承诺量 70%"]
+        },
+        "cannot_skip": "如果 verification.json 不存在，Phase 8 的 gate_file 不存在。"
+      },
+      "phase_8": {
+        "phase_name": "交付收尾",
+        "gate_file": "{task_dir}/verification.json（必须存在且 passed）",
+        "produce_file_1": "{task_dir}/manifest.json",
+        "produce_file_2": "{task_dir}/health_check.json",
+        "produce_file_3": "INDEX.md 更新",
+        "health_check": {
+          "description": "产物体检：不依赖 Agent 自评，直接读取文件进行自动化检查。",
+          "checks": {
+            "文件完整性": "检查 task_dir 下是否有 spec.json, path.json, nodes.json, interfaces.json, verification.json, manifest.json",
+            "数值一致性": "检查 spec/path/nodes/interfaces 中的关键数值是否一致",
+            "goal_trace链路": "检查每个文件的 goal_trace.trace_path 是否形成连续链",
+            "实际产出vs承诺": "实际产出 ≥ spec.json 承诺量的 70%"
+          },
+          "output": "health_check.json 含所有检查项的 pass/fail 和具体偏差数据"
+        },
+        "checkpoint_self": {
+          "result_file": "{task_dir}/supervisor_checkpoints/cp_7.self_check.json",
+          "checks": ["manifest.json 存在", "health_check.json 存在", "health_check 全部 pass", "INDEX.md 已更新"]
+        },
+        "cannot_skip": "Phase 8 是终点。如果 health_check.json 不存在，任务未完成。"
+      }
+    },
+
+    "execution_chain_visual": {
+      "description": "完整的门禁链。每个 Phase 的 produce_file 是下一 Phase 的 gate_file。",
+      "chain": [
+        "Phase 1 → spec.json",
+        "  ├── gate: 无（起点）",
+        "  └── checkpoint: cp_0.self_check.json",
+        "Phase 2 → path.json",
+        "  ├── gate: spec.json 存在",
+        "  └── checkpoint: cp_1.self_check.json",
+        "Phase 3 → nodes.json",
+        "  ├── gate: path.json 存在",
+        "  └── checkpoint: cp_2.self_check.json",
+        "Phase 4 → interfaces.json",
+        "  ├── gate: nodes.json 存在",
+        "  └── checkpoint: cp_3.self_check.json",
+        "Phase 5 → nodes/ 或 leaf_nodes.json",
+        "  ├── gate: interfaces.json 存在",
+        "  └── checkpoint: cp_4.self_check.json",
+        "Phase 6 → 最终产出",
+        "  ├── gate: interfaces.json + (nodes/ 或 leaf_nodes.json) 存在",
+        "  └── checkpoint: cp_5.self_check.json + blueprint_comparison.json",
+        "Phase 7 → verification.json",
+        "  ├── gate: 最终产出存在",
+        "  └── checkpoint: cp_6.self_check.json",
+        "Phase 8 → manifest.json + health_check.json",
+        "  ├── gate: verification.json 存在且 passed",
+        "  └── checkpoint: cp_7.self_check.json",
+        "==========================================================================",
+        "全链路通路 = 从 spec.json 到 health_check.json 的 8 个文件全部存在且 gate 链完整"
+      ]
+    },
+
+    "self_check_mode": {
+      "description": "单 Agent 模式下，监督者检查点由 Agent 自检。这不是理想方案（理想方案是三 IDE 独立监督者），但远比'跳过检查点'好。",
+      "rule": "Agent 必须以'审核者'身份（不是'作者'身份）执行自检。如果发现自己的产出有问题，必须标记为 failed 并重做。",
+      "independence_proxy": "Agent 在自检时，只能读取 produce_file 的内容，不得参考自己的'设计思路'或'对话历史'。",
+      "three_strikes": "同一 Phase 自检连续 3 次 failed → 标记为 blocked，写入 blockage.json，通知用户。"
+    },
+
+    "minimum_viable_execution": {
+      "description": "创作类任务（如小说大纲、报告生成）的最小可执行链路。不允许跳过任何 Phase。",
+      "创作类": {
+        "must_execute": ["Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5(简化)", "Phase 6", "Phase 7", "Phase 8"],
+        "phase_5_简化": "如果节点数 ≤ 6 且每个节点可直接映射到内容单元，写 leaf_nodes.json 替代 nodes/。",
+        "minimum_artifacts": ["spec.json", "path.json", "nodes.json", "interfaces.json", "leaf_nodes.json", "最终产出", "verification.json", "manifest.json", "health_check.json"]
+      }
+    }
+  },
+
+  "supervisor_independence": {
+    "description": "监督者必须与执行Agent物理分离。三IDE架构中，OpenClaw在独立IDE实例中运行。",
+    "rule": "监督者检查点必须由独立Agent执行。执行Agent不得在产物中预填alignment_check字段。",
+    "implementation": "执行Agent写入.pending文件 → OpenClaw轮询到.pending → 独立执行检查点 → 写入.result",
+    "prohibition": "执行Agent在产物中填写的任何supervisor_*或alignment_*字段将被OpenClaw标记为INVALID并重新检查",
+    "communication_protocol": "详见 三IDE角色自动化联通协议_V1.0.md"
+  },
+
+  "goal_alignment_supervisor": {
+    "description": "目标对齐监督者。独立Agent角色（OpenClaw），在独立IDE实例中运行，不参与任何执行。通过轮询supervisor_checkpoints/目录发现待审核任务。",
+    "role": "supervisor",
+    "agent": "openclaw",
+    "ide_instance": "OpenClaw IDE（独立进程/窗口）",
+    "authority": "veto",
+    "poll_target": "/workspace/collaboration/deliverables/*/supervisor_checkpoints/",
+    "root_goal_source": "项目级 Phase 1 产出的 spec.json.clarified_requirement.one_liner",
+    "core_question": "这个节点的产出，能回到根目标吗？",
+    "on_pass": "写入 .result = pass。执行Agent继续下一Phase。",
+    "on_fail": "写入 .result = fail + failure_details。执行Agent重做当前Phase。",
+
+    "checkpoints": {
+      "checkpoint_0": {
+        "id": "cp_0_phase_1_quality",
+        "after_phase": 1,
+        "description": "校验 Phase 1 产出自身是否自洽",
+        "automated_checks": {
+          "spec_json_exists": "spec.json 文件是否存在",
+          "self_audit_log_44_fields": "self_audit_log 中必须有 44 个独立字段（不是 8 个维度摘要），缺 1 个 → FAIL",
+          "inferred_ratio_under_30": "inferred_ratio < 0.30",
+          "goal_trace_present": "goal_trace 字段存在且非空",
+          "acceptance_criteria_measurable": "acceptance_criteria 非空且可测量"
+        },
+        "semantic_review": {
+          "one_liner_consistent": "one_liner 与 original_input 一致？",
+          "scope_acceptance_self_consistent": "scope 与 acceptance_criteria 自洽？",
+          "contradictions": "有无内部矛盾？",
+          "missing_dimensions": "有无遗漏维度？"
+        },
+        "on_fail": "强制重做 Phase 1"
+      },
+      "checkpoint_1": {
+        "id": "cp_1_path_alignment",
+        "after_phase": 2,
+        "description": "校验路径是否对齐根目标",
+        "automated_checks": {
+          "path_json_exists": "path.json 文件是否存在",
+          "path_endpoint_matches_root": "path.json 的路径终点是否等于根目标描述的最终产出"
+        },
+        "semantic_review": "路径能否反向追溯到根目标？",
+        "on_fail": "强制重做 Phase 2"
+      },
+      "checkpoint_2": {
+        "id": "cp_2_node_relevance",
+        "after_phase": 3,
+        "description": "校验节点是否服务于根目标（自动化必要性审计）",
+        "automated_checks": {
+          "nodes_json_exists": "nodes.json 文件是否存在",
+          "each_node_maps_to_root": "每个节点的 maps_to_root_goal 字段非空，且必须在 acceptance_criteria 中找到对应维度",
+          "no_extraneous": "不存在无法对应 acceptance_criteria 的节点（标记为 extraneous）",
+          "no_missing": "acceptance_criteria 中每个维度在 nodes.json 中都有对应节点（标记为 missing）"
+        },
+        "on_fail": "强制重做 Phase 3"
+      },
+      "checkpoint_3": {
+        "id": "cp_3_interface_direction",
+        "after_phase": 4,
+        "description": "校验接口方向是否匹配根目标数据流，数值约束是否与spec一致",
+        "automated_checks": {
+          "interfaces_json_exists": "interfaces.json 文件是否存在",
+          "schema_match": "上游输出 Schema == 下游输入 Schema",
+          "numeric_consistency": "interfaces.json 中的数值约束（minItems, maxItems, enum）必须与 spec.json 的 scope 字段一致。比对项：章节数、伏笔数、人物数、卷数。不一致 → FAIL"
+        },
+        "iteration_rule": "每次 spec.json 被更新时，Phase 4 必须重新执行。Agent 不得跳过。",
+        "on_fail": "强制重做 Phase 4"
+      },
+      "checkpoint_4": {
+        "id": "cp_4_decomposition_coverage",
+        "after_phase": 5,
+        "description": "校验拆解是否完整且无冗余，递归是否确实执行",
+        "automated_checks": {
+          "nodes_subdir_exists": "检查是否存在 nodes/ 子目录且包含至少 1 个子节点的 spec.json",
+          "coverage_check": "子节点集合是否完整覆盖父节点功能需求",
+          "no_extraneous_children": "有无多余子节点（过度拆解）"
+        },
+        "on_fail": "强制重做 Phase 5"
+      },
+      "checkpoint_5": {
+        "id": "cp_5_code_blueprint_match",
+        "after_phase": 6,
+        "description": "校验代码行为是否匹配蓝图",
+        "automated_checks": {
+          "code_exists": "代码产出目录是否存在",
+          "section_count_vs_blueprint": "实际 Section 数 vs path.json/nodes.json 规定的节点数",
+          "deviation_rule": "实际 Section 数 < 蓝图数 → FAIL。实际 Section 数 > 蓝图数 → 标注'超出蓝图'并给出理由"
+        },
+        "semantic_review": "代码实现的功能是否与 spec 定义一致？是否实现了蓝图全部功能？是否超出蓝图（自行添加）？",
+        "on_fail": "强制重做 Phase 6"
+      },
+      "checkpoint_6": {
+        "id": "cp_6_test_alignment",
+        "after_phase": 7,
+        "description": "校验测试用例和实际产出是否对齐根目标",
+        "automated_checks": {
+          "section_count": "提取产出中所有 h2 标签数量，与 nodes.json 的节点数比对",
+          "content_count": "提取产出中实际内容条目数，与 spec.json 的 target 比对",
+          "word_count": "提取产出中文本字数，与 spec.json 的 target_word_count 比对（允许 ±30% 误差）",
+          "pass_condition": "所有三项比对误差 < 30%"
+        },
+        "semantic_review": "测试用例验收标准是否对齐根目标？测试覆盖是否包含根目标所有核心功能？",
+        "on_fail": "强制重做 Phase 7"
+      },
+      "checkpoint_7": {
+        "id": "cp_7_delivery_traceability",
+        "after_phase": 8,
+        "description": "最终校验交付物是否完整回答根目标",
+        "automated_checks": {
+          "all_files_exist": "spec.json, path.json, nodes.json, interfaces.json, verification.json, manifest.json 全部存在",
+          "goal_trace_chain": "每个文件的 goal_trace.trace_path 是否形成连续链，全链路完整无断点",
+          "output_vs_commitment": "实际产出是否 ≥ spec.json 承诺的 70%"
+        },
+        "semantic_review": "最终交付物能否完整回答根目标？能否从最终交付物反向追溯到根目标 one_liner？",
+        "on_fail": "强制重做 Phase 8"
+      }
+    }
+  },
+
+  "pass_boundary": {
+    "description": "去程和回程的边界。叶节点是去程终点，也是回程起点。",
+    "forward_pass_end": "叶节点（Level 4 开发类 / Level 2 创作类，不可再分）",
+    "backward_pass_start": "叶节点（不可再分，转为回程 Phase 6-8）",
+    "transition_rule": "到达叶节点后，不再递归，直接转为回程（Phase 6-8）"
+  },
+
+  "versioning": {
+    "description": "产物版本化规则。每次 spec.json 被更新时，旧版本移动到 archive/。",
+    "rule": "每次 spec.json 被更新时，旧版本移动到 archive/ 目录",
+    "archive_path": "{task_dir}/archive/spec_v{version}_{timestamp}.json",
+    "current_path": "{task_dir}/spec.json（始终指向最新版本）",
+    "manifest_tracking": "manifest.json 的 version_history 字段记录所有版本的关键参数变更"
+  },
+
+  "global_config": {
+    "tech_stack": { "language": "TypeScript", "runtime": "Node.js" },
+    "code_style": { "naming": "camelCase", "indent": 2, "file_structure": "src/nodes/{node_name}/index.ts" },
+    "test_standards": { "framework": "jest", "min_cases_per_node": 3, "auto_fix_retries": 3 },
+    "doc_standards": { "root": "/workspace/docs", "index_file": "/workspace/docs/INDEX.md", "archive_dir": "/workspace/docs/archive", "naming_rule": "禁止版本号后缀" },
+    "paths": { "intermediate": "/workspace/intermediate/{node_id}/output", "collaboration": "/workspace/collaboration" },
+    "external_services": { "ollama": "http://localhost:11434", "qdrant": "http://localhost:6333" },
+    "quality_thresholds": { "relevance_score": 0.6, "link_validity_rate": 1.0 }
+  },
+
+  "level_definitions": {
+    "description": "递归树的层级定义。去程逐层拆解，回程逐层合成。所有层级 Phase 1 均为全自动。监督者检查点覆盖所有层级。创作类任务递归深度降至2层，开发类任务维持4层。",
+    "task_type_grading": {
+      "创作类": { "max_depth": 2, "description": "项目级 → 卷/篇章级 → 叶节点。卷→章即到叶节点。", "examples": ["小说大纲", "报告生成", "文档撰写"] },
+      "开发类": { "max_depth": 4, "description": "项目级 → 宏观节点 → 模块 → 子节点 → 叶节点。", "examples": ["功能开发", "系统构建", "数据处理管线"] }
+    },
+    "levels": [
+      { "id": 0, "name": "项目级", "phase_1_mode": "autonomous_44_question_audit", "children": "macro_nodes", "direction": "去程起点，回程终点", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["创作类", "开发类"] },
+      { "id": 1, "name": "宏观节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": "modules", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"], "创作类_替代": "卷/篇章级" },
+      { "id": 2, "name": "模块级", "phase_1_mode": "self_qa_with_goal_trace", "children": "sub_nodes", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"], "创作类_替代": "叶节点（章级，不可再分）" },
+      { "id": 3, "name": "子节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": "leaf_nodes", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"] },
+      { "id": 4, "name": "叶节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": null, "terminal": true, "description": "不可再分，一个函数/一个内容单元能实现。去程终点，回程起点。", "supervisor_checkpoints": "cp_0, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"] }
+    ]
+  },
+
+  "goal_trace_schema": {
+    "description": "每个节点的 spec.json 必须包含 goal_trace 字段，形成从叶节点到根目标的完整追溯链。",
+    "required_fields": {
+      "root_goal": "根目标的 one_liner（项目级 Phase 1 产出）",
+      "parent_goal": "父节点对我的要求",
+      "my_goal": "我的唯一目标",
+      "trace_path": "从根目标到我的完整路径，格式：root → 宏观节点N → 模块N → 子节点N → 叶节点N",
+      "alignment_check": "由监督者（OpenClaw）填写，执行Agent不得预填。passed | failed"
+    },
+    "validation_rule": "监督者沿着 trace_path 反向验证：my_goal → parent_goal → root_goal 是否形成连续的、无断点的语义链。"
+  },
+
+  "phase_1_autonomous": {
+    "description": "Phase 1 — 所有层级全自动。Agent 自问自答，不询问用户，不等待确认，直接产出 spec.json（含 goal_trace）。",
+    "id": "intent_anchor",
+    "name": "意图锚定（全自动自问自答）",
+    "pass": "forward",
+    "type": "fully_autonomous",
+    "goal": "Agent 调用自问自答深度检查清单，按 8 维度 44 问自审，产出 spec.json（含 goal_trace），自动进入检查点 0。",
+
+    "self_audit_checklist": "/workspace/开发总纲_问答题框架.md",
+    "self_audit_checklist_description": "Phase 1 自问自答深度检查清单。8维度44问：意图锚定(5问)、边界划定(5问)、架构建模(5问)、接口契约(5问)、模块拆解(5问)、实现路径(5问)、验证闭环(7问)、交付收尾(7问)。",
+
+    "agent_workflow": {
+      "step_1": "读取用户的一句话输入",
+      "step_2": "调用自问自答深度检查清单，按 8 维度 44 问逐层自审。必须输出 44 个独立回答，不得合并为 8 维度摘要。缺 1 个 → cp_0 FAIL。",
+      "step_3": "基于 44 问的回答，合成一句话精炼需求 + spec.json",
+      "step_4": "写入 goal_trace（项目级标记为 root，递归层级标记追溯路径）",
+      "step_5": "自评置信度（inferred 比例 > 30% → 标记 low-confidence，但不阻塞）",
+      "step_6": "写入 spec.json，自动进入检查点 0（不等待用户）"
+    },
+
+    "self_audit_log_format": {
+      "强制格式": "44 个独立字段，不是 8 个维度摘要",
+      "dimension_1": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_2": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_3": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_4": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_5": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_6": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
+      "dimension_7": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填", "q6": "必填", "q7": "必填" },
+      "dimension_8": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填", "q6": "必填", "q7": "必填" },
+      "cp_0_check": "自动化检查：self_audit_log 中必须有 44 个独立字段，缺 1 个 → FAIL"
+    },
+
+    "quality_mechanism": {
+      "description": "44 问自审 + 监督者检查点 0 双重保障。",
+      "confidence_rule": "如果 inferred 比例 > 30%，在 spec.json 中标记 low_confidence_flags。监督者检查点 0 可能拒绝。",
+      "no_user_interaction": "Phase 1 全程不输出任何内容给用户，不等待任何用户输入。"
+    },
+
+    "gate_to_phase_2": {
+      "conditions": [
+        "spec.json 存在且格式正确",
+        "clarified_requirement.one_liner 非空",
+        "self_audit_log 包含 44 个独立字段",
+        "goal_trace 字段完整",
+        "监督者检查点 0 通过（OpenClaw 写入 .result = pass）"
+      ],
+      "auto_proceed": true
+    }
+  },
+
+  "phase_1_self_qa": {
+    "description": "Phase 1 — 递归层级使用。Agent 基于父节点 spec 自问自答，写入 goal_trace。",
+    "id": "intent_anchor_self",
+    "name": "意图锚定（自问自答 + 目标追溯）",
+    "pass": "forward",
+    "type": "autonomous",
+    "goal": "基于父节点的 spec，自问自答确认本节点的唯一目标，并追溯回根目标。",
+
+    "self_qa_template": {
+      "q1": "父节点要求我做什么？（从父节点的 spec.interfaces 中读取）",
+      "q2": "我的输入是什么格式？从哪个上游节点来？",
+      "q3": "我的输出是什么格式？给哪个下游节点？",
+      "q4": "我的唯一目标用一句话描述是什么？",
+      "q5": "我的目标能否反向追溯到根目标？如果能，追溯路径是什么？（写入 goal_trace）"
+    },
+
+    "output": "本节点的 spec.json（包含 clarified_requirement、parent_spec_ref、self_qa_log、goal_trace）",
+    "validation": "自我验证：我的目标和父节点对我的要求一致吗？我的 goal_trace 能回到根目标吗？"
+  },
+
+  "forward_pass": {
+    "description": "去程（拆解程）：Phase 1-5。从项目级逐层拆解到叶节点。只设计，不写代码。每阶段产出后监督者校验。",
+    "direction": "top_down",
+    "rule": "去程不写代码，产出的是 spec、路径图、接口契约、拆解方案。",
+
+    "phase_2": {
+      "id": "path_anchor",
+      "name": "路径锚定",
+      "pass": "forward",
+      "goal": "从起点到终点画出一条完整的路径图。",
+      "input": "Phase 1 产出的 spec.json",
+      "output": "完整路径图（起点→经过哪些节点→终点）",
+      "validation": "路径是否连通？有没有断点？",
+      "artifact": "path.json",
+      "supervisor_checkpoint": "cp_1：路径终点是否等于根目标最终产出？路径能否反向追溯到根目标？"
+    },
+
+    "phase_3": {
+      "id": "node_identification",
+      "name": "节点识别",
+      "pass": "forward",
+      "goal": "识别路径上的所有节点，划分层级。",
+      "input": "路径图",
+      "output": "节点清单（当前层级的子节点列表，每个节点含 maps_to_root_goal 字段）",
+      "validation": "每个节点都是路径上必要的吗？有没有遗漏？",
+      "artifact": "nodes.json",
+      "necessity_audit_automated": {
+        "rule_1": "每个节点的 maps_to_root_goal 字段必须与 spec.json 的 acceptance_criteria 中的某个维度对应",
+        "rule_2": "如果某个节点的 maps_to_root_goal 无法在任何 acceptance_criteria 中找到对应，标记为 extraneous",
+        "rule_3": "如果 acceptance_criteria 中某个维度在 nodes.json 中找不到对应节点，标记为 missing",
+        "cp_2_check": "must not have extraneous AND must not have missing"
+      },
+      "supervisor_checkpoint": "cp_2：每个节点是否映射到根目标的必要组成部分？有无无关节点？"
+    },
+
+    "phase_4": {
+      "id": "interface_contract",
+      "name": "接口契约",
+      "pass": "forward",
+      "goal": "定义相邻节点之间的接口。",
+      "input": "节点清单",
+      "output": "每对相邻节点的输入/输出Schema（JSON Schema格式）",
+      "validation": "上游输出Schema == 下游输入Schema？",
+      "artifact": "interfaces.json",
+      "iteration_rule": "每次 spec.json 被更新时，Phase 4 必须重新执行。Agent 不得跳过。",
+      "numeric_consistency_check": "interfaces.json 中的数值约束（minItems, maxItems, enum）必须与 spec.json 的 scope 字段一致。示例：spec.scope.target_chapters=400 → interfaces 约束 minItems:350, maxItems:450。",
+      "supervisor_checkpoint": "cp_3：接口方向是否服务于根目标数据流？Schema是否匹配？数值约束是否与spec一致？"
+    },
+
+    "phase_5": {
+      "id": "recursive_decomposition",
+      "name": "递归拆解",
+      "pass": "forward",
+      "type": "recursion_entry",
+      "goal": "对每个子节点，递归进入下一层，重新走去程（Phase 1-5 + 检查点 0-4）。",
+      "mandatory_rules": {
+        "rule_1": "对每个子节点，必须创建独立目录并产出该子节点的 spec.json",
+        "rule_2": "子节点 spec.json 的 goal_trace 必须包含父节点的引用",
+        "rule_3": "递归终止条件：当前节点被判定为叶节点（不可再分，一个函数/一个内容单元能实现）",
+        "rule_4": "如果子节点数 > 3，必须至少递归一层。不得将所有子节点声明为叶节点",
+        "rule_5": "递归产物目录结构：{task_dir}/nodes/{node_id}/spec.json"
+      },
+      "minimum_requirement": "至少产出 1 个子节点的递归 spec.json，否则 cp_4 不通过",
+      "recursion_rule": "对每个子节点创建新的递归上下文，执行Phase 1-5 + 检查点 0-4。子节点全部回程通路后返回。",
+      "terminal_condition": "当前节点是叶节点（不可再分）→ 去程终点，跳过Phase 5，直接转为回程Phase 6",
+      "max_depth_by_task_type": { "创作类": 2, "开发类": 4 },
+      "artifact": "子节点递归结果（nodes/ 子目录）",
+      "supervisor_checkpoint": "cp_4：检查 nodes/ 子目录是否存在且包含至少 1 个 spec.json。子节点是否完整覆盖父节点需求？有无多余子节点？"
+    }
+  },
+
+  "backward_pass": {
+    "description": "回程（合成程）：Phase 6-8。从叶节点逐层合成到全链路。只实现，不设计。每阶段产出后监督者校验。",
+    "direction": "bottom_up",
+    "rule": "回程不重新设计，严格按去程的 spec + interfaces 蓝图执行。",
+
+    "phase_6": {
+      "id": "implementation",
+      "name": "实现集成",
+      "pass": "backward",
+      "type": "synthesis",
+      "goal": "从叶节点开始，按照去程的蓝图，自底向上实现和集成。",
+      "blueprint_check": {
+        "step_0": "在开始实现前，读取 path.json 和 nodes.json，提取'必须实现的 Section 列表'",
+        "step_0_check": "确认该列表与 spec.json 的 acceptance_criteria 一致",
+        "step_final": "实现完成后，列出实际生成的 Section，与蓝图对照",
+        "deviation_rule": "实际 Section 数 > 蓝图 Section 数 → cp_5 标注'超出蓝图'并给出理由。实际 Section 数 < 蓝图 Section 数 → cp_5 直接 FAIL"
+      },
+      "execution": {
+        "leaf_node": "写代码实现该节点（按去程的spec和interfaces）",
+        "parent_node": "等待所有子节点回程Phase 8完成后，集成子节点的产出物"
+      },
+      "crucial_rule": "回程不重新设计。不去质疑去程的spec。如果发现去程设计有问题，标记并报告，但不自行修改设计。",
+      "artifact": "代码",
+      "supervisor_checkpoint": "cp_5：代码行为是否匹配蓝图？是否实现全部功能？是否超出蓝图？Section 数是否对齐？"
+    },
+
+    "phase_7": {
+      "id": "connectivity_verification",
+      "name": "通路验证",
+      "pass": "backward",
+      "goal": "每一层集成后，验证通路。",
+      "verification_levels": {
+        "leaf": "单元测试通过（正常/异常/边界）",
+        "sub_node": "其下所有叶节点集成测试通过",
+        "module": "其下所有子节点集成测试通过",
+        "macro_node": "其下所有模块集成测试通过",
+        "project": "所有宏观节点端到端测试通过 = 全链路通路"
+      },
+      "verification_order": "leaf → sub_node → module → macro_node → project（回程方向，自底向上）",
+      "on_failure": "标记具体哪些指标不达标，返回 Phase 6 重做相关内容。不得下调验收标准。",
+      "prohibition": "不得在验收不达标时写'完整 X 章概要已超出单个 HTML 的展示范围'等降标声明",
+      "supervisor_checkpoint": "cp_6：测试用例验收标准是否对齐根目标？实际产出内容是否达到承诺？"
+    },
+
+    "phase_8": {
+      "id": "delivery",
+      "name": "交付收尾",
+      "pass": "backward",
+      "goal": "更新索引、生成manifest、归档、产物体检、标记本节点通路完成。",
+      "deliverables": ["manifest.json", "代码", "测试报告", "INDEX.md更新", "health_check.json"],
+      "completion_signal": "本节点的通路验证通过 + 交付物就绪",
+      "supervisor_checkpoint": "cp_7：最终交付物能否完整回答根目标？goal_trace 全链路是否完整无断点？"
+    },
+
+    "phase_8_health_check": {
+      "description": "产物体检报告。Phase 8 后自动执行，不依赖 Agent 自我评估。",
+      "auto_checks": {
+        "文件完整性": "检查 task_dir 下是否有 spec.json, path.json, nodes.json, interfaces.json, verification.json, manifest.json",
+        "数值一致性": "检查 spec/path/nodes/interfaces 中的关键数值是否一致",
+        "goal_trace链路": "检查每个文件的 goal_trace.trace_path 是否形成连续链",
+        "实际产出vs承诺": "检查实际产出内容（Section 数、条目数、字数）是否 ≥ spec.json 承诺的 70%"
+      },
+      "output": "{task_dir}/health_check.json，包含所有检查项的 pass/fail 和具体偏差数据"
+    }
+  },
+
+  "recursive_execution_algorithm": {
+    "description": "双程递归执行核心算法。含监督者检查点。全自动：Phase 1 自问自答 → 去程拆解 → 回程合成。",
+
+    "function_execute_node(node, level, parent_spec, root_goal)": {
+      "comment": "去程 Phase 1-5（拆解：只设计）",
+      "forward_step_1": "if level == 0: phase_1_autonomous() else: phase_1_self_qa(node, parent_spec, root_goal)",
+      "forward_step_1_output": "spec.json（含 44 个独立字段的 self_audit_log + goal_trace）",
+      "forward_step_1_signal": "写入 cp_0.pending → OpenClaw 轮询 → 写入 cp_0.result",
+      "forward_step_2": "phase_2_path_anchor(node) → path.json",
+      "forward_step_2_signal": "写入 cp_1.pending → OpenClaw 轮询 → 写入 cp_1.result",
+      "forward_step_3": "phase_3_node_identification(node) → nodes.json（含 maps_to_root_goal）",
+      "forward_step_3_signal": "写入 cp_2.pending → OpenClaw 轮询 → 写入 cp_2.result",
+      "forward_step_4": "phase_4_interface_contract(node) → interfaces.json",
+      "forward_step_4_signal": "写入 cp_3.pending → OpenClaw 轮询 → 写入 cp_3.result",
+      "forward_step_5": "if node.is_terminal: goto backward_step_1 else: for each child in node.children: execute_node(child, level+1, node.spec, root_goal)",
+      "forward_step_5_signal": "写入 cp_4.pending → OpenClaw 轮询 → 写入 cp_4.result",
+
+      "comment_transition": "去程终点 = 回程起点。",
+
+      "comment": "回程 Phase 6-8（合成：只实现）",
+      "backward_step_1": "phase_6_implementation(node) — 含蓝图对照 step_0 + step_final",
+      "backward_step_1_signal": "写入 cp_5.pending → OpenClaw 轮询 → 写入 cp_5.result",
+      "backward_step_2": "phase_7_connectivity_verification(node) — 失败时标记具体指标，不降标",
+      "backward_step_2_signal": "写入 cp_6.pending → OpenClaw 轮询 → 写入 cp_6.result",
+      "backward_step_3": "phase_8_delivery(node) + phase_8_health_check()",
+      "backward_step_3_signal": "写入 cp_7.pending → OpenClaw 轮询 → 写入 cp_7.result",
+      "return": "node.status = 'connected_and_aligned'"
+    },
+
+    "execution_order": {
+      "description": "全自动双程执行 + 三IDE监督者全程校验：一句话输入 → 全自动完成。",
+      "order": [
+        "=== Phase 1（全自动自问自答）===",
+        "1. Codex Agent 调用 44 问自审清单，逐维度自问自答（44个独立字段）",
+        "2. 产出根目标 spec.json（含 goal_trace[root]）",
+        "3. 写入 cp_0.pending → OpenClaw 轮询到 → 执行 cp_0 自动化校验 + 语义审查 → 写入 cp_0.result",
+        "",
+        "=== 去程（拆解程）全自动 + 监督者 ===",
+        "4. Codex 执行 Phase 2-5，每阶段产出后写入 cp_N.pending",
+        "5. OpenClaw 轮询到 .pending → 执行自动化校验 + 语义审查 → 写入 .result",
+        "6. Codex 轮询到 .result → pass 继续，fail 重做",
+        "7. 递归到叶节点：去程终点，转为回程",
+        "",
+        "=== 回程（合成程）全自动 + 监督者 ===",
+        "8. Cursor 读取设计文档，按蓝图实现（含蓝图对照 step_0/step_final）",
+        "9. 每个 Phase 完成后写入 cp_N.pending",
+        "10. OpenClaw 轮询校验 → 写入 .result",
+        "11. Cursor 轮询 .result → pass 继续，fail 重做",
+        "12. Phase 8 完成后执行产物体检 → 写入 health_check.json",
+        "13. 全链路通路 + 全节点对齐 = 开发完成。通知用户。"
+      ]
+    }
+  },
+
+  "connectivity_rules": {
+    "description": "通路验证规则。回程逐层验证，从叶节点到全链路。所有通路必须通过监督者检查点。",
+    "single_node": "节点通路 = Phase 7测试全部通过 + 监督者检查点 6 通过 + 实际产出 ≥ 承诺量 70%",
+    "parent_node": "父节点通路 = 所有子节点通路 + 集成测试通过 + 全部检查点通过",
+    "full_chain": "全链路通路 = 所有宏观节点通路 + 端到端测试通过 + 全部检查点通过 + health_check 全部通过",
+    "verification_order": "leaf → sub_node → module → macro_node → full_chain（回程方向）"
+  },
+
+  "meta": {
+    "version": "3.6.0",
+    "created": "2026-07-13",
+    "change_from_v3_5_0": "V3.6 新增 Phase 门禁引擎(S5)。解决两次运行中 Agent 系统性跳过 P5/P7/P8 和全部检查点的根因。每个 Phase 有 gate_file（前置条件）和 produce_file（强制产出），形成不可跳过的执行链。单 Agent 模式下用自检替代独立监督者。",
+    "change_from_v3_4_0": "三IDE物理分离架构：监督者(OpenClaw)独立运行。监督者检查点改为自动化校验+语义审查。强制递归产出(S2)。接口一致性自动化检查(P4-1)。内容自动化校验(P7-2)。蓝图对照步骤(S3)。44问强制结构化格式(P1-1)。产物版本化(S4)。必要性审计自动化(P3-1)。产物体检报告。任务类型分级(创作类/开发类)。",
+    "human_readable": "/workspace/开发总纲_人类可读版.md",
+    "supersedes": "/workspace/开发总纲_可执行版.json (v3.4.0)",
+    "related": [
+      "/workspace/开发总纲_问答题框架.md",
+      "/workspace/AGENT_INSTRUCTION.md",
+      "/workspace/Agent子节点沟通模板.md",
+      "/workspace/三IDE角色自动化联通协议_V1.0.md",
+      "/workspace/开发总纲_V3.5_优化方案.md"
+    ]
+  }
+}
