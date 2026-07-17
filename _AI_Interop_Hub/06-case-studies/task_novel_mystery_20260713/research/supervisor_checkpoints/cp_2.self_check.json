@@ -1,0 +1,46 @@
+{
+  "checkpoint_id": "cp_2",
+  "phase": 3,
+  "phase_name": "节点识别",
+  "checked_at": "2026-07-13T13:00:00Z",
+  "mode": "self_check",
+  "result": "pass",
+
+  "checks": [
+    {
+      "check": "nodes.json 存在",
+      "result": "pass",
+      "detail": "nodes.json 存在于 task_dir"
+    },
+    {
+      "check": "每个节点 maps_to_root_goal 非空",
+      "result": "pass",
+      "detail": "9个节点全部 maps_to_root_goal='产出前十章正文'，非空"
+    },
+    {
+      "check": "无 extraneous 节点",
+      "result": "pass",
+      "detail": "necessity_audit.extraneous_nodes=[]，无冗余节点"
+    },
+    {
+      "check": "无 missing 维度",
+      "result": "pass",
+      "detail": "necessity_audit.missing_criteria=[]，所有 acceptance_criteria 均已覆盖"
+    }
+  ],
+
+  "necessity_audit_verified": {
+    "total_nodes": 9,
+    "chapters_covered": 10,
+    "extraneous": 0,
+    "missing": 0,
+    "all_mapped": true
+  },
+
+  "goal_trace_verified": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "nodes_goal": "识别9个叶节点（9章），每个节点映射到 acceptance_criteria.structure",
+    "trace_path": "root → path.json → nodes.json",
+    "aligned": true
+  }
+}

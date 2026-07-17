@@ -1,0 +1,83 @@
+{
+  "task_id": "task_novel_mystery_20260713",
+  "created_at": "2026-07-13T00:00:00Z",
+  "updated_at": "2026-07-13T12:00:00Z",
+  "version": "3.6.0",
+  "constitution_version": "V3.6.0",
+  "revision": "v3_chapters_1_10_docx",
+
+  "original_input": "根据《第七声钟响》已有大纲，产出前十章正文，格式为起点中文网标准.docx",
+  "revised_input": "产出《第七声钟响》第一卷第一篇（七封邀请函）前十章正文，每章2000-2500字，.docx格式，宋体小四/首行缩进2字符/1.5倍行距/A4纸，多视角叙事（沈默第一人称 + 其余人物第三人称），每章有断章钩子",
+
+  "self_audit_log": {
+    "total_questions": 44,
+    "answered": 44,
+    "inferred": 6,
+    "confirmed": 38,
+    "inferred_ratio": 0.1364,
+    "low_confidence": false,
+
+    "dimension_1": { "q1": "10章悬疑推理小说正文，.docx格式", "q2": "起点投稿作者", "q3": "已有大纲，需产出可投稿正文", "q4": "10章约2000-2500字/章正文", "q5": "根据《第七声钟响》大纲产出前十章.docx正文，起点标准排版" },
+    "dimension_2": { "q1": "前十章正文、起点标准排版", "q2": "不写新大纲、不写市场分析", "q3": "中文/.docx/宋体小四/首行缩进", "q4": "是否需要封面页→默认包含", "q5": "10章间逻辑自洽，人物一致" },
+    "dimension_3": { "q1": "大纲→多视角分配→逐章写作→.docx输出", "q2": "6个模块", "q3": "python-docx生成.docx", "q4": "串行：大纲→分配→写作", "q5": "基于已有大纲扩展" },
+    "dimension_4": { "q1": "大纲HTML + spec.json", "q2": ".docx文件", "q3": "HTML → 文本提取 → .docx", "q4": "如章节字数不足→扩展", "q5": "task_novel_mystery_20260713_research/" },
+    "dimension_5": { "q1": "6个叶节点", "q2": "每个叶节点→2章", "q3": "大纲→叶节点→章节", "q4": "低风险", "q5": "每个叶节点对应2章" },
+    "dimension_6": { "q1": "第1-2章(沈默)", "q2": "第3-4章(赵明远+陈雪)", "q3": "第5-6章(顾天成+苏婉清)", "q4": "第7-10章(周柏+林若兰+码头+渡轮+雾中岛)", "q5": "无循环依赖" },
+    "dimension_7": { "q1": "10章/每章2000-2500字/多视角/.docx", "q2": "10章全部产出", "q3": "字数不足则扩展", "q4": "不少于10章", "q5": "人物一致、伏笔连贯", "q6": "字数<承诺量70%", "q7": "自动化字数+章节数校验" },
+    "dimension_8": { "q1": "是", "q2": "INDEX.md/manifest.json/health_check.json", "q3": "待Phase 7", "q4": "无", "q5": "是", "q6": ".docx可投稿", "q7": "全部门禁通过后完成" }
+  },
+
+  "clarified_requirement": {
+    "one_liner": "根据《第七声钟响》已有大纲，产出前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事，每章有断章钩子",
+    "genre": "悬疑推理",
+    "novel_title": "第七声钟响",
+    "output_format": "docx",
+    "output_layout": "宋体小四/首行缩进2字符/1.5倍行距/A4纸",
+    "complexity": "高（10章多视角叙事，每章2000-2500字）",
+    "target_platform": "起点中文网",
+    "target_chapters": 10,
+    "target_word_count_per_chapter": "2000-2500字",
+    "target_total_words": "20000-25000字",
+    "writing_style": "暗黑者式（多视角切换+短章节快节奏+心理博弈镜头感）"
+  },
+
+  "goal_trace": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "parent_goal": null,
+    "my_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "trace_path": "root",
+    "alignment_check": "pending"
+  },
+
+  "confidence": 92,
+  "confidence_flags": {
+    "low_confidence": false,
+    "inferred_ratio": 0.1364,
+    "inferred_items": ["每章具体字数", "每章断章钩子位置", "每章视角切换次数", "每章场景数", "每章对话占比", "每章信息增量密度"]
+  },
+
+  "acceptance_criteria": {
+    "structure": "10章正文，每章有标题和视角标注",
+    "format": ".docx文件，宋体小四(12pt)，首行缩进2字符，1.5倍行距，A4纸",
+    "word_count": "每章2000-2500字，总计20000-25000字",
+    "perspective": "多视角叙事：沈默第一人称 + 其余人物第三人称",
+    "hooks": "每章结尾有断章钩子",
+    "logic": "人物性格一致，伏笔连贯，与大纲一致"
+  },
+
+  "scope": {
+    "type": "content_creation",
+    "domain": "悬疑推理小说正文",
+    "depth": "前十章完整正文",
+    "language": "zh-CN",
+    "target_platform": "起点中文网",
+    "chapters": 10,
+    "output_format": "docx"
+  },
+
+  "downstream_handoff": {
+    "next_phase": "Phase 2 路径锚定",
+    "required_inputs": ["spec.json"],
+    "expected_outputs": ["path.json", "nodes.json", "interfaces.json", "leaf_nodes.json", "最终产出.docx", "verification.json", "manifest.json", "health_check.json"]
+  }
+}

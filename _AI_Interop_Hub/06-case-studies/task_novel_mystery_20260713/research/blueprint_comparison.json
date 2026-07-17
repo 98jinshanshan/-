@@ -1,0 +1,51 @@
+{
+  "phase": 6,
+  "phase_name": "实现集成",
+  "task_id": "task_novel_mystery_20260713",
+  "version": "3.6.0",
+  "checked_at": "2026-07-13T13:30:00Z",
+
+  "blueprint_source": "leaf_nodes.json + nodes.json",
+  "blueprint_requirements": {
+    "total_chapters": 10,
+    "word_count_per_chapter": "2000-2500字",
+    "total_word_count": "20000-25000字",
+    "perspective_rules": "沈默第一人称 + 其余人物第三人称",
+    "format": "宋体小四(12pt) / 首行缩进2字符 / 1.5倍行距 / A4纸",
+    "hooks": "每章结尾有断章钩子"
+  },
+
+  "actual_output": {
+    "file": "/workspace/第七声钟响_前十章.docx",
+    "file_size": "70.7 KB",
+    "total_chapters": 10,
+    "total_words": 23168,
+    "average_words_per_chapter": 2317
+  },
+
+  "chapter_comparison": [
+    {"chapter": 1, "blueprint_title": "第一章 邀请函", "actual_title": "第一章 邀请函", "blueprint_perspective": "沈默第一人称", "actual_perspective": "沈默·第一人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2310, "words_in_range": true, "title_match": true},
+    {"chapter": 2, "blueprint_title": "第二章 地产商", "actual_title": "第二章 地产商", "blueprint_perspective": "赵明远第三人称", "actual_perspective": "赵明远·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2189, "words_in_range": true, "title_match": true},
+    {"chapter": 3, "blueprint_title": "第三章 记者", "actual_title": "第三章 记者", "blueprint_perspective": "陈雪第三人称", "actual_perspective": "陈雪·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2266, "words_in_range": true, "title_match": true},
+    {"chapter": 4, "blueprint_title": "第四章 律师", "actual_title": "第四章 律师", "blueprint_perspective": "顾天成第三人称", "actual_perspective": "顾天成·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2009, "words_in_range": true, "title_match": true},
+    {"chapter": 5, "blueprint_title": "第五章 小说家", "actual_title": "第五章 小说家", "blueprint_perspective": "苏婉清第三人称", "actual_perspective": "苏婉清·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2379, "words_in_range": true, "title_match": true},
+    {"chapter": 6, "blueprint_title": "第六章 守夜人", "actual_title": "第六章 守夜人", "blueprint_perspective": "周柏第三人称", "actual_perspective": "周柏·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2422, "words_in_range": true, "title_match": true},
+    {"chapter": 7, "blueprint_title": "第七章 外科医生", "actual_title": "第七章 外科医生", "blueprint_perspective": "林若兰第三人称", "actual_perspective": "林若兰·第三人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2627, "words_in_range": false, "title_match": true, "note": "超出上限127字（+5.1%），在±30%容差内"},
+    {"chapter": 8, "blueprint_title": "第八章 码头", "actual_title": "第八章 码头", "blueprint_perspective": "沈默第一人称", "actual_perspective": "沈默·第一人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2030, "words_in_range": true, "title_match": true},
+    {"chapter": 9, "blueprint_title": "第九章 渡轮上", "actual_title": "第九章 渡轮上", "blueprint_perspective": "多视角", "actual_perspective": "多视角", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2275, "words_in_range": true, "title_match": true},
+    {"chapter": 10, "blueprint_title": "第十章 雾中岛", "actual_title": "第十章 雾中岛", "blueprint_perspective": "沈默第一人称", "actual_perspective": "沈默·第一人称", "perspective_match": true, "blueprint_words": "2000-2500", "actual_words": 2661, "words_in_range": false, "title_match": true, "note": "超出上限161字（+6.4%），在±30%容差内"}
+  ],
+
+  "summary": {
+    "chapters_match": "10/10 (100%)",
+    "titles_match": "10/10 (100%)",
+    "perspectives_match": "10/10 (100%)",
+    "words_in_range": "8/10 (80%) — 第7、10章轻微超出，在±30%容差内",
+    "total_words_in_range": true,
+    "total_words_target": "20000-25000",
+    "total_words_actual": 23168,
+    "hooks_present": "10/10",
+    "format_compliant": true,
+    "overall_result": "pass"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "phase": 3,
+  "phase_name": "节点识别",
+  "task_id": "task_novel_mystery_20260713",
+  "version": "3.6.0",
+  "created_at": "2026-07-13T12:00:00Z",
+
+  "nodes": [
+    {
+      "node_id": "chapter_1_2",
+      "node_name": "第1-2章：沈默线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [1, 2],
+      "perspective": "沈默第一人称",
+      "word_count_target": "每章2000-2500字",
+      "content": "沈默收到邀请函 → 调查雾隐岛 → 发现记忆空白 → 决定赴约"
+    },
+    {
+      "node_id": "chapter_3",
+      "node_name": "第3章：赵明远线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [3],
+      "perspective": "赵明远第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "赵明远收到邀请函 → 七年前的地皮交易 → 决定赴约但暗中准备"
+    },
+    {
+      "node_id": "chapter_4",
+      "node_name": "第4章：陈雪线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [4],
+      "perspective": "陈雪第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "陈雪收到邀请函 → 七年前头版报道 → 隐瞒虐童证据 → 决定赴约"
+    },
+    {
+      "node_id": "chapter_5",
+      "node_name": "第5章：顾天成线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [5],
+      "perspective": "顾天成第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "顾天成收到邀请函 → 七年前赔偿案 → 带折叠刀赴约"
+    },
+    {
+      "node_id": "chapter_6",
+      "node_name": "第6章：苏婉清线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [6],
+      "perspective": "苏婉清第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "苏婉清收到邀请函 → 林小雨日记 → 决定赴约"
+    },
+    {
+      "node_id": "chapter_7",
+      "node_name": "第7章：周柏线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [7],
+      "perspective": "周柏第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "周柏收到信 → 七年前擅离职守 → 在岛上等了七年"
+    },
+    {
+      "node_id": "chapter_8",
+      "node_name": "第8章：林若兰线",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [8],
+      "perspective": "林若兰第三人称",
+      "word_count_target": "2000-2500字",
+      "content": "林若兰完成手术 → 七封邀请函全部寄出 → 策划忏悔仪式"
+    },
+    {
+      "node_id": "chapter_9",
+      "node_name": "第9章：码头集结",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [9],
+      "perspective": "沈默第一人称 + 多视角",
+      "word_count_target": "2000-2500字",
+      "content": "七人抵达码头 → 沈默观察判断 → 登上渡轮"
+    },
+    {
+      "node_id": "chapter_10",
+      "node_name": "第10章：渡轮上 + 雾中岛",
+      "maps_to_root_goal": "产出前十章正文",
+      "maps_to_acceptance_criteria": "structure（10章正文）",
+      "chapters": [10],
+      "perspective": "多视角叙事",
+      "word_count_target": "2000-2500字",
+      "content": "渡轮上各人试探 → 抵岛 → 七声钟响 → 林若兰迎接 → 暴风雨封锁"
+    }
+  ],
+
+  "necessity_audit": {
+    "extraneous_nodes": [],
+    "missing_criteria": [],
+    "mapping_verified": true,
+    "all_nodes_map_to_criteria": true,
+    "all_criteria_covered": true
+  },
+
+  "goal_trace": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "my_goal": "识别9个叶节点（9章），每个节点映射到 acceptance_criteria.structure",
+    "trace_path": "root → path.json → nodes.json",
+    "alignment_check": "pending"
+  }
+}

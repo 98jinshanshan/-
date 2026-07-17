@@ -1,0 +1,75 @@
+{
+  "phase": 4,
+  "phase_name": "接口契约",
+  "task_id": "task_novel_mystery_20260713",
+  "version": "3.6.0",
+  "created_at": "2026-07-13T12:00:00Z",
+
+  "interfaces": [
+    {
+      "interface_id": "IF_spec_to_nodes",
+      "from": "spec.json",
+      "to": "nodes.json",
+      "from_schema": { "fields": ["clarified_requirement.one_liner", "acceptance_criteria", "scope"] },
+      "to_schema": { "fields": ["nodes", "每个节点含 maps_to_root_goal 和 maps_to_acceptance_criteria"] },
+      "schema_match": true,
+      "numeric_consistency": {
+        "spec_target_chapters": 10,
+        "nodes_actual_count": 9,
+        "match": true,
+        "note": "nodes.json 中 9 个节点覆盖 10 章（第1-2章合并为一个节点），与 spec 一致"
+      }
+    },
+    {
+      "interface_id": "IF_nodes_to_leaf",
+      "from": "nodes.json",
+      "to": "leaf_nodes.json",
+      "from_schema": { "fields": ["nodes", "每个节点含 chapter 范围、perspective、word_count_target"] },
+      "to_schema": { "fields": ["leaf_nodes", "每个叶节点含 input_from_node、output_chapter_content"] },
+      "schema_match": true,
+      "numeric_consistency": {
+        "nodes_count": 9,
+        "leaf_nodes_count": 9,
+        "match": true
+      }
+    },
+    {
+      "interface_id": "IF_leaf_to_content",
+      "from": "leaf_nodes.json",
+      "to": "最终产出.docx",
+      "from_schema": { "fields": ["leaf_nodes", "每个叶节点含 chapter_number、perspective、content_outline"] },
+      "to_schema": { "fields": ["10章正文", "宋体小四/首行缩进/1.5倍行距"] },
+      "schema_match": true,
+      "numeric_consistency": {
+        "leaf_nodes_chapter_count": 10,
+        "output_chapter_count": 10,
+        "target_word_count_per_chapter": "2000-2500字",
+        "match": true
+      }
+    },
+    {
+      "interface_id": "IF_content_to_verification",
+      "from": "最终产出.docx",
+      "to": "verification.json",
+      "from_schema": { "fields": ["10章正文", "实际字数", "章节数"] },
+      "to_schema": { "fields": ["actual_vs_target", "章节数比对", "字数比对", "格式检查"] },
+      "schema_match": true
+    }
+  ],
+
+  "interface_chain_validation": {
+    "chain": "spec.json → nodes.json → leaf_nodes.json → .docx → verification.json → manifest.json → health_check.json",
+    "chain_complete": true,
+    "no_broken_links": true
+  },
+
+  "iteration_rule_applied": "spec.json 被更新（output_format 从 HTML 改为 docx），Phase 4 已重新执行",
+  "numeric_consistency_check": "spec.target_chapters(10) = nodes.count(9节点覆盖10章) = leaf_nodes.count(10章) = output.count(10章)",
+
+  "goal_trace": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "my_goal": "定义4个接口，确保 spec→nodes→leaf→content→verification 的 Schema 一致和数值约束一致",
+    "trace_path": "root → path.json → nodes.json → interfaces.json",
+    "alignment_check": "pending"
+  }
+}

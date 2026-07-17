@@ -1,0 +1,54 @@
+{
+  "checkpoint_id": "cp_4",
+  "phase": 5,
+  "phase_name": "递归拆解（创作类简化）",
+  "checked_at": "2026-07-13T13:00:00Z",
+  "mode": "self_check",
+  "result": "pass",
+
+  "checks": [
+    {
+      "check": "leaf_nodes.json 存在",
+      "result": "pass",
+      "detail": "leaf_nodes.json 存在于 task_dir（创作类简化，不递归创建 nodes/ 子目录）"
+    },
+    {
+      "check": "叶节点数量与 nodes.json 一致",
+      "result": "pass",
+      "detail": "leaf_nodes 包含 10 个叶节点（章节），对应 nodes.json 中 9 个节点覆盖 10 章"
+    },
+    {
+      "check": "每个叶节点含 goal_trace",
+      "result": "pass",
+      "detail": "leaf_nodes.json 顶层 goal_trace 完整，trace_path='root → path.json → nodes.json → interfaces.json → leaf_nodes.json'"
+    },
+    {
+      "check": "每个叶节点含必要字段",
+      "result": "pass",
+      "detail": "10个叶节点全部包含 chapter_number、title、perspective、word_count_target、content_outline"
+    }
+  ],
+
+  "leaf_nodes_summary": {
+    "total": 10,
+    "perspectives": {
+      "沈默第一人称": [1, 8, 10],
+      "赵明远第三人称": [2],
+      "陈雪第三人称": [3],
+      "顾天成第三人称": [4],
+      "苏婉清第三人称": [5],
+      "周柏第三人称": [6],
+      "林若兰第三人称": [7],
+      "多视角": [9]
+    },
+    "word_count_target": "每章2000-2500字",
+    "total_target": "20000-25000字"
+  },
+
+  "goal_trace_verified": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "leaf_goal": "将 nodes.json 中的9个节点拆解为10个叶节点（章节），每个叶节点含 chapter_number、perspective、content_outline",
+    "trace_path": "root → path.json → nodes.json → interfaces.json → leaf_nodes.json",
+    "aligned": true
+  }
+}

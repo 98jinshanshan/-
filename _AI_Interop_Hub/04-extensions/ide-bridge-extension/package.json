@@ -1,0 +1,130 @@
+{
+  "name": "ide-bridge",
+  "displayName": "IDE Bridge",
+  "description": "三 IDE 实时通信插件 — 协调者+监督者 / 研究员 / 开发者 三角色协作",
+  "version": "0.1.0",
+  "publisher": "novelcraft",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "IDE Bridge",
+      "properties": {
+        "ide-bridge.role": {
+          "type": "string",
+          "default": "",
+          "enum": [
+            "",
+            "openclaw",
+            "codex",
+            "cursor"
+          ],
+          "enumDescriptions": [
+            "未设置（插件不激活通信功能）",
+            "协调者+监督者（项目经理，唯一对接口）",
+            "研究员（去程设计）",
+            "开发者（回程实现）"
+          ],
+          "description": "当前 IDE 的角色。设置后插件自动连接 Bridge 并注册。"
+        },
+        "ide-bridge.bridgeHost": {
+          "type": "string",
+          "default": "localhost",
+          "description": "IDE Bridge 服务器地址"
+        },
+        "ide-bridge.bridgePort": {
+          "type": "number",
+          "default": 9527,
+          "description": "IDE Bridge 服务器端口"
+        },
+        "ide-bridge.autoStartBridge": {
+          "type": "boolean",
+          "default": true,
+          "description": "Bridge 不在线时是否自动启动本地 Bridge 进程"
+        },
+        "ide-bridge.bridgeScriptPath": {
+          "type": "string",
+          "default": "",
+          "description": "ide-bridge.js 的绝对路径（留空则在工作区查找）"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "ide-bridge.startTask",
+        "title": "IDE Bridge: 启动任务",
+        "enablement": "config.ide-bridge.role == 'openclaw'"
+      },
+      {
+        "command": "ide-bridge.showStatus",
+        "title": "IDE Bridge: 查看连接状态"
+      },
+      {
+        "command": "ide-bridge.sendMessage",
+        "title": "IDE Bridge: 发送测试消息"
+      },
+      {
+        "command": "ide-bridge.switchRole",
+        "title": "IDE Bridge: 切换角色"
+      },
+      {
+        "command": "ide-bridge.restartBridge",
+        "title": "IDE Bridge: 重启 Bridge 服务"
+      },
+      {
+        "command": "ide-bridge.showMessageLog",
+        "title": "IDE Bridge: 查看消息日志"
+      },
+      {
+        "command": "ide-bridge.refreshStatus",
+        "title": "刷新",
+        "icon": "$(refresh)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "ide-bridge",
+          "title": "IDE Bridge",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "ide-bridge": [
+        {
+          "id": "ide-bridge.status",
+          "name": "状态"
+        },
+        {
+          "id": "ide-bridge.tasks",
+          "name": "任务"
+        },
+        {
+          "id": "ide-bridge.messages",
+          "name": "消息日志"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "ide-bridge.refreshStatus",
+          "when": "view == ide-bridge.status",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "ws": "^8.21.1"
+  }
+}

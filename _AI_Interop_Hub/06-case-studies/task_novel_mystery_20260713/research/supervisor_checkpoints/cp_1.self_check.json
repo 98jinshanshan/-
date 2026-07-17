@@ -1,0 +1,33 @@
+{
+  "checkpoint_id": "cp_1",
+  "phase": 2,
+  "phase_name": "路径锚定",
+  "checked_at": "2026-07-13T13:00:00Z",
+  "mode": "self_check",
+  "result": "pass",
+
+  "checks": [
+    {
+      "check": "path.json 存在",
+      "result": "pass",
+      "detail": "path.json 存在于 task_dir"
+    },
+    {
+      "check": "path 终点与 spec.json.one_liner 一致",
+      "result": "pass",
+      "detail": "path.end='《第七声钟响》前十章.docx（起点标准排版，宋体小四/首行缩进/1.5倍行距）' 与 spec.one_liner='产出《第七声钟响》前十章正文（.docx格式，起点标准排版）' 一致"
+    },
+    {
+      "check": "path 无断点",
+      "result": "pass",
+      "detail": "path.is_connected=true，7个节点串行连通：spec锚定→大纲解析→多视角分配→逐章写作→.docx排版→通路验证→交付收尾"
+    }
+  ],
+
+  "goal_trace_verified": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "path_goal": "定义从大纲到.docx产出的完整路径，7个节点，路径连通无断点",
+    "trace_path": "root → path.json",
+    "aligned": true
+  }
+}

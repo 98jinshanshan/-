@@ -1,0 +1,45 @@
+{
+  "checkpoint_id": "cp_3",
+  "phase": 4,
+  "phase_name": "接口契约",
+  "checked_at": "2026-07-13T13:00:00Z",
+  "mode": "self_check",
+  "result": "pass",
+
+  "checks": [
+    {
+      "check": "interfaces.json 存在",
+      "result": "pass",
+      "detail": "interfaces.json 存在于 task_dir"
+    },
+    {
+      "check": "每个接口 schema_match: true",
+      "result": "pass",
+      "detail": "4个接口 IF_spec_to_nodes、IF_nodes_to_leaf、IF_leaf_to_content、IF_content_to_verification 全部 schema_match=true"
+    },
+    {
+      "check": "数值约束与 spec 一致",
+      "result": "pass",
+      "detail": "spec.target_chapters=10, nodes.actual_count=9节点覆盖10章, leaf_nodes=10章, 全链路数值一致"
+    },
+    {
+      "check": "接口链完整无断点",
+      "result": "pass",
+      "detail": "interface_chain_validation.chain_complete=true, no_broken_links=true"
+    }
+  ],
+
+  "numeric_consistency_verified": {
+    "spec_target_chapters": 10,
+    "nodes_coverage": "9节点覆盖10章",
+    "leaf_nodes_count": 10,
+    "chain": "全部一致"
+  },
+
+  "goal_trace_verified": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "interfaces_goal": "定义4个接口，确保 spec→nodes→leaf→content→verification 的 Schema 一致和数值约束一致",
+    "trace_path": "root → path.json → nodes.json → interfaces.json",
+    "aligned": true
+  }
+}

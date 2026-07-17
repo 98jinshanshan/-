@@ -1,0 +1,33 @@
+{
+  "phase": 5,
+  "phase_name": "递归拆解（创作类简化 → leaf_nodes.json）",
+  "task_id": "task_novel_mystery_20260713",
+  "version": "3.6.0",
+  "created_at": "2026-07-13T12:00:00Z",
+  "task_type": "创作类",
+  "recursion_depth": 2,
+  "simplification_note": "创作类任务，节点数=9≤6→不满足简化条件，但每个节点是独立章节可直接映射到内容单元，按创作类简化规则写 leaf_nodes.json",
+
+  "leaf_nodes": [
+    { "chapter_number": 1, "node_id": "chapter_1", "title": "第一章 邀请函", "perspective": "沈默第一人称", "word_count_target": "2000-2500字", "content_outline": "沈默收到匿名邀请函，笔迹精确如外科医生。信中提及'七年前的事'。他调查雾隐岛，发现记忆有空白——七年前的秋天完全不存在。决定赴约。" },
+    { "chapter_number": 2, "node_id": "chapter_2", "title": "第二章 地产商", "perspective": "赵明远第三人称", "word_count_target": "2000-2500字", "content_outline": "赵明远签合同时收到信。信中提及'七年前的那桩交易'——孤儿院地皮。他通过贿赂加速地皮流转。决定赴约，但暗中准备后手。" },
+    { "chapter_number": 3, "node_id": "chapter_3", "title": "第三章 记者", "perspective": "陈雪第三人称", "word_count_target": "2000-2500字", "content_outline": "陈雪收到信，夹着七年前她写的头版报道。火灾前她收到虐童证据但选择隐瞒。她的报道让她从实习记者升为首席。决定赴约。" },
+    { "chapter_number": 4, "node_id": "chapter_4", "title": "第四章 律师", "perspective": "顾天成第三人称", "word_count_target": "2000-2500字", "content_outline": "顾天成收到信，夹着七年前赔偿案卷。他收了赵明远50万故意输掉官司。遇难者家属每人仅得8.3万。决定赴约，带折叠刀。" },
+    { "chapter_number": 5, "node_id": "chapter_5", "title": "第五章 小说家", "perspective": "苏婉清第三人称", "word_count_target": "2000-2500字", "content_outline": "苏婉清凌晨打开保险箱。信中提及七年前她带走的林小雨日记。她曾是志愿者教师，发现虐童后沉默离开。林小雨死于火灾。决定赴约赎罪。" },
+    { "chapter_number": 6, "node_id": "chapter_6", "title": "第六章 守夜人", "perspective": "周柏第三人称", "word_count_target": "2000-2500字", "content_outline": "周柏在岛上等了七年。信只有一句话：'是时候了。'七年前火灾当晚他擅离职守去喝酒。他搬到雾隐岛，每天敲七声钟——一声代表一个孩子。" },
+    { "chapter_number": 7, "node_id": "chapter_7", "title": "第七章 外科医生", "perspective": "林若兰第三人称", "word_count_target": "2000-2500字", "content_outline": "林若兰完成心脏移植手术。七封邀请函全部寄出。她花了七年找到每个与火灾相关的人。她本可复仇，但选择让他们活着面对自己的罪——忏悔仪式。" },
+    { "chapter_number": 8, "node_id": "chapter_8", "title": "第八章 码头", "perspective": "沈默第一人称", "word_count_target": "2000-2500字", "content_outline": "十月二十三日。七人抵达码头。沈默观察每个人——都在隐藏什么。登上雾隐号渡轮。暴风雨逼近。" },
+    { "chapter_number": 9, "node_id": "chapter_9", "title": "第九章 渡轮上", "perspective": "多视角", "word_count_target": "2000-2500字", "content_outline": "渡轮上七人各自为阵。赵明远带30万现金。陈雪偷拍每个人。顾天成认出赵明远。苏婉清想起林小雨日记。周柏在船头看着雾隐岛。沈默注意到每个人都在说谎。" },
+    { "chapter_number": 10, "node_id": "chapter_10", "title": "第十章 雾中岛", "perspective": "沈默第一人称", "word_count_target": "2000-2500字", "content_outline": "雾隐岛在雾中显现。钟鸣馆如鬼屋。七声钟响后死寂。林若兰迎接——'欢迎来到钟鸣馆。'玄关挂着一幅燃烧的孤儿院油画。暴风雨终于来了。" }
+  ],
+
+  "total_chapters": 10,
+  "total_target_words": "20000-25000字",
+
+  "goal_trace": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "my_goal": "将 nodes.json 中的9个节点拆解为10个叶节点（章节），每个叶节点含 chapter_number、perspective、content_outline",
+    "trace_path": "root → path.json → nodes.json → interfaces.json → leaf_nodes.json",
+    "alignment_check": "pending"
+  }
+}

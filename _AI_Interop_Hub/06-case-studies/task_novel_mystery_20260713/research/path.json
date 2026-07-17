@@ -1,0 +1,31 @@
+{
+  "phase": 2,
+  "phase_name": "路径锚定",
+  "task_id": "task_novel_mystery_20260713",
+  "version": "3.6.0",
+  "created_at": "2026-07-13T12:00:00Z",
+
+  "path": {
+    "start": "已有《第七声钟响》400章大纲 + 起点投稿格式调研",
+    "end": "《第七声钟响》前十章.docx（起点标准排版，宋体小四/首行缩进/1.5倍行距）",
+    "is_connected": true,
+    "nodes": [
+      "spec_锚定（根目标：前十章 .docx 产出）",
+      "大纲解析（提取前十章概要 + 人物信息）",
+      "多视角分配（每章视角标记）",
+      "逐章写作（10章 × 2000-2500字）",
+      ".docx 排版（python-docx 生成）",
+      "通路验证（字数/章节数/格式校验）",
+      "交付收尾（manifest + health_check）"
+    ],
+    "trace_to_root_goal": "路径终点（前十章.docx）→ 直接回答根目标（产出前十章正文）",
+    "checkpoints": [0, 1, 2, 3, 4, 5, 6, 7]
+  },
+
+  "goal_trace": {
+    "root_goal": "产出《第七声钟响》前十章正文（.docx格式，起点标准排版），每章2000-2500字，多视角叙事",
+    "my_goal": "定义从大纲到.docx产出的完整路径，7个节点，路径连通无断点",
+    "trace_path": "root → path.json",
+    "alignment_check": "pending"
+  }
+}

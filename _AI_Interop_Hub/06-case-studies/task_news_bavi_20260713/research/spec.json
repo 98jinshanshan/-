@@ -1,0 +1,33 @@
+{
+  "task_id": "task_news_bavi_20260713",
+  "original_input": "运行总纲给我生成一篇巴威过境江浙沪的新闻报告",
+  "clarified_requirement": {
+    "one_liner": "生成一篇关于2026年第9号台风'巴威'过境浙江、上海、江苏三地的综合性新闻深度报告，涵盖登陆过程、各地影响、应急响应、数据统计和后续展望"
+  },
+  "self_audit_log": [
+    {"dimension": "意图锚定", "result": "用户需要一篇台风过境江浙沪的新闻报告，非代码开发任务"},
+    {"dimension": "边界划定", "result": "聚焦2026年7月台风巴威，限浙江+上海+江苏，含登陆、影响、应急、数据"},
+    {"dimension": "架构建模", "result": "报告结构：概述→登陆过程→浙江影响→上海影响→江苏影响→应急响应→数据→展望"},
+    {"dimension": "接口契约", "result": "输出格式：HTML报告，含标题、分段、数据表格、引用来源"},
+    {"dimension": "模块拆解", "result": "8个内容模块，每个模块2-3段"},
+    {"dimension": "实现路径", "result": "先搜索→整理→写作→生成HTML→保存"},
+    {"dimension": "验证闭环", "result": "检查：时间线准确、数据有来源、三省覆盖完整"},
+    {"dimension": "交付收尾", "result": "保存为/workspace/台风巴威过境江浙沪新闻报告.html"}
+  ],
+  "confidence": 95,
+  "confidence_flags": {"inferred_ratio": 0.05, "low_confidence": false},
+  "goal_trace": {
+    "root_goal": "生成一篇关于2026年第9号台风'巴威'过境浙江、上海、江苏三地的综合性新闻深度报告",
+    "trace_path": "root",
+    "alignment_check": "passed"
+  },
+  "acceptance_criteria": [
+    "覆盖浙江、上海、江苏三地影响",
+    "包含登陆时间、地点、强度等关键数据",
+    "包含应急响应和人员转移数据",
+    "引用来源可追溯",
+    "HTML格式，可直接阅读"
+  ],
+  "scope": {"included": ["登陆过程", "三省影响", "应急响应", "数据统计", "后续展望"], "excluded": ["其他省份详细报道", "国际影响"], "uncertain": []},
+  "downstream_handoff": {"for_reviewer": "检查时间线准确性和三省覆盖完整性", "for_developer": "生成HTML格式新闻报告"}
+}
