@@ -1,0 +1,293 @@
+{
+  "ontology_version": "1.2.0",
+  "generated_at": "2026-07-16",
+  "generated_by": "开发总纲演进 V3.8.0，V3.7.1 审计纠偏",
+  "description": "开发总纲核心本体定义。经 V3.8.0 更新，新增 domain_classifier 实体（core），15 实体拆分为 core（9 个，当前阶段必须）和 extended（6 个，端到端跑通后再激活）。",
+
+  "mvp_note": {
+    "message": "V3.8.0 更新：新增 domain_classifier 实体（core），对应 Phase 0 领域分类器。core 实体从 8 个增至 9 个。",
+    "principle": "不是'本体论领域有什么'，而是'总纲跑通最少需要定义什么实体'。",
+    "core_count": 9,
+    "extended_count": 6
+  },
+
+  "canonical_entities": [
+    {
+      "id": "task",
+      "classification": "core",
+      "name": "任务",
+      "description": "用户发起的一次完整开发请求。从一句话开始，到全链路交付结束。",
+      "attributes": ["task_id", "task_type", "status", "created_at", "completed_at", "one_liner"],
+      "relationships": {
+        "has_phases": ["phase"],
+        "assigned_to": ["role"],
+        "produces": ["artifact"]
+      },
+      "lifecycle": ["created", "planning", "executing", "reviewing", "implementing", "verifying", "completed", "blocked"]
+    },
+    {
+      "id": "domain_classifier",
+      "classification": "core",
+      "name": "领域分类器",
+      "description": "Phase 0 的领域分类实体。在 Phase 1 之前执行，通过漏斗式问题确定任务领域和子类型，选择对应的领域问题包和 Phase 领域变体。",
+      "attributes": ["domain", "subtype", "selected_question_pack", "classification_confidence"],
+      "relationships": {
+        "precedes": ["phase"],
+        "determines": ["phase.domain_variant"]
+      },
+      "domains": {
+        "creative": { "subtypes": ["fiction", "article", "script", "marketing"] },
+        "development": { "subtypes": ["web_app", "api", "script", "plugin"] },
+        "analysis": { "subtypes": ["data", "market", "technical"] },
+        "research": { "subtypes": ["literature", "best_practice", "feasibility"] }
+      },
+      "funnel_principle": "像猜想法一样逐层缩小阈值。Layer 0: 3-5 个问题确定大类。Layer 1: 10-20 个领域专属问题定位子类型。Layer 2: 44 问完整性检查补漏。"
+    },
+    {
+      "id": "phase",
+      "classification": "core",
+      "name": "阶段",
+      "description": "任务执行的 8 个阶段，每个有 gate_file（前置条件）和 produce_file（强制产出）。",
+      "attributes": ["phase_id", "phase_name", "gate_file", "produce_file", "sprint_contract", "checkpoint"],
+      "relationships": {
+        "belongs_to": ["task"],
+        "precedes": ["phase"],
+        "produces": ["artifact"]
+      }
+    },
+    {
+      "id": "artifact",
+      "classification": "core",
+      "name": "产出物",
+      "description": "每个 Phase 的强制产出文件。",
+      "attributes": ["artifact_id", "file_path", "phase_id", "content_type", "schema"],
+      "relationships": {
+        "produced_by": ["phase"],
+        "consumed_by": ["phase"]
+      }
+    },
+    {
+      "id": "role",
+      "classification": "core",
+      "name": "角色",
+      "description": "参与开发流程的 IDE Agent 角色。",
+      "attributes": ["role_id", "role_name", "responsibilities", "ide_type"],
+      "relationships": {
+        "executes": ["phase"],
+        "communicates_with": ["role"]
+      },
+      "instances": [
+        {
+          "role_id": "openclaw",
+          "role_name": "协调者+监督者",
+          "responsibilities": ["任务分配", "审核", "全局调度", "通知用户"],
+          "ide_type": "OpenClaw"
+        },
+        {
+          "role_id": "codex",
+          "role_name": "研究员",
+          "responsibilities": ["Phase 1-5 去程设计", "提交审核", "修正反馈"],
+          "ide_type": "Codex"
+        },
+        {
+          "role_id": "windsurf",
+          "role_name": "开发者",
+          "responsibilities": ["Phase 6-8 回程实现", "蓝图对照", "提交审核"],
+          "ide_type": "Windsurf"
+        }
+      ]
+    },
+    {
+      "id": "checkpoint",
+      "classification": "core",
+      "name": "检查点",
+      "description": "每个 Phase 完成后的审核节点。由 Evaluator（OpenClaw）执行。",
+      "attributes": ["checkpoint_id", "phase_id", "status", "evaluator", "result", "failure_details"],
+      "relationships": {
+        "evaluates": ["phase"],
+        "performed_by": ["role"]
+      }
+    },
+    {
+      "id": "sprint_contract",
+      "classification": "core",
+      "name": "冲刺合同",
+      "description": "Phase 开始前签订的验收合同。定义通过标准。",
+      "attributes": ["contract_id", "phase_id", "acceptance_criteria", "max_retries", "negotiated_by"],
+      "relationships": {
+        "governs": ["phase"],
+        "negotiated_by": ["role"]
+      }
+    },
+    {
+      "id": "goal_trace",
+      "classification": "core",
+      "name": "目标追踪",
+      "description": "从根目标到最终产出的完整追踪链。",
+      "attributes": ["root_goal", "path", "nodes", "actual_output", "trace_complete"],
+      "relationships": {
+        "links": ["artifact"],
+        "defined_in": ["spec"]
+      }
+    },
+    {
+      "id": "message",
+      "classification": "core",
+      "name": "消息",
+      "description": "IDE 之间通过 Bridge 通信的消息。",
+      "attributes": ["msg_id", "type", "from", "to", "payload", "timestamp"],
+      "relationships": {
+        "sent_by": ["role"],
+        "received_by": ["role"],
+        "routed_by": ["bridge"]
+      }
+    },
+    {
+      "id": "bridge",
+      "classification": "extended",
+      "name": "通信中枢",
+      "description": "IDE Bridge WebSocket 服务。角色注册、消息路由、离线队列。",
+      "attributes": ["host", "port", "online_roles", "offline_queue"],
+      "relationships": {
+        "connects": ["role"],
+        "routes": ["message"]
+      }
+    },
+    {
+      "id": "automation",
+      "classification": "extended",
+      "name": "自动化",
+      "description": "IDE 内置的自动化/定时任务。Codex Thread Automation、OpenClaw Cron、Windsurf Cascade。",
+      "attributes": ["automation_id", "type", "schedule", "status", "last_run"],
+      "relationships": {
+        "triggers": ["role"],
+        "reads": ["artifact"],
+        "writes": ["message"]
+      },
+      "instances": [
+        {
+          "automation_id": "codex_thread",
+          "type": "Thread Automation",
+          "schedule": "*/5 * * * *",
+          "role": "codex",
+          "description": "每 5 分钟检查 .bridge/current_task.json，自动执行 Phase 1-5"
+        },
+        {
+          "automation_id": "openclaw_reviewer",
+          "type": "Cron Job (Isolated)",
+          "schedule": "*/2 * * * *",
+          "role": "openclaw",
+          "description": "每 2 分钟检查 .bridge/pending_reviews.json，自动审核 Phase 产出"
+        },
+        {
+          "automation_id": "openclaw_orchestrator",
+          "type": "Cron Job (Main Session)",
+          "schedule": "*/3 * * * *",
+          "role": "openclaw",
+          "description": "每 3 分钟检查全局状态，重大事件通知用户，推进流程"
+        }
+      ]
+    },
+    {
+      "id": "context_defense",
+      "classification": "extended",
+      "name": "上下文防御",
+      "description": "防止上下文焦虑和 Agent 幻觉的防御机制。",
+      "attributes": ["max_rounds", "reset_strategy", "preserved_files", "discarded_context"],
+      "relationships": {
+        "protects": ["phase"]
+      }
+    },
+    {
+      "id": "harness_degradation",
+      "classification": "extended",
+      "name": "Harness 退化",
+      "description": "根据模型能力自动调整检查点严格程度的机制。",
+      "attributes": ["model", "capabilities", "active_checks", "degraded_checks"],
+      "relationships": {
+        "configures": ["checkpoint", "sprint_contract"]
+      }
+    },
+    {
+      "id": "self_audit",
+      "classification": "extended",
+      "name": "自审",
+      "description": "Phase 1 的 44 问自审日志。",
+      "attributes": ["self_audit_log", "44_fields", "inferred_ratio", "confidence_scores"],
+      "relationships": {
+        "generated_by": ["phase"],
+        "evaluated_by": ["checkpoint"]
+      }
+    },
+    {
+      "id": "health_check",
+      "classification": "extended",
+      "name": "产物体检",
+      "description": "Phase 8 的最终产物体检。",
+      "attributes": ["overall_health", "checks", "file_integrity", "goal_trace_complete"],
+      "relationships": {
+        "validates": ["task"],
+        "depends_on": ["phase"]
+      }
+    }
+  ],
+
+  "palantir_ontology_layers": {
+    "description": "借鉴 Palantir Foundry 的三层本体映射。",
+    "semantic_layer": {
+      "description": "语义层：定义实体和关系的含义。",
+      "entities": ["task", "domain_classifier", "phase", "artifact", "role", "checkpoint", "sprint_contract", "goal_trace", "self_audit"],
+      "purpose": "Agent 理解'什么是任务'、'什么是阶段'、'什么关系'"
+    },
+    "kinetic_layer": {
+      "description": "动力学层：定义实体如何流转和变化。",
+      "entities": ["message", "bridge", "automation", "context_defense"],
+      "purpose": "Agent 理解'任务如何流转'、'消息如何路由'、'自动化如何触发'"
+    },
+    "dynamic_layer": {
+      "description": "动态层：定义运行时状态和实时监控。",
+      "entities": ["health_check", "harness_degradation", "goal_trace"],
+      "purpose": "Agent 理解'当前状态是什么'、'需要调整什么'"
+    }
+  },
+
+  "oag_pipeline": {
+    "description": "OAG（Ontology-Augmented Generation）管道。将本体知识注入 Agent 推理过程。",
+    "stages": [
+      {
+        "stage": 1,
+        "name": "本体注入",
+        "action": "Agent 启动时，读取 ontology.json 的 canonical_entities，建立语义理解上下文"
+      },
+      {
+        "stage": 2,
+        "name": "关系激活",
+        "action": "Agent 执行任务时，根据当前 Phase 激活对应的实体关系（如：Phase 2 激活 path→nodes 关系）"
+      },
+      {
+        "stage": 3,
+        "name": "约束应用",
+        "action": "Agent 执行产出时，应用 sprint_contract 的约束条件，确保产出符合本体定义"
+      },
+      {
+        "stage": 4,
+        "name": "一致性验证",
+        "action": "Agent 提交产出前，通过 validateContract 验证产出是否与本体定义一致"
+      }
+    ]
+  },
+
+  "neurosymbolic_fusion": {
+    "description": "神经符号融合映射。将本体符号规则融入 LLM 的神经推理。",
+    "symbolic_rules": [
+      "IF Phase.gate_file NOT EXISTS THEN Phase.status = 'blocked'",
+      "IF Checkpoint.result = 'fail' THEN Phase.retry_count++",
+      "IF Phase.retry_count > Phase.max_retries THEN Task.status = 'blocked'",
+      "IF ALL Phase.produce_file EXISTS THEN Task.status = 'completed'",
+      "IF SprintContract.critical_failures > 0 THEN Checkpoint.result = 'fail'",
+      "IF ContextDefense.rounds > 15 THEN TRIGGER ContextDefense.reset",
+      "IF HarnessDegradation.model_capability.self_evaluation_reliable THEN SKIP cp_0 cp_2 cp_4"
+    ],
+    "llm_integration": "这些符号规则在 Agent 推理时作为约束条件注入 prompt，与 LLM 的语义理解融合。"
+  }
+}

@@ -2,14 +2,87 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "novelcraft-dev-workflow-v3",
   "name": "开发总纲",
-  "version": "3.6.0",
+  "version": "3.9.0",
   "type": "dual_pass_recursive_tree_with_supervisor",
-  "description": "双程递归自相似开发工作流，含目标对齐监督者。三IDE实例独立运行，通过共享文件系统异步通信。Phase 1全自动自问自答，去程逐层拆解，回程逐层合成。监督者全程校验目标对齐。一句话输入→全自动执行→开发完成。",
-
+  "description": "双程递归自相似开发工作流，含目标对齐监督者和约束收敛引擎。三IDE实例独立运行，通过三层通信架构（IDE Bridge实时消息 + Hooks系统触发 + IM机器人桥接）协作。约束收敛引擎（convergence_engine）通过5层关键词匹配+参考标准字典，从海量可能性中确定性收敛到唯一目标。Phase 1全自动自问自答，去程逐层拆解，回程逐层合成。监督者全程校验目标对齐。一句话输入→全自动执行→开发完成。",
+  "change_log_v3_9_0": {
+    "S11_convergence_engine": "将 Phase 0 领域分类器从'问问题'的 Agent 主观判断模式替换为'约束收敛引擎'——5 层关键词匹配 + 参考标准字典的确定性筛选算法。每层有明确的 reference（关键词字典）、scoring（评分公式）、threshold（通过阈值）、reduction（空间缩小量）。同一输入永远产生同一输出。解决'那么多领域节点谁知道一句话要表达的是哪个方向'的根因。",
+    "L0_domain": "领域分类层。4 大类关键词字典（含 exclusion 排除词），确定性匹配。",
+    "L1_subtype": "子类型分类层。4 领域 × 多子类型关键词字典。",
+    "L2_platform": "平台/技术栈约束层。小说平台规则字典（起点/晋江/番茄/通用）+ 开发技术栈字典。",
+    "L3_structural": "结构参数提取层。正则数值提取，至少 50% 参数被明确提取。",
+    "L4_domain_rules": "领域专属规则层。悬疑推理/玄幻/言情/CRUD 等规则数据库，全部带 verifiable 标注。",
+    "L5_verification": "验证约束层。100% acceptance_criteria 必须可验证。",
+    "S12_dictionary_design": {
+      "date": "2026-07-17",
+      "changes": [
+        "convergence_engine 版本 1.0.0 → 1.1.0",
+        "新增 dictionary_schema：字典文件统一 Schema 标准",
+        "新增 dictionary_lifecycle：三阶段字典生命周期（纯字典→字典+统计→字典+向量+反馈）",
+        "新增 cold_start_standards：截断点定义 + 文件系统断点重续机制",
+        "新增 keyword_weighting：关键词长度加权计分公式",
+        "新增 hysteresis_config：L0 领域切换滞后阈值",
+        "新增 convergence_speed_config：conservative/medium/aggressive 三级收敛速度",
+        "L4 新增 constraint_types：硬约束（淘汰）vs 软约束（扣分）分离",
+        "stop_condition 更新：加入 hysteresis 和 gap_threshold 引用"
+      ]
+    },
+    "S13_dimensionality_proof": {
+      "date": "2026-07-17",
+      "changes": [
+        "新增 dimensionality_completeness_proof：5 维正交性证明 + 完备性反证 + 漏维即发散分析",
+        "新增 possibility_space_reduction：可能性空间从 1920 → 1 的逐层量化收束",
+        "明确 L5 角色：兜底层非维度层",
+        "明确 Phase 0(5维) 与 Phase 1(8维) 的关系：13 维完整收敛链路"
+      ]
+    },
+    "S14_self_diagnosis": {
+      "date": "2026-07-17",
+      "changes": [
+        "新增 self_diagnosis：5D 框架诊断总纲 18 节点，发现 25 个维度缺失",
+        "Phase 1-8 各 Phase 的 D-L3/D-L4 缺失清单",
+        "跨节点系统的维度缺失清单",
+        "标记 V3.9.1 目标：补齐 Phase 1-8 的 D-L3 和 D-L4 缺失"
+      ]
+    },
+    "S15_gap_fix": {
+      "date": "2026-07-17",
+      "changes": [
+        "Phase 1: 新增 consistency_check（5 条一致性校验规则）+ hard_constraints（4 条硬约束）",
+        "Phase 2: 新增 structural_parameters（节点数量范围+粒度标准）+ hard_constraints（4 条硬约束）",
+        "Phase 3: 新增 structural_parameters（每层级节点数量范围）+ overlap_detection（功能重叠检测）",
+        "Phase 4: 新增 field_completeness（阈值 80%）+ semantic_match（同义字段映射+类型转换规则）",
+        "Phase 5: 新增 atomicity_standard（3 条客观标准，与 Phase 0 L3 统一）+ coverage_check（量化校验）",
+        "Phase 6: 新增 quality_metrics（5 项量化指标）+ deviation_classification（正向纠偏 vs 偏离）",
+        "Phase 7: 新增 verification_thresholds（5 层验证阈值）+ downgrade_judgment（降标判定规则）",
+        "Phase 8: 新增 runnability_check（4 项可运行性检查）",
+        "监督者: 新增 cp_1-cp_7 量化标准 + unified_failure_policy（统一失败处理）",
+        "Sprint Contract: 新增 sprint_contract_engine + phase_0_linkage（从 Phase 0 自动派生）",
+        "领域变体: 扩展至 Phase 1/2/3/6/8（原仅覆盖 Phase 4/5/7）",
+        "递归架构: 新增 recursive_self_similar（深度联动+终止条件统一+跨领域处理）",
+        "最小可行链路: 新增 hard_constraints（5 项 stop_thresholds）",
+        "演进三原则: 新增 quantification（3 条量化判定标准）",
+        "双程规则: 新增 dual_pass_rule（边界违规判定+升级路径）"
+      ]
+    }
+  },
+  "change_log_v3_8_0": {
+    "S7_phase_0_domain_classifier": "新增 Phase 0 领域分类。在 Phase 1 之前，通过 3-5 个问题确定任务领域（创作/开发/分析/研究），根据领域选择对应的领域问题包。解决 44 问通用框架在单一领域不够精准的问题。",
+    "S8_domain_variants": "Phase 1-8 新增领域变体定义。每个 Phase 不再是通用步骤，而是根据领域（创作/开发/分析/研究）有不同的产出定义和验证标准。消除'创作类简化'补丁，改为创作类 Phase 的正确定义。",
+    "S9_conversation_self_audit": "新增对话级自审条款。每次 Agent 回答前必须自问三问：是否直接回应了用户的一句话？是否引入了用户没问的新概念？是否在不必要的时候把决策推回给用户？任意一项为是→回答偏离，重写。",
+    "S10_44_question_repositioning": "44 问从'漏斗'重新定位为'完整性检查'。领域问题包（10-20 题）前置，44 问后置补漏，不重复。"
+  },
+  "change_log_v3_7_1": {
+    "audit_correction": "2026.07.16 审计纠偏。基于'一句话生成最终目标'唯一标尺，识别Sessions 4-6研究漂移带。新增minimum_viable_chain定义，明确当前阶段核心需求与延期项。将完成度从18%（6层行业标准框架）修正为50-55%（最小可行链路）。",
+    "minimum_viable_chain": "新增。定义'一句话→最终目标'的最小可行链路，区分core（当前阶段必须）和deferred（端到端跑通后再补）。",
+    "evolution_rules": "新增三条纠偏规则：研究必须有工程锚点、标准对齐从需求出发、完成度评估用最小可行链路。"
+  },
+  "change_log_v3_7_0": {
+    "S6_ide_bridge": "三IDE通信从文件轮询升级为三层通信架构：Layer1 IDE Bridge实时消息推送（已实现）、Layer2 Hooks系统触发层（架构已定）、Layer3 IM机器人桥接（架构已定）。通信层唯一权威定义见三IDE角色自动化联通协议_V2.1.md。"
+  },
   "change_log_v3_6_0": {
     "S5_execution_engine": "新增 Phase 门禁引擎。解决'Agent 系统性跳过中间 Phase'的根因。每个 Phase 有 gate_file（前置条件）和 produce_file（强制产出），形成不可跳过的执行链。Agent 启动任何任务前必须先读取并执行门禁检车。"
   },
-
   "change_log_v3_5_0": {
     "S1_supervisor_independence": "监督者独立于执行Agent，在独立IDE实例中运行。三IDE架构确保设计和审核物理分离。禁止执行Agent在产物中预填alignment_check。",
     "S2_forced_recursion": "Phase 5递归拆解改为强制产出，每个子节点必须创建独立目录和spec.json。cp_4自动化检查nodes/子目录。",
@@ -22,52 +95,1418 @@
     "health_check": "Phase 8后新增产物体检报告，自动检查文件完整性、数值一致性、goal_trace链路、实际产出vs承诺。",
     "task_type_grading": "level_definitions增加applicable_task_types，区分创作类(递归2层)和开发类(递归4层)。"
   },
-
   "growth_metaphor": {
     "forward_pass": "种子 → 扎根 → 发芽 → 长大（去程：拆解，从粗到细）",
     "backward_pass": "成熟 → 开花 → 结果（回程：合成，从细到粗）",
-    "supervisor": "三个IDE实例独立运行，监督者(OpenClaw)在独立IDE中全程值守，通过共享文件系统异步校验"
+    "supervisor": "三个IDE实例独立运行，监督者(OpenClaw)在独立IDE中全程值守，通过IDE Bridge实时通信校验"
   },
-
   "core_contract": {
     "user_input": "一句话（模糊想法）",
-    "user_participation": "0。全程不需要用户参与。",
-    "execution_mode": "three_ide_polling",
-    "phase_1": "Codex Agent 调用 44 问自审清单，自问自答，产出根目标 spec.json。全自动。",
-    "supervisor_start": "Phase 1 完成后，OpenClaw Agent 通过轮询检测到 .pending 文件，锁定根目标为唯一校验基准。",
-    "forward_pass": "Phase 2-5 去程：Codex 产出设计文档，OpenClaw 轮询校验。全自动。",
-    "backward_pass": "Phase 6-8 回程：Cursor 按蓝图实现，OpenClaw 轮询校验。全自动。",
-    "communication": "三个IDE通过共享文件系统异步通信。详见 三IDE角色自动化联通协议_V1.0.md。",
-    "completion_signal": "全链路通路验证通过 + 全节点目标对齐通过 → 通知用户"
+    "user_participation": "0。全程不需要用户参与。唯一例外：L0 领域分类出现歧义时触发人工确认。",
+    "execution_mode": "three_ide_bridge",
+    "phase_1": "Codex Agent 基于收敛引擎的输出，调用 44 问完整性检查，自问自答，产出根目标 spec.json。全自动。",
+    "supervisor_start": "Phase 1 完成后，Codex 通过 IDE Bridge 发送 checkpoint.request，OpenClaw 实时收到并锁定根目标为唯一校验基准。",
+    "forward_pass": "Phase 2-5 去程：Codex 产出设计文档，通过 IDE Bridge 实时请求审核，OpenClaw 实时校验。全自动。",
+    "backward_pass": "Phase 6-8 回程：Cursor 按蓝图实现，通过 IDE Bridge 实时请求审核，OpenClaw 实时校验。全自动。",
+    "communication": "三个IDE通过三层通信架构协作：Layer1 IDE Bridge实时消息 + Layer2 Hooks系统触发 + Layer3 IM机器人桥接。通信协议详见 三IDE角色自动化联通协议_V2.1.md。",
+    "completion_signal": "全链路通路验证通过 + 全节点目标对齐通过 → 通知用户",
+    "convergence_phase": "约束收敛引擎（5层关键词匹配+参考标准字典）将一句话从海量可能性收敛到唯一 spec.json。不是 Agent 主观判断，而是确定性算法。"
   },
-
+  "convergence_engine": {
+    "description": "约束收敛引擎（V3.9.0 替换 Phase 0 领域分类器）。不是让 Agent 问问题靠主观判断分类，而是通过 5 层确定性约束条件逐层过滤。字典是永久锚定层，经历纯字典→字典+统计→字典+向量+反馈三阶段生命周期，从不退出。关键词匹配 + 长度加权计分 + 滞后阈值 + 断点重续，同一输入永远产生同一输出。",
+    "version": "1.1.0",
+    "principle": "收敛不是靠 Agent 的'理解'，而是靠参考标准字典的确定性匹配。每一层都是一次 P_i → P_{i+1} 的约束映射：输入当前可能性空间，应用约束条件，输出缩小后的空间。当所有参数都收敛到唯一值，收敛停止。",
+    "layers": {
+      "L0_domain": {
+        "name": "领域分类层",
+        "method": "关键词匹配 + 参考标准字典",
+        "description": "输入一句话，匹配领域关键词字典，确定任务属于哪个大类。",
+        "reference": {
+          "creative": {
+            "keywords": [
+              "写",
+              "创作",
+              "小说",
+              "文章",
+              "剧本",
+              "脚本",
+              "文案",
+              "大纲",
+              "章",
+              "节",
+              "篇",
+              "故事",
+              "角色",
+              "情节",
+              "人物",
+              "章节",
+              "正文",
+              "内容",
+              "稿",
+              "剧情",
+              "叙事",
+              "世界观",
+              "人设",
+              "场景",
+              "对白"
+            ],
+            "exclusion": [
+              "代码",
+              "程序",
+              "API",
+              "部署",
+              "前端",
+              "后端",
+              "数据库",
+              "分析",
+              "数据",
+              "报告",
+              "调研",
+              "选型",
+              "评估"
+            ],
+            "output": "creative"
+          },
+          "development": {
+            "keywords": [
+              "开发",
+              "写代码",
+              "实现",
+              "搭建",
+              "部署",
+              "API",
+              "前端",
+              "后端",
+              "数据库",
+              "组件",
+              "页面",
+              "功能",
+              "系统",
+              "应用",
+              "服务",
+              "接口",
+              "架构",
+              "配置",
+              "构建",
+              "编译",
+              "测试",
+              "上线",
+              "发布",
+              "代码",
+              "程序",
+              "框架",
+              "模块",
+              "插件",
+              "扩展"
+            ],
+            "exclusion": [
+              "小说",
+              "文章",
+              "剧本",
+              "分析报告",
+              "调研"
+            ],
+            "output": "development"
+          },
+          "analysis": {
+            "keywords": [
+              "分析",
+              "数据",
+              "报告",
+              "图表",
+              "指标",
+              "趋势",
+              "洞察",
+              "对比",
+              "统计",
+              "可视化",
+              "报表",
+              "指标",
+              "KPI",
+              "归因",
+              "拆解",
+              "归因分析",
+              "市场",
+              "竞品",
+              "用户分析"
+            ],
+            "exclusion": [
+              "写代码",
+              "开发",
+              "小说",
+              "创作"
+            ],
+            "output": "analysis"
+          },
+          "research": {
+            "keywords": [
+              "调研",
+              "综述",
+              "最佳实践",
+              "选型",
+              "可行性",
+              "文献",
+              "评估",
+              "对比",
+              "方案",
+              "技术选型",
+              "行业研究",
+              "趋势",
+              "前沿",
+              "进展",
+              "综述",
+              "总结"
+            ],
+            "exclusion": [
+              "写代码",
+              "开发",
+              "小说"
+            ],
+            "output": "research"
+          }
+        },
+        "scoring": "score = 该领域 keywords 命中数 - 该领域 exclusion 命中数。取 score > 0 且 score 最高的领域。若最高分并列，触发 L0_disambiguation。",
+        "threshold": "score > 0 且 score ≥ second_best + 1。不满足则标记为 ambiguous，触发人工确认（仅此一层允许，且仅限领域无法确定时）。",
+        "reduction": "从 4 个大类 → 1 个确定领域。可能性空间缩小 75%。"
+      },
+      "L1_subtype": {
+        "name": "子类型分类层",
+        "method": "领域内关键词匹配 + 子类型参考标准字典",
+        "description": "在确定的领域内，匹配子类型关键词字典，确定任务子类型。",
+        "reference": {
+          "creative": {
+            "fiction": {
+              "keywords": [
+                "小说",
+                "故事",
+                "章",
+                "章节",
+                "角色",
+                "情节",
+                "人物",
+                "悬疑",
+                "推理",
+                "玄幻",
+                "言情",
+                "科幻",
+                "现实",
+                "都市",
+                "历史",
+                "武侠",
+                "仙侠",
+                "灵异",
+                "盗墓",
+                "暗黑",
+                "罪案",
+                "侦探",
+                "凶手",
+                "谜题",
+                "诡计",
+                "反转",
+                "伏笔",
+                "世界观",
+                "修炼",
+                "穿越",
+                "重生"
+              ],
+              "output": "fiction"
+            },
+            "article": {
+              "keywords": [
+                "文章",
+                "博客",
+                "新闻",
+                "公众号",
+                "论文",
+                "评论",
+                "评测",
+                "教程",
+                "攻略",
+                "分享",
+                "心得",
+                "笔记",
+                "总结",
+                "技术博客",
+                "推文",
+                "帖子"
+              ],
+              "output": "article"
+            },
+            "script": {
+              "keywords": [
+                "剧本",
+                "视频",
+                "播客",
+                "直播",
+                "分镜",
+                "对白",
+                "场景",
+                "镜头",
+                "短片",
+                "长片",
+                "广告片",
+                "宣传片",
+                "纪录片",
+                "综艺",
+                "口播"
+              ],
+              "output": "script"
+            },
+            "marketing": {
+              "keywords": [
+                "广告",
+                "软文",
+                "营销",
+                "推广",
+                "文案",
+                "社群",
+                "邮件",
+                "卖点",
+                "促销",
+                "品牌",
+                "活动",
+                "落地页",
+                "Slogan",
+                "标语",
+                "转化",
+                "引流"
+              ],
+              "output": "marketing"
+            }
+          },
+          "development": {
+            "web_app": {
+              "keywords": [
+                "Web",
+                "前端",
+                "后端",
+                "全栈",
+                "页面",
+                "网站",
+                "后台",
+                "管理系统",
+                "SPA",
+                "SSR",
+                "React",
+                "Vue",
+                "Next",
+                "Nuxt",
+                "Django",
+                "Flask",
+                "Spring",
+                "用户系统",
+                "认证",
+                "支付",
+                "部署",
+                "域名"
+              ],
+              "output": "web_app"
+            },
+            "api": {
+              "keywords": [
+                "API",
+                "接口",
+                "REST",
+                "GraphQL",
+                "gRPC",
+                "微服务",
+                "端点",
+                "endpoint",
+                "Swagger",
+                "OpenAPI",
+                "网关",
+                "鉴权",
+                "限流",
+                "数据服务"
+              ],
+              "output": "api"
+            },
+            "script": {
+              "keywords": [
+                "脚本",
+                "工具",
+                "自动化",
+                "爬虫",
+                "批处理",
+                "定时",
+                "CLI",
+                "命令行",
+                "导入导出",
+                "数据处理",
+                "转换",
+                "迁移",
+                "备份"
+              ],
+              "output": "script"
+            },
+            "plugin": {
+              "keywords": [
+                "插件",
+                "扩展",
+                "VS Code",
+                "Chrome",
+                "Figma",
+                "浏览器",
+                "IDE",
+                "Extension",
+                "Plugin",
+                "Addon"
+              ],
+              "output": "plugin"
+            }
+          },
+          "analysis": {
+            "data": {
+              "keywords": [
+                "数据",
+                "分析",
+                "统计",
+                "报表",
+                "图表",
+                "可视化",
+                "趋势",
+                "指标",
+                "同比",
+                "环比",
+                "归因",
+                "漏斗",
+                "留存",
+                "转化率"
+              ],
+              "output": "data"
+            },
+            "market": {
+              "keywords": [
+                "市场",
+                "竞品",
+                "行业",
+                "赛道",
+                "份额",
+                "规模",
+                "渗透率",
+                "用户画像",
+                "消费者",
+                "品牌",
+                "定价",
+                "渠道"
+              ],
+              "output": "market"
+            },
+            "technical": {
+              "keywords": [
+                "技术",
+                "调研",
+                "选型",
+                "对比",
+                "框架",
+                "方案",
+                "优缺点",
+                "性能",
+                "成本",
+                "可行性",
+                "PoC",
+                "原型"
+              ],
+              "output": "technical"
+            }
+          },
+          "research": {
+            "literature": {
+              "keywords": [
+                "文献",
+                "综述",
+                "论文",
+                "研究",
+                "进展",
+                "前沿",
+                "学术",
+                "引用",
+                "参考文献"
+              ],
+              "output": "literature"
+            },
+            "best_practice": {
+              "keywords": [
+                "最佳实践",
+                "经验",
+                "指南",
+                "规范",
+                "标准",
+                "推荐",
+                "建议",
+                "模式",
+                "架构"
+              ],
+              "output": "best_practice"
+            },
+            "feasibility": {
+              "keywords": [
+                "可行性",
+                "评估",
+                "方案",
+                "决策",
+                "推荐",
+                "风险",
+                "成本",
+                "收益",
+                "ROI",
+                "投入产出"
+              ],
+              "output": "feasibility"
+            }
+          }
+        },
+        "scoring": "在该领域内，计算每个子类型的 keywords 命中数。取 score > 0 且 score 最高的子类型。",
+        "threshold": "score > 0 且 score ≥ second_best + 1。不满足时标记为 inferred，记录置信度。",
+        "reduction": "从该领域的多种子类型 → 1 个确定子类型。"
+      },
+      "L2_platform_stack": {
+        "name": "平台/技术栈约束层",
+        "method": "领域专属平台规则匹配 + 平台参考标准字典",
+        "description": "根据子类型，匹配平台/技术栈关键词，确定目标平台及其规则约束。",
+        "reference": {
+          "fiction_platforms": {
+            "qidian": {
+              "keywords": [
+                "起点",
+                "阅文",
+                "网文",
+                "连载",
+                "付费",
+                "推荐票",
+                "月票",
+                "订阅",
+                "白金",
+                "大神"
+              ],
+              "rules": {
+                "format": ".docx",
+                "font": "宋体小四",
+                "indent": "首行缩进2字符",
+                "word_count_per_chapter": "2000-2500",
+                "hook_required": true,
+                "pace": "快节奏",
+                "update_frequency": "日更推荐"
+              }
+            },
+            "jjwxc": {
+              "keywords": [
+                "晋江",
+                "耽美",
+                "言情",
+                "原创",
+                "积分",
+                "签约"
+              ],
+              "rules": {
+                "format": ".docx",
+                "font": "宋体",
+                "word_count_per_chapter": "3000-5000",
+                "hook_required": false,
+                "pace": "中速",
+                "emotion_line": "情感线明确"
+              }
+            },
+            "fanqie": {
+              "keywords": [
+                "番茄",
+                "免费",
+                "流量",
+                "推荐",
+                "广告"
+              ],
+              "rules": {
+                "format": ".txt或.docx",
+                "font": "默认",
+                "word_count_per_chapter": "1500-2000",
+                "hook_required": true,
+                "pace": "极快节奏",
+                "hook_density": "每500字至少一个爽点"
+              }
+            },
+            "generic": {
+              "keywords": [],
+              "rules": {
+                "format": ".docx",
+                "font": "宋体小四",
+                "indent": "首行缩进2字符",
+                "word_count_per_chapter": "2000-3000",
+                "hook_required": false,
+                "pace": "标准"
+              },
+              "note": "未匹配到任何平台关键词时使用此默认规则。标记为 inferred。"
+            }
+          },
+          "web_app_stack": {
+            "react_ecosystem": {
+              "keywords": [
+                "React",
+                "Next",
+                "Vite",
+                "TypeScript",
+                "Tailwind",
+                "Redux",
+                "Zustand"
+              ],
+              "rules": {
+                "language": "TypeScript",
+                "framework": "React",
+                "css": "Tailwind CSS"
+              }
+            },
+            "vue_ecosystem": {
+              "keywords": [
+                "Vue",
+                "Nuxt",
+                "Pinia",
+                "Element",
+                "Vuetify"
+              ],
+              "rules": {
+                "language": "TypeScript",
+                "framework": "Vue",
+                "css": "根据项目约定"
+              }
+            },
+            "python_ecosystem": {
+              "keywords": [
+                "Django",
+                "Flask",
+                "FastAPI",
+                "Python",
+                "Jinja"
+              ],
+              "rules": {
+                "language": "Python",
+                "framework": "根据关键词确定"
+              }
+            },
+            "generic": {
+              "keywords": [],
+              "rules": {
+                "language": "TypeScript",
+                "framework": "React",
+                "css": "Tailwind CSS",
+                "note": "默认技术栈"
+              }
+            }
+          }
+        },
+        "scoring": "在子类型对应的平台字典中，匹配 keywords。取最高分平台。",
+        "threshold": "score > 0 则使用该平台规则。score = 0 则使用 generic 默认规则，标记为 inferred。",
+        "reduction": "平台/技术栈参数锁定。输出格式、字数范围、技术栈等硬约束确定。"
+      },
+      "L3_structural": {
+        "name": "结构参数提取层",
+        "method": "数值提取 + 明确参数解析",
+        "description": "从输入中提取明确的结构参数（数量、范围、单位等），不能被数值化提取的参数标记为 inferred。",
+        "extraction_rules": {
+          "chapter_count": {
+            "pattern": "前(\\d+)章|(\\d+)章|(\\d+)个章节|共(\\d+)章",
+            "type": "number",
+            "unit": "章"
+          },
+          "word_count": {
+            "pattern": "(\\d+)[-~至到](\\d+)字|(\\d+)字[/每]章|(\\d+)万字|(\\d+)千字",
+            "type": "range",
+            "unit": "字"
+          },
+          "page_count": {
+            "pattern": "(\\d+)页|(\\d+)个页面|(\\d+)个屏幕",
+            "type": "number",
+            "unit": "页"
+          },
+          "component_count": {
+            "pattern": "(\\d+)个组件|(\\d+)个模块",
+            "type": "number",
+            "unit": "个"
+          },
+          "perspective": {
+            "pattern": "第一人称|第三人称|多视角|上帝视角|限制视角",
+            "type": "enum",
+            "values": [
+              "第一人称",
+              "第三人称",
+              "多视角",
+              "上帝视角",
+              "限制视角"
+            ]
+          },
+          "output_format": {
+            "pattern": "\\.docx|\\.pdf|\\.html|\\.md|\\.txt|\\.pptx|Word|PDF|网页|Markdown",
+            "type": "enum"
+          }
+        },
+        "scoring": "对每个 extraction_rule，用正则匹配输入。匹配成功 → 参数值确定。匹配失败 → 标记为 inferred，使用 L2 的默认规则填充。",
+        "threshold": "至少 50% 的结构参数被明确提取。低于 50% → 标记为 high_inference_risk，需要在 Phase 1 的 44 问中优先确认。",
+        "reduction": "所有结构参数（数量、范围、格式）被锁定为具体数值或范围。"
+      },
+      "L4_domain_rules": {
+        "name": "领域专属规则层",
+        "method": "领域规则数据库查询",
+        "description": "根据子类型，查询领域专属规则数据库，应用该领域特有的约束条件。这些是领域内不可违背的行业标准。",
+        "reference": {
+          "fiction_xuanyi_tuili": {
+            "genre_name": "悬疑推理小说",
+            "rules": {
+              "hook_per_chapter": {
+                "value": true,
+                "description": "每章结尾必须有钩子/悬念/反转",
+                "verifiable": true,
+                "verification": "检查每章最后3段是否包含疑问/悬念/未解事件"
+              },
+              "dialogue_ratio": {
+                "value": "30-40%",
+                "description": "对话占全文比例",
+                "verifiable": true,
+                "verification": "统计对话行数/总行数"
+              },
+              "scenes_per_chapter": {
+                "value": "2-3",
+                "description": "每章场景数",
+                "verifiable": true,
+                "verification": "统计场景切换标记数"
+              },
+              "clue_density": {
+                "value": "每章至少1个新线索或反转",
+                "description": "信息增量密度",
+                "verifiable": true,
+                "verification": "检查每章是否有新的案件信息/人物关系变化"
+              },
+              "chapter_structure": {
+                "value": "短章节快节奏",
+                "description": "章节结构",
+                "verifiable": false,
+                "verification": "定性判断"
+              }
+            }
+          },
+          "fiction_xuanhuan": {
+            "genre_name": "玄幻小说",
+            "rules": {
+              "per_chapter_event": {
+                "value": "每章至少1次修炼/战斗/突破",
+                "verifiable": true
+              },
+              "world_building_per_chapter": {
+                "value": "每章体现世界观设定",
+                "verifiable": false
+              },
+              "level_system": {
+                "value": "等级体系明确",
+                "verifiable": true
+              }
+            }
+          },
+          "fiction_yanqing": {
+            "genre_name": "言情小说",
+            "rules": {
+              "emotion_beat_per_chapter": {
+                "value": "每章至少1个情感节点",
+                "verifiable": false
+              },
+              "dialogue_ratio": {
+                "value": "40-50%",
+                "verifiable": true
+              }
+            }
+          },
+          "web_app_crud": {
+            "type_name": "CRUD 管理系统",
+            "rules": {
+              "auth_required": {
+                "value": true,
+                "verifiable": true
+              },
+              "pagination": {
+                "value": true,
+                "verifiable": true
+              },
+              "form_validation": {
+                "value": true,
+                "verifiable": true
+              },
+              "error_handling": {
+                "value": true,
+                "verifiable": true
+              },
+              "responsive": {
+                "value": true,
+                "verifiable": true
+              }
+            }
+          }
+        },
+        "scoring": "查询规则数据库。匹配到子类型规则 → 全部应用。未匹配到 → 仅使用通用规则。",
+        "threshold": "所有 applicable 规则必须被应用。每条规则标注 verifiable: true/false。verifiable=false 的规则在 Phase 7 中需要独立 Agent 审查。",
+        "reduction": "领域专属约束全部锁定。从'通用任务'收敛为'领域特定任务'。",
+        "constraint_types": {
+          "hard": {
+            "description": "硬约束。违反直接淘汰路径，不可协商。",
+            "examples_creative": [
+              "章节数不能为0",
+              "输出格式必须符合平台要求"
+            ],
+            "examples_quantitative": [
+              "单一标的仓位 ≤ 5%",
+              "日换手率 ≤ 30%",
+              "必须满足证监会合规要求"
+            ]
+          },
+          "soft": {
+            "description": "软约束。违反扣分但不淘汰路径。",
+            "examples_creative": [
+              "对话占比建议 30-40%",
+              "章节结构建议短章节快节奏"
+            ],
+            "examples_quantitative": [
+              "行业偏离建议 ≤ 基准±5%"
+            ]
+          },
+          "scoring_update": "L4 评分 = hard_constraints_all_passed ? (soft_constraints_passed / soft_constraints_total) : 0（直接淘汰）"
+        }
+      },
+      "L5_verification": {
+        "name": "验证约束层",
+        "method": "验收标准可验证性检查",
+        "description": "检查每个 acceptance_criteria 是否具有可数值化验证方法。这是收敛的最后一步——确保唯一目标的所有维度都可以被客观验证。",
+        "rules": {
+          "must_be_numeric": "每个 acceptance_criteria 必须包含以下至少一项：数值（如 2000 字）、范围（如 2000-2500）、布尔条件（如 必须有钩子=true）、枚举（如 视角=多视角）",
+          "must_be_traceable": "每个 acceptance_criteria 必须能通过 goal_trace 追溯到根目标",
+          "must_be_non_overlapping": "任意两个 acceptance_criteria 不能覆盖同一维度（如不能同时有'2000-2500字/章'和'2000-3000字/章'）"
+        },
+        "scoring": "verifiable_count / total_criteria_count。",
+        "threshold": "100% 的 acceptance_criteria 必须可验证。低于 100% → 不可验证的 criteria 标记为 qualitative，在 Phase 7 中由独立 Agent 审查。",
+        "reduction": "所有验收维度锁定。收敛完成。输出唯一 spec.json。"
+      }
+    },
+    "stop_condition": {
+      "description": "收敛停止条件。当以下全部满足时，收敛完成，进入 Phase 1。",
+      "conditions": [
+        "L0: 领域确定（score ≥ second_best + gap_threshold，或所有路径中仅剩一个领域）",
+        "L1: 子类型确定（score ≥ second_best + 1，或已标记 inferred）",
+        "L2: 平台/技术栈规则确定（含 inferred 默认值）",
+        "L3: 结构参数提取率 ≥ 50%",
+        "L4: 所有硬约束通过，所有 applicable 软约束已评估",
+        "L5: 质量评分最高路径已选出，平手时哈希锚定兜底"
+      ],
+      "hysteresis_note": "L0 领域切换受 hysteresis_config 控制，gap_threshold 由 convergence_speed_config 决定。"
+    },
+    "output": {
+      "file": "{task_dir}/domain_classification.json",
+      "fields": [
+        "domain",
+        "subtype",
+        "platform",
+        "platform_rules",
+        "structural_params",
+        "applied_domain_rules",
+        "acceptance_criteria",
+        "convergence_trace"
+      ],
+      "convergence_trace": "记录每层收敛的输入空间大小和输出空间大小，用于审计和调试。"
+    },
+    "dictionary_schema": {
+      "version": "1.0.0",
+      "description": "所有字典文件必须遵循的统一 Schema。每个领域一个独立字典文件。",
+      "fields": {
+        "schema_version": {
+          "type": "string",
+          "required": true
+        },
+        "domain_id": {
+          "type": "string",
+          "required": true
+        },
+        "domain_label": {
+          "type": "string",
+          "required": true
+        },
+        "domain_definition": {
+          "type": "string",
+          "required": true
+        },
+        "L0": {
+          "type": "object",
+          "required": true
+        },
+        "L1": {
+          "type": "object",
+          "required": true
+        },
+        "L2": {
+          "type": "object",
+          "required": false
+        },
+        "L4": {
+          "type": "object",
+          "required": false
+        },
+        "meta": {
+          "type": "object",
+          "required": true
+        }
+      },
+      "design_principle": "每个领域一个独立字典文件，非一个巨型字典。添加新领域不修改已有字典。独立版本控制，独立测试准确率。"
+    },
+    "dictionary_lifecycle": {
+      "principle": "字典不是临时替代品，而是永久锚定层。它从不退出，只改变权重占比。",
+      "phases": {
+        "phase_1_cold_start": {
+          "name": "纯字典冷启动",
+          "trigger": "无历史数据，无向量模型",
+          "dictionary_weight": "100%",
+          "vector_weight": "0%",
+          "description": "字典是唯一决策源。关键词匹配 + 排除词过滤 + 长度加权计分。"
+        },
+        "phase_2_warm_start": {
+          "name": "字典+统计温启动",
+          "trigger": "累积 ≥ 100 次分类决策",
+          "dictionary_weight": "70%",
+          "statistics_weight": "30%",
+          "description": "字典主导决策。统计层根据历史准确率调整关键词权重。非 ML，仅计数统计。"
+        },
+        "phase_3_hot_start": {
+          "name": "字典+向量+反馈热启动",
+          "trigger": "累积 ≥ 1000 次分类决策且向量模型已训练",
+          "dictionary_weight": "40%",
+          "vector_weight": "40%",
+          "feedback_weight": "20%",
+          "description": "字典和向量并行双通道。字典作为硬地板和安全网。向量提供语义相似度补充。两者不一致时字典优先。"
+        }
+      },
+      "dictionary_roles_in_hot_phase": {
+        "hard_floor": "字典保证最低准确率，即使向量完全失效",
+        "safety_net": "向量置信度 < 字典置信度时，回退到字典",
+        "training_seed": "字典条目作为正例训练向量模型",
+        "audit_trail": "每次决策可追溯到字典说X向量说Y综合选Z"
+      },
+      "dual_channel_merge_rules": {
+        "both_agree": "高置信度，直接通过",
+        "both_disagree": "字典优先（硬地板原则），标记 discrepancy",
+        "dictionary_only": "标记 inferred，置信度 = 字典置信度",
+        "vector_only": "标记 inferred，置信度 = 向量置信度 × 0.8",
+        "neither": "双路径并行，等待 L5 评分淘汰"
+      }
+    },
+    "cold_start_standards": {
+      "principle": "截断不是停止，是标记后继续。字典文件是唯一真相源。断点记忆在文件系统，不在内存。",
+      "truncation_points": {
+        "L0_T1": {
+          "trigger": "所有领域 score = 0",
+          "action": "标记 ambiguous，取最高分两个领域双路径并行",
+          "stops_engine": false
+        },
+        "L0_T2": {
+          "trigger": "最高分并列",
+          "action": "双路径并行，不调大模型",
+          "stops_engine": false
+        },
+        "L1_T1": {
+          "trigger": "score < second_best + 1",
+          "action": "标记 inferred，取最高分",
+          "stops_engine": false
+        },
+        "L3_T1": {
+          "trigger": "提取率 < 50%",
+          "action": "标记 high_inference_risk",
+          "stops_engine": false
+        },
+        "L4_T1": {
+          "trigger": "硬约束违反",
+          "action": "该路径淘汰，其他路径继续",
+          "stops_engine": false
+        }
+      },
+      "checkpoint_resume": {
+        "mechanism": "文件系统驱动",
+        "steps": [
+          "引擎启动 → 检查字典文件 hash → 与上次运行对比",
+          "字典未变 → 检查各层 produce_file 是否存在且有效",
+          "L5 已完成 → 直接返回结果",
+          "L3 完成但 L4 未完成 → 从 L4 继续",
+          "全部不存在 → 从 L0 开始",
+          "字典已变 → 强制从头执行"
+        ],
+        "checkpoint_format": "{ layer: string, status: string, timestamp: string, output_hash: string }",
+        "key_principle": "重启不丢。字典文件是唯一真相源。"
+      }
+    },
+    "keyword_weighting": {
+      "formula": "weight = 1 + (keyword_length - 2) × 0.2",
+      "min_weight": 1,
+      "examples": {
+        "1char": {
+          "keyword": "写",
+          "weight": 1
+        },
+        "2chars": {
+          "keyword": "悬疑",
+          "weight": 1
+        },
+        "4chars": {
+          "keyword": "悬疑推理",
+          "weight": 1.4
+        },
+        "6chars": {
+          "keyword": "本格推理小说",
+          "weight": 1.8
+        }
+      },
+      "purpose": "长尾关键词更具体，命中时给予更高权重，减少短关键词误匹配。",
+      "scoring_update": "L0/L1 计分公式更新为：score = Σ(keyword_weight × hit) - Σ(exclusion_hit)"
+    },
+    "hysteresis_config": {
+      "description": "滞后阈值机制。防止输入在领域边界附近时领域标签频繁切换。",
+      "mechanism": "上一轮确定的领域标签保持，直到新领域得分差距 ≥ gap_threshold 才切换。",
+      "gap_threshold": 2,
+      "example": "输入在 creative(score=3) 和 analysis(score=2) 之间。差距=1 < 2。保持 creative 标签不切换。"
+    },
+    "convergence_speed_config": {
+      "default": "medium",
+      "levels": {
+        "conservative": {
+          "threshold_gap": 2,
+          "min_confidence": 0.9,
+          "description": "高精度场景（量化风控、合规审查）"
+        },
+        "medium": {
+          "threshold_gap": 1,
+          "min_confidence": 0.7,
+          "description": "通用场景（创作拆解、开发任务）"
+        },
+        "aggressive": {
+          "threshold_gap": 0,
+          "min_confidence": 0.5,
+          "description": "快速原型场景（探索性任务）"
+        }
+      }
+    },
+    "dimensionality_completeness_proof": {
+      "core_principle": "5 个正交维度穷尽模糊概念的所有不确定性。缺少任意一个维度 = 漏维即发散 = 无法得到唯一正解。",
+      "orthogonality": {
+        "definition": "两个维度正交 = 改变其中一个不影响另一个。5 个维度必须两两正交。",
+        "total_pairs": 10,
+        "all_pairs_orthogonal": true,
+        "proof": {
+          "L0_L1": "同一领域(creative)下可有不同子类型(fiction vs article)",
+          "L0_L2": "同一领域(creative)下可有不同平台(起点 vs 晋江)",
+          "L0_L3": "同一领域下可有不同结构参数(1章 vs 10章)",
+          "L0_L4": "同一领域下可有不同规则集(悬疑规则 vs 玄幻规则)",
+          "L1_L2": "同一子类型(fiction)下可有不同平台",
+          "L1_L3": "同一子类型下可有不同结构参数",
+          "L1_L4": "同一子类型下可有不同规则集",
+          "L2_L3": "同一平台(起点)下可有不同字数",
+          "L2_L4": "平台规则(起点格式) ≠ 领域规则(悬疑钩子)",
+          "L3_L4": "结构参数(字数) ≠ 领域规则(钩子必须存在)"
+        }
+      },
+      "missing_dimension_consequences": {
+        "principle": "漏维即发散——缺失任意一层，该维度未收束，无限合法解并存。",
+        "cases": {
+          "without_L0": "不知道是创作还是开发 → 两个完全不同的路径树并存，无法收敛",
+          "without_L1": "知道是创作，不知道是小说还是剧本 → 小说路径和剧本路径并存，规则冲突",
+          "without_L2": "知道是悬疑小说，不知道目标平台 → 起点规则和番茄规则并存",
+          "without_L3": "知道是起点悬疑小说，不知道写多少章 → 1章和100章都是合法解",
+          "without_L4": "知道是起点悬疑小说10章，不知道领域规则 → 可能产出没有钩子的章节"
+        }
+      },
+      "completeness": {
+        "method": "反证法——假设存在第6个正交维度，尝试列举所有候选",
+        "candidates": {
+          "谁来做": "执行分配问题(Phase 5之后)，不是结构收敛问题",
+          "什么时候做": "时序调度问题，不是结构收敛问题",
+          "为什么做": "L0的子问题——领域判定已经包含目的",
+          "怎么做": "L1的子问题——子类型决定方法",
+          "多少钱": "L3的子问题——成本是结构参数的一种"
+        },
+        "conclusion": "找不到第6个正交维度。5层是完备的。"
+      },
+      "possibility_space_reduction": {
+        "formula": "U = L0 × L1 × L2 × L3 × L4",
+        "size_estimates": {
+          "L0": "4 (creative/development/analysis/research)",
+          "L1": "4-5 (每个领域下的子类型数)",
+          "L2": "3-5 (每个子类型下的平台数)",
+          "L3": "≈10 (连续参数正则离散化后)",
+          "L4": "2-5 (每个子类型的规则数)"
+        },
+        "total_combinations": "≈ 4 × 4 × 4 × 10 × 3 = 1920 (保守估计)",
+        "step_by_step": {
+          "L0_unconstrained": 1920,
+          "L0_constrained": 480,
+          "L0_L1_constrained": 120,
+          "L0_L2_constrained": 30,
+          "L0_L3_constrained": 3,
+          "L0_L4_constrained": 1,
+          "L5_anchored": 1
+        }
+      },
+      "L5_role": "L5 是兜底层，不是维度层。L5 不增加新的不确定性维度，只在 L0-L4 收束后仍有平手时强制唯一化。",
+      "relationship_with_phase1": "Phase 0 的 5 维（粗粒度收束）+ Phase 1 的 44 问 8 维（细粒度填充）= 13 维完整收敛链路。5 维确保方向对，8 维确保细节对。"
+    },
+    "self_diagnosis": {
+      "date": "2026-07-17",
+      "method": "将 5D 收敛框架（L0-L4）作为诊断透镜，对总纲全部 18 个节点（8 Phase + 10 跨节点系统）逐项检查维度完备性",
+      "summary": {
+        "total_nodes": 18,
+        "fully_passed_5d": 1,
+        "partially_passed": 17,
+        "total_gaps": 25,
+        "gap_distribution": {
+          "D_L0": 0,
+          "D_L1": 1,
+          "D_L2": 1,
+          "D_L3": 11,
+          "D_L4": 12
+        }
+      },
+      "key_findings": [
+        "Phase 0 是唯一完全通过 5D 诊断的节点。验证了 5D 框架本身的完备性。",
+        "缺失集中在 D-L3（结构参数，11个）和 D-L4（规则约束，12个）。Phase 1-8 在量化和硬约束两个维度上严重不足。",
+        "Phase 0 的收敛输出与 Phase 1-8 之间存在信息断层。收敛引擎算出了正确答案，但后续 Phase 读不到。",
+        "25 个缺失中，有 8 个是已讨论但未落地的问题。",
+        "递归自相似架构的相似性不完整。Phase 0 只在项目级执行一次。"
+      ],
+      "phase_gaps": {
+        "phase_1": {
+          "gaps": [
+            "GAP-1: 44问内部一致性校验缺失",
+            "GAP-2: 无硬约束（核心维度不可全inferred）"
+          ],
+          "total": 2
+        },
+        "phase_2": {
+          "gaps": [
+            "GAP-3: 路径节点数量范围",
+            "GAP-4: 节点粒度标准",
+            "GAP-5: 路径完整性硬约束"
+          ],
+          "total": 3
+        },
+        "phase_3": {
+          "gaps": [
+            "GAP-6: 每层级节点数量范围",
+            "GAP-7: 节点功能重叠检测"
+          ],
+          "total": 2
+        },
+        "phase_4": {
+          "gaps": [
+            "GAP-8: 接口字段完整性阈值",
+            "GAP-9: 接口语义匹配规则"
+          ],
+          "total": 2
+        },
+        "phase_5": {
+          "gaps": [
+            "GAP-10: 原子性客观标准",
+            "GAP-11: 子节点覆盖度量化校验"
+          ],
+          "total": 2
+        },
+        "phase_6": {
+          "gaps": [
+            "GAP-12: 实现质量量化指标",
+            "GAP-13: 实现偏差分类规则"
+          ],
+          "total": 2
+        },
+        "phase_7": {
+          "gaps": [
+            "GAP-14: 验证阈值",
+            "GAP-15: 降标判定规则"
+          ],
+          "total": 2
+        },
+        "phase_8": {
+          "gaps": [
+            "GAP-16: 交付物可运行性检查"
+          ],
+          "total": 1
+        }
+      },
+      "cross_cutting_gaps": {
+        "supervisor": [
+          "GAP-17: cp_1-cp_7 量化标准",
+          "GAP-18: 失败处理统一规则"
+        ],
+        "sprint_contract": [
+          "GAP-19: 与 Phase 0 收敛引擎联动"
+        ],
+        "domain_variants": [
+          "GAP-20: Phase 1/2/3/6/8 无领域变体"
+        ],
+        "recursive_architecture": [
+          "GAP-21: 递归深度与 Phase 0 L3 联动",
+          "GAP-22: 终止条件与原子性标准统一"
+        ],
+        "minimum_viable_chain": [
+          "GAP-23: 硬约束（完成度低于X停止）"
+        ],
+        "evolution_rules": [
+          "GAP-24: 量化判定标准"
+        ],
+        "dual_pass_rule": [
+          "GAP-25: 边界违规判定"
+        ]
+      },
+      "next_action": "V3.9.1 目标：补齐 Phase 1-8 的 D-L3 和 D-L4 缺失维度"
+    }
+  },
+  "minimum_viable_chain": {
+    "description": "最小可行链路（V3.7.1 审计纠偏新增）。以'一句话→最终目标'为唯一标尺，定义当前阶段必须跑通的最小链路，与端到端跑通后再补的延期项。",
+    "assessment_date": "2026-07-16",
+    "overall_completion": "50-55%",
+    "principle": "不是'行业有什么我们就做什么'，而是'要跑通一句话→最终目标，最少需要什么'。",
+    "core_chain": {
+      "description": "当前阶段必须完成的核心链路组件。",
+      "items": {
+        "phase_1_intent": {
+          "status": "70%",
+          "note": "44问自审 + goal_trace + spec.json，核心链路完整，自审自动化待验证"
+        },
+        "gate_enforcement": {
+          "status": "80%",
+          "note": "orchestrator.js + phase_gate_engine，代码级强制，8 Phase 全链路通过"
+        },
+        "forward_decomposition": {
+          "status": "50%",
+          "note": "gate→produce 链 + 递归树，结构定义完整，自动化执行未验证"
+        },
+        "goal_alignment": {
+          "status": "60%",
+          "note": "goal_trace + 8 检查点，机制定义完整，独立监督者未部署"
+        },
+        "sprint_contract": {
+          "status": "50%",
+          "note": "contract_schema + validateContract，函数已实现，未端到端测试"
+        },
+        "backward_implementation": {
+          "status": "40%",
+          "note": "蓝图对照 + verification，定义完整，自动化执行链路最长"
+        },
+        "ide_communication": {
+          "status": "60%",
+          "note": "IDE Bridge + 3 角色分工，插件已打包，自动化触发已定义"
+        },
+        "automation_execution": {
+          "status": "30%",
+          "note": "4 个自动化 prompt 模板已生成，未在 IDE 中实际配置运行"
+        }
+      },
+      "critical_gap": "端到端跑通一次完整链路——所有模块都定义了但未串联验证，这是当前最大缺口"
+    },
+    "deferred_items": {
+      "description": "端到端跑通后再补的延期项。这些在行业标准框架中很重要，但对'一句话→最终目标'的最小可行链路不是必须的。",
+      "items": {
+        "agentops_monitoring": {
+          "reason": "AgentOps 监控在链路稳定后再加，当前阶段人工观察即可",
+          "trigger": "端到端跑通 3 次后"
+        },
+        "a2a_protocol": {
+          "reason": "A2A 标准化协议在 Bridge 稳定后再考虑，当前 WebSocket 足够",
+          "trigger": "Bridge 连续运行 24h 无故障后"
+        },
+        "german_governance_l4_l6": {
+          "reason": "Gartner L4-L6 治理在真正需要人工升级时再加，当前 three_strikes 足够",
+          "trigger": "首次出现需要人工介入的阻塞后"
+        },
+        "full_ontology_14_entities": {
+          "reason": "14 实体中 8 个 core 实体足够当前阶段使用，其余 6 个在需要时激活",
+          "trigger": "OAG 管道验证通过后"
+        },
+        "mcp_server_encapsulation": {
+          "reason": "MCP 封装在 plugin 分发前做，当前 orchestrator.js 直接调用即可",
+          "trigger": "开始 Plugin 分发时"
+        }
+      }
+    },
+    "hard_constraints": {
+      "description": "最小可行链路硬约束。定义哪些维度低于阈值时不能进入下一阶段。",
+      "stop_thresholds": {
+        "phase_1_intent": {
+          "min": 0.5,
+          "description": "意图锚定 < 50% → 无法进入 Phase 2。根目标都不清楚，后续全错"
+        },
+        "gate_enforcement": {
+          "min": 0.5,
+          "description": "门禁引擎 < 50% → 无法进入 Phase 2。门禁不执行，后续 Phase 不会触发"
+        },
+        "forward_decomposition": {
+          "min": 0.3,
+          "description": "去程拆解 < 30% → 无法进入 Phase 6。蓝图都没画完，不能开始实现"
+        },
+        "goal_alignment": {
+          "min": 0.4,
+          "description": "目标对齐 < 40% → 无法进入 Phase 7。没人盯着，验证无意义"
+        },
+        "automation_execution": {
+          "min": 0.2,
+          "description": "自动化执行 < 20% → 全链路无法自动跑通。可手动执行，不阻塞"
+        }
+      },
+      "on_stop": "任一维度低于 min → 标记 blocked，该维度成为当前最高优先级修复项"
+    }
+  },
+  "evolution_rules": {
+    "description": "演进三原则（V3.7.1 审计纠偏新增）。基于 Sessions 4-6 研究漂移带的教训，制定三条规则防止未来重复偏离。",
+    "rules": [
+      {
+        "id": "rule_1",
+        "name": "研究必须有工程锚点",
+        "content": "任何研究启动前，必须先回答'这个研究结果会被哪个文件/哪个函数使用？'如果回答不上来，说明研究时机未到。",
+        "anti_pattern": "Session 4-5 的本体论全景研究和行业标准对比——有价值但无工程锚点，导致漂移。",
+        "positive_pattern": "Session 8 的 Harness 研究——每个洞察都有对应的代码落脚点（Sprint Contract → validateContract, 上下文焦虑 → context_defense）。"
+      },
+      {
+        "id": "rule_2",
+        "name": "标准对齐从需求出发",
+        "content": "不是'行业有 6 层标准，我们差多少'，而是'我们要实现一句话→最终目标，最少需要哪几层？'",
+        "anti_pattern": "Session 6 的 6 层标准框架差距分析——用外部标准反推需求，得出误导性的 18%。",
+        "positive_pattern": "Session 10 的 4 个融合点——每个都是从总纲自身需求推导的，不是从行业标准反推的。"
+      },
+      {
+        "id": "rule_3",
+        "name": "完成度评估用最小可行链路",
+        "content": "后续每一次完成度评估，都必须以'一句话→最终目标的最小可行链路'为唯一标尺，不使用行业标准框架。",
+        "anti_pattern": "Session 6 的 18% 评估——基于错误坐标系，传递了'离目标很远'的错误信号。",
+        "positive_pattern": "V3.7.1 的 50-55% 评估——基于最小可行链路，准确反映了实际进展。"
+      }
+    ],
+    "quantification": {
+      "description": "演进三原则量化判定标准。将口号转化为可验证的检查项。",
+      "rules": {
+        "rule_1": {
+          "name": "研究必须有工程锚点",
+          "quantified_check": "研究启动前，在 research_proposal.md 中填写 target_file 和 target_function 字段。两者均为空 → 研究被阻止。",
+          "verification": "research_proposal.target_file 非空 AND research_proposal.target_function 非空"
+        },
+        "rule_2": {
+          "name": "标准对齐从需求出发",
+          "quantified_check": "任何标准引入前，在 standard_adoption.md 中填写 derived_from_requirement 字段。引用总纲中哪个 Phase 的哪个需求驱动了此标准。",
+          "verification": "standard_adoption.derived_from_requirement 非空 AND 引用有效"
+        },
+        "rule_3": {
+          "name": "完成度评估用最小可行链路",
+          "quantified_check": "完成度评估报告必须基于 minimum_viable_chain 的 8 个维度计算，不得引用外部行业标准框架。",
+          "verification": "评估报告来源 = minimum_viable_chain.core_chain.items"
+        }
+      }
+    }
+  },
+  "conversation_self_audit": {
+    "description": "对话级自审条款（V3.8.0 新增）。Agent 在每次回答前，必须自问以下三问。任意一项为'是'→ 回答已偏离用户的一句话，必须重写。这是总纲方法论在对话层面的应用——不是'Agent 不够聪明'，而是'Agent 聊着聊着就忘了最初的问题'。",
+    "principle": "把用户的一句话钉在屏幕上当标尺。每次回答前检查。",
+    "three_questions": [
+      {
+        "id": "q1_respond_to_original",
+        "question": "我的回答是否直接回应了用户的一句话？",
+        "fail_indicator": "回答在分析背景、展开相关话题、提供额外信息，但没有先给出用户要的答案",
+        "anti_example": "用户问'其他 Phase 有没有同样问题？'，回答是'逐 Phase 分析了漏洞，然后引入了领域翻译层新概念，最后问用户要不要继续'——没有先给出'是/否'的明确结论"
+      },
+      {
+        "id": "q2_no_new_concepts",
+        "question": "我是否引入了用户没问的新概念？",
+        "fail_indicator": "回答中出现了用户原问题里没有的新术语、新框架、新方案，且这些新概念不是回答用户问题的必要部分",
+        "anti_example": "用户问'其他 Phase 有没有同样问题？'，回答引入了'领域翻译层'——用户没问解决方案，只问了诊断"
+      },
+      {
+        "id": "q3_no_decision_pushback",
+        "question": "我是否在不必要的时候把决策推回给了用户？",
+        "fail_indicator": "回答结尾是'你想让我...？''你觉得...？''要不要我...？'而不是直接给出结论并自动推进",
+        "anti_example": "回答结尾问'你想让我继续深入，还是你有其他想法？'——把决策权推回给用户，违反了全自动原则"
+      }
+    ],
+    "enforcement": "每次回答前，Agent 必须在内部执行这三问。任意一项失败 → 回答已偏离，丢弃当前回答，从用户的一句话重新开始。"
+  },
   "phase_gate_engine": {
     "description": "Phase 门禁引擎（V3.6 新增）。解决'Agent 系统性跳过中间 Phase'的根因。每个 Phase 读取 gate_file（前置条件），写入 produce_file（强制产出）。Agent 在启动任何任务前，必须先读取本引擎，按 gate_file 列表逐项检查，不满足则拒绝执行。",
     "version": "1.0.0",
     "principle": "门禁即执行。Agent 不需要'理解'Phase 的价值——它只需要知道：不产出 gate_file 就无法进入下一 Phase。",
-
     "mandatory_on_startup": {
+      "step_0": "Phase 0: Agent 执行约束收敛引擎（convergence_engine），通过5层关键词匹配+参考标准字典确定 domain/subtype/platform/structural_params/domain_rules/acceptance_criteria，产出 domain_classification.json",
       "step_1": "Agent 读取本 phase_gate_engine 章节",
       "step_2": "Agent 列出当前任务所有 phase 的 gate_file 和 produce_file",
       "step_3": "Agent 从 Phase 1 开始，逐个检查 gate_file 是否存在",
-      "step_4": "如果 gate_file 不存在 → 该 Phase 是当前 Phase，开始执行",
+      "step_4": "如果 gate_file 不存在 → 该 Phase 是当前 Phase，开始执行（使用该 Phase 的 domain_variants 中对应领域的定义，领域由 convergence_engine 的 domain_classification.json 确定）",
       "step_5": "执行完成后，写入 produce_file → 自动进入下一 Phase",
       "step_6": "重复直到 Phase 8 produce_file 全部存在",
       "step_7": "任何时候不得跳过 Phase。连续 2 个 produce_file 缺失 → 认定为系统性故障"
     },
-
     "anti_skip_mechanism": {
       "description": "防止 Agent 跳过中间 Phase 直接执行 Phase 6。",
       "rule": "如果 Phase 6 的 gate_file_1（interfaces.json）不存在，Agent 不得执行 Phase 6，必须从缺失的最早 Phase 开始。",
       "check_before_phase_6": "必须确认 gate_file_1 到 gate_file_5 全部存在。缺任一个 → 拒绝执行 Phase 6，回退到缺失 Phase。"
     },
-
+    "sprint_contract_engine": {
+      "description": "Sprint Contract 引擎（V4.1 新增）。借鉴 Anthropic Harness 工程的 Sprint Contract 模式：每个 Phase 开始前，Evaluator（OpenClaw）与 Generator（Codex/Cursor）签订验收合同，明确什么算'通过'。执行完成后，对照合同逐条检查。不通过 → 标记具体原因 → 打回重做。",
+      "version": "1.0.0",
+      "principle": "验收前置。不是'做完后看看行不行'，而是'开始前先说好什么叫行'。",
+      "contract_schema": {
+        "sprint_contract": {
+          "contract_id": "sc_phase_1_task_xxx",
+          "phase": "1",
+          "task_id": "task_xxx",
+          "negotiated_by": "openclaw_evaluator",
+          "negotiated_at": "ISO8601",
+          "acceptance_criteria": [
+            {
+              "id": "ac_1",
+              "description": "可验证的验收条件描述",
+              "verification": "自动化验证方法（如：检查 path.json 的 nodes 数组长度 > 0）",
+              "verification_type": "file_exists | field_check | value_range | schema_match | count_check | content_length",
+              "weight": "critical | major | minor",
+              "target_file": "{task_dir}/path.json",
+              "target_field": "path.nodes",
+              "expected_value": "数组长度 > 0",
+              "fail_action": "reject | retry | warn"
+            }
+          ],
+          "max_retries": 3,
+          "retry_strategy": "每次重试前，Generator 必须读取 failure_details 并针对性修正"
+        }
+      },
+      "result_schema": {
+        "contract_result": {
+          "contract_id": "sc_phase_1_task_xxx",
+          "result": "pass | fail | needs_revision",
+          "checked_at": "ISO8601",
+          "checker": "openclaw_evaluator",
+          "criteria_results": [
+            {
+              "ac_id": "ac_1",
+              "passed": true,
+              "actual_value": "nodes 数组长度 = 5",
+              "notes": ""
+            }
+          ],
+          "failure_details": [
+            {
+              "ac_id": "ac_2",
+              "reason": "path.end 为空",
+              "file": "{task_dir}/path.json",
+              "field": "path.end",
+              "fix_suggestion": "请设置 path.end 为目标终点节点 ID"
+            }
+          ],
+          "overall_result": "pass"
+        }
+      }
+    },
     "gates": {
       "phase_1": {
         "phase_name": "意图锚定",
         "gate_file": "无（Phase 1 是起点，不需要前置文件）",
         "produce_file": "{task_dir}/spec.json",
-        "produce_check": { "fields": ["clarified_requirement.one_liner", "goal_trace.root_goal", "self_audit_log", "acceptance_criteria"] },
+        "produce_check": {
+          "fields": [
+            "clarified_requirement.one_liner",
+            "goal_trace.root_goal",
+            "self_audit_log",
+            "acceptance_criteria"
+          ]
+        },
         "checkpoint_self": {
           "description": "单 Agent 模式下自检（替代 OpenClaw cp_0）",
           "checks": [
@@ -84,10 +1523,21 @@
         "phase_name": "路径锚定",
         "gate_file": "{task_dir}/spec.json（必须存在）",
         "produce_file": "{task_dir}/path.json",
-        "produce_check": { "fields": ["path.start", "path.end", "path.nodes", "path.is_connected"] },
+        "produce_check": {
+          "fields": [
+            "path.start",
+            "path.end",
+            "path.nodes",
+            "path.is_connected"
+          ]
+        },
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_1.self_check.json",
-          "checks": ["path.json 存在", "path 终点与 spec.json.one_liner 一致", "path 无断点"]
+          "checks": [
+            "path.json 存在",
+            "path 终点与 spec.json.one_liner 一致",
+            "path 无断点"
+          ]
         },
         "cannot_skip": "如果 path.json 不存在，Phase 3 的 gate_file 不存在。"
       },
@@ -95,10 +1545,20 @@
         "phase_name": "节点识别",
         "gate_file": "{task_dir}/path.json（必须存在）",
         "produce_file": "{task_dir}/nodes.json",
-        "produce_check": { "fields": ["nodes", "每个节点含 maps_to_root_goal"] },
+        "produce_check": {
+          "fields": [
+            "nodes",
+            "每个节点含 maps_to_root_goal"
+          ]
+        },
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_2.self_check.json",
-          "checks": ["nodes.json 存在", "每个节点 maps_to_root_goal 非空", "无 extraneous 节点", "无 missing 维度"]
+          "checks": [
+            "nodes.json 存在",
+            "每个节点 maps_to_root_goal 非空",
+            "无 extraneous 节点",
+            "无 missing 维度"
+          ]
         },
         "cannot_skip": "如果 nodes.json 不存在，Phase 4 的 gate_file 不存在。"
       },
@@ -106,10 +1566,68 @@
         "phase_name": "接口契约",
         "gate_file": "{task_dir}/nodes.json（必须存在）",
         "produce_file": "{task_dir}/interfaces.json",
-        "produce_check": { "fields": ["interfaces", "每个接口含 schema_match", "interface_chain_validation"] },
+        "produce_check": {
+          "fields": [
+            "interfaces",
+            "每个接口含 schema_match",
+            "interface_chain_validation"
+          ]
+        },
+        "domain_variants": {
+          "description": "接口契约在不同领域的含义不同。Phase 4 不是通用步骤，而是根据领域选择对应的契约定义。",
+          "creative": {
+            "name": "叙事结构契约",
+            "description": "创作类没有'接口'，有的是叙事结构约束。",
+            "produce_file": "{task_dir}/interfaces.json",
+            "required_checks": [
+              "视角转换点：每个视角切换的位置和规则",
+              "时间线节点：故事时间线的关键节点和顺序",
+              "人物弧光节点：每个主要人物的成长/变化节点",
+              "章节约束：每章的字数范围、节奏要求、钩子类型"
+            ],
+            "schema_match_means": "每个创作约束（视角、时间线、人物弧光、章节）都在后续产出中有对应的落实"
+          },
+          "development": {
+            "name": "接口契约",
+            "description": "开发类的标准接口定义。",
+            "produce_file": "{task_dir}/interfaces.json",
+            "required_checks": [
+              "API 定义：每个端点的输入/输出/错误码",
+              "数据模型：实体关系、字段类型、约束",
+              "组件通信：props/events/state 的传递规则"
+            ],
+            "schema_match_means": "每个接口的输入输出 Schema 在上下游一致"
+          },
+          "analysis": {
+            "name": "数据流契约",
+            "description": "分析类定义数据从源到结论的流动。",
+            "produce_file": "{task_dir}/interfaces.json",
+            "required_checks": [
+              "数据源→指标→图表→结论的映射关系",
+              "每个分析维度的计算方法和数据来源",
+              "输出格式与目标受众的匹配"
+            ],
+            "schema_match_means": "每个分析步骤的输入数据源和输出格式在链路上一致"
+          },
+          "research": {
+            "name": "知识结构契约",
+            "description": "研究类定义知识组织的结构。",
+            "produce_file": "{task_dir}/interfaces.json",
+            "required_checks": [
+              "主题→子主题→论据的层级关系",
+              "每个论点的来源和引用格式",
+              "结论与调研问题的对应关系"
+            ],
+            "schema_match_means": "每个调研主题的结论能追溯到对应的来源和论据"
+          }
+        },
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_3.self_check.json",
-          "checks": ["interfaces.json 存在", "每个接口 schema_match: true", "数值约束与 spec 一致"]
+          "checks": [
+            "interfaces.json 存在",
+            "每个接口 schema_match: true",
+            "数值约束与 spec 一致"
+          ]
         },
         "cannot_skip": "如果 interfaces.json 不存在，Phase 5 的 gate_file 不存在。"
       },
@@ -117,12 +1635,49 @@
         "phase_name": "递归拆解",
         "gate_file": "{task_dir}/interfaces.json（必须存在）",
         "produce_file": "{task_dir}/nodes/（至少 1 个子节点 spec.json）",
-        "produce_check": { "condition": "nodes/ 目录存在且包含至少 1 个 {node_id}/spec.json" },
+        "produce_check": {
+          "condition": "nodes/ 目录存在且包含至少 1 个 {node_id}/spec.json"
+        },
+        "domain_variants": {
+          "description": "递归拆解在不同领域的拆分粒度和停止条件不同。",
+          "creative": {
+            "name": "叶节点展开",
+            "description": "创作类不递归，直接展开为叶节点。每个叶节点 = 一个可独立完成的内容单元。",
+            "produce_file": "{task_dir}/leaf_nodes.json",
+            "stop_condition": "每个叶节点满足：原子性（可一次会话完成）、可验证性（有明确的数值化验收标准）、目标回溯（能反向追溯到 acceptance_criteria）、无交叉依赖。",
+            "node_count_rule": "叶节点数 ≥ acceptance_criteria 数量，≤ acceptance_criteria 数量 × 2。如 acceptance_criteria 有 6 条，则叶节点 6-12 个。",
+            "example": "小说：每章一个叶节点。文章：每节一个叶节点。剧本：每场一个叶节点。"
+          },
+          "development": {
+            "name": "递归拆解",
+            "description": "开发类标准递归：项目 → 模块 → 子模块 → 组件，递归深度 4 层。",
+            "produce_file": "{task_dir}/nodes/（含子目录）",
+            "stop_condition": "每个叶节点 = 一个独立可编译/可测试的代码单元。",
+            "node_count_rule": "由功能分解自然决定，不设硬性上限。"
+          },
+          "analysis": {
+            "name": "分析维度展开",
+            "description": "分析类按分析维度展开：总览 → 维度 → 子维度 → 指标。",
+            "produce_file": "{task_dir}/nodes/（含子目录）",
+            "stop_condition": "每个叶节点 = 一个可独立计算/查询的指标。",
+            "node_count_rule": "叶节点数 = 分析维度数 × 每个维度的指标数。"
+          },
+          "research": {
+            "name": "主题展开",
+            "description": "研究类按主题展开：总览 → 主题 → 子主题 → 论据。",
+            "produce_file": "{task_dir}/nodes/（含子目录）",
+            "stop_condition": "每个叶节点 = 一个可独立收集/验证的论据。",
+            "node_count_rule": "由研究主题的自然层级决定。"
+          }
+        },
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_4.self_check.json",
-          "checks": ["nodes/ 子目录存在", "至少 1 个子节点 spec.json", "每个子节点含 goal_trace"]
+          "checks": [
+            "nodes/ 子目录存在 或 leaf_nodes.json 存在",
+            "至少 1 个子节点 spec.json 或叶节点",
+            "每个子节点/叶节点含 goal_trace"
+          ]
         },
-        "创作类_简化": "创作类任务（如小说大纲）递归深度为 2 层。如果 nodes.json 中节点数 ≤ 6 且每个节点可直接映射到内容单元，可以不递归，但必须显式声明叶节点列表并写入 {task_dir}/leaf_nodes.json。",
         "cannot_skip": "如果 nodes/ 和 leaf_nodes.json 都不存在，Phase 5 未完成。"
       },
       "phase_6": {
@@ -130,12 +1685,18 @@
         "gate_file_1": "{task_dir}/interfaces.json（必须存在）",
         "gate_file_2": "{task_dir}/nodes/ 或 {task_dir}/leaf_nodes.json（必须存在）",
         "produce_file": "{task_dir}/../code/ 或 最终产出文件",
-        "produce_check": { "condition": "最终产出文件存在且内容非空" },
+        "produce_check": {
+          "condition": "最终产出文件存在且内容非空"
+        },
         "blueprint_check_on_start": "Agent 在开始实现前，必须先读取 path.json 和 nodes.json，列出蓝图要求的 Section 清单，打印到日志中。",
         "blueprint_check_on_end": "Agent 在实现完成后，必须列出实际产出的 Section，与蓝图对照，写入 {task_dir}/blueprint_comparison.json。",
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_5.self_check.json",
-          "checks": ["最终产出存在", "实际 Section 数 ≥ 蓝图 Section 数", "blueprint_comparison.json 存在"]
+          "checks": [
+            "最终产出存在",
+            "实际 Section 数 ≥ 蓝图 Section 数",
+            "blueprint_comparison.json 存在"
+          ]
         },
         "cannot_skip": "Phase 6 是回程唯一的内容产出阶段。无法跳过。"
       },
@@ -143,7 +1704,79 @@
         "phase_name": "通路验证",
         "gate_file": "Phase 6 的最终产出文件（必须存在）",
         "produce_file": "{task_dir}/verification.json",
-        "produce_check": { "fields": ["verification_results", "所有模块 status 为 passed"] },
+        "produce_check": {
+          "fields": [
+            "verification_results",
+            "所有模块 status 为 passed"
+          ]
+        },
+        "domain_variants": {
+          "description": "通路验证在不同领域的自动化程度不同。创作类有大量定性判断，开发类几乎全可自动化。",
+          "creative": {
+            "name": "内容验证",
+            "description": "创作类的验证分为可自动化部分和需人工/独立 Agent 审查部分。",
+            "automated_checks": [
+              "章节数/节数",
+              "总字数",
+              "每章字数范围",
+              "格式合规",
+              "钩子/悬念存在性"
+            ],
+            "manual_checks": [
+              "逻辑一致性",
+              "文学质量",
+              "人物一致性",
+              "伏笔连贯性"
+            ],
+            "principle": "可自动化的检查必须自动化。定性检查由独立 Agent（非作者）执行，不是作者自评。"
+          },
+          "development": {
+            "name": "自动化验证",
+            "description": "开发类的验证几乎全可自动化。",
+            "automated_checks": [
+              "测试通过率",
+              "代码覆盖率",
+              "构建成功",
+              "lint 通过",
+              "类型检查",
+              "API 响应"
+            ],
+            "manual_checks": [
+              "代码审查（由独立 Agent 执行）"
+            ],
+            "principle": "全部自动化。唯一例外是代码审查，由独立 Agent 执行。"
+          },
+          "analysis": {
+            "name": "数据验证",
+            "description": "分析类的验证重点是数据准确性。",
+            "automated_checks": [
+              "数据源完整性",
+              "计算正确性",
+              "图表与数据一致性",
+              "引用完整性"
+            ],
+            "manual_checks": [
+              "结论合理性",
+              "洞察深度"
+            ],
+            "principle": "数据层面的检查全部自动化，洞察层面由独立 Agent 审查。"
+          },
+          "research": {
+            "name": "知识验证",
+            "description": "研究类的验证重点是来源可靠性和逻辑完备性。",
+            "automated_checks": [
+              "引用完整性",
+              "覆盖度检查（是否遗漏关键主题）",
+              "格式一致性"
+            ],
+            "manual_checks": [
+              "论据可靠性",
+              "逻辑完备性",
+              "结论合理性"
+            ],
+            "principle": "结构化检查自动化，内容质量由独立 Agent 审查。"
+          }
+        },
         "content_verification": {
           "description": "自动化内容校验：不依赖 Agent 自评，直接读取最终产出文件进行数值比对。",
           "checks": [
@@ -156,7 +1789,11 @@
         "prohibition": "如果实际产出 < 承诺量 70%，verification.json 必须标记为 failed，不得写 passed。",
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_6.self_check.json",
-          "checks": ["verification.json 存在", "all_checkpoints 非空", "实际产出 ≥ 承诺量 70%"]
+          "checks": [
+            "verification.json 存在",
+            "all_checkpoints 非空",
+            "实际产出 ≥ 承诺量 70%"
+          ]
         },
         "cannot_skip": "如果 verification.json 不存在，Phase 8 的 gate_file 不存在。"
       },
@@ -178,12 +1815,16 @@
         },
         "checkpoint_self": {
           "result_file": "{task_dir}/supervisor_checkpoints/cp_7.self_check.json",
-          "checks": ["manifest.json 存在", "health_check.json 存在", "health_check 全部 pass", "INDEX.md 已更新"]
+          "checks": [
+            "manifest.json 存在",
+            "health_check.json 存在",
+            "health_check 全部 pass",
+            "INDEX.md 已更新"
+          ]
         },
         "cannot_skip": "Phase 8 是终点。如果 health_check.json 不存在，任务未完成。"
       }
     },
-
     "execution_chain_visual": {
       "description": "完整的门禁链。每个 Phase 的 produce_file 是下一 Phase 的 gate_file。",
       "chain": [
@@ -215,44 +1856,87 @@
         "全链路通路 = 从 spec.json 到 health_check.json 的 8 个文件全部存在且 gate 链完整"
       ]
     },
-
     "self_check_mode": {
       "description": "单 Agent 模式下，监督者检查点由 Agent 自检。这不是理想方案（理想方案是三 IDE 独立监督者），但远比'跳过检查点'好。",
       "rule": "Agent 必须以'审核者'身份（不是'作者'身份）执行自检。如果发现自己的产出有问题，必须标记为 failed 并重做。",
       "independence_proxy": "Agent 在自检时，只能读取 produce_file 的内容，不得参考自己的'设计思路'或'对话历史'。",
       "three_strikes": "同一 Phase 自检连续 3 次 failed → 标记为 blocked，写入 blockage.json，通知用户。"
     },
-
     "minimum_viable_execution": {
       "description": "创作类任务（如小说大纲、报告生成）的最小可执行链路。不允许跳过任何 Phase。",
       "创作类": {
-        "must_execute": ["Phase 1", "Phase 2", "Phase 3", "Phase 4", "Phase 5(简化)", "Phase 6", "Phase 7", "Phase 8"],
+        "must_execute": [
+          "Phase 1",
+          "Phase 2",
+          "Phase 3",
+          "Phase 4",
+          "Phase 5(简化)",
+          "Phase 6",
+          "Phase 7",
+          "Phase 8"
+        ],
         "phase_5_简化": "如果节点数 ≤ 6 且每个节点可直接映射到内容单元，写 leaf_nodes.json 替代 nodes/。",
-        "minimum_artifacts": ["spec.json", "path.json", "nodes.json", "interfaces.json", "leaf_nodes.json", "最终产出", "verification.json", "manifest.json", "health_check.json"]
+        "minimum_artifacts": [
+          "spec.json",
+          "path.json",
+          "nodes.json",
+          "interfaces.json",
+          "leaf_nodes.json",
+          "最终产出",
+          "verification.json",
+          "manifest.json",
+          "health_check.json"
+        ]
       }
+    },
+    "communication_layer": {
+      "description": "三层通信架构（V3.7 新增）。Layer1 IDE Bridge 实时消息推送（已实现），Layer2 Hooks 系统触发层（架构已定），Layer3 IM 机器人桥接（架构已定）。通信协议的唯一权威定义见 三IDE角色自动化联通协议_V2.1.md，此处仅引用。",
+      "layers": {
+        "layer_1_ide_bridge": {
+          "status": "implemented",
+          "description": "Agent↔Agent 实时通信，WebSocket 端口 9527"
+        },
+        "layer_2_hooks": {
+          "status": "architecture_defined",
+          "description": "系统级自动触发，Agent 不会忘"
+        },
+        "layer_3_im_bridge": {
+          "status": "architecture_defined",
+          "description": "Agent↔人 通信，微信/QQ/飞书"
+        }
+      },
+      "bridge_server": "ide-bridge.js",
+      "bridge_client": "ide-bridge-client.js",
+      "default_port": 9527,
+      "fallback": "V1.0 文件轮询（.pending → .processing → .result）"
     }
   },
-
   "supervisor_independence": {
     "description": "监督者必须与执行Agent物理分离。三IDE架构中，OpenClaw在独立IDE实例中运行。",
     "rule": "监督者检查点必须由独立Agent执行。执行Agent不得在产物中预填alignment_check字段。",
-    "implementation": "执行Agent写入.pending文件 → OpenClaw轮询到.pending → 独立执行检查点 → 写入.result",
+    "implementation": "执行Agent通过IDE Bridge发送checkpoint.request → OpenClaw实时收到 → 独立执行检查点 → 通过Bridge回复checkpoint.result",
     "prohibition": "执行Agent在产物中填写的任何supervisor_*或alignment_*字段将被OpenClaw标记为INVALID并重新检查",
-    "communication_protocol": "详见 三IDE角色自动化联通协议_V1.0.md"
+    "communication_protocol": "详见 三IDE角色自动化联通协议_V2.1.md（通信层唯一权威定义，含三层架构）"
   },
-
   "goal_alignment_supervisor": {
-    "description": "目标对齐监督者。独立Agent角色（OpenClaw），在独立IDE实例中运行，不参与任何执行。通过轮询supervisor_checkpoints/目录发现待审核任务。",
-    "role": "supervisor",
+    "description": "协调者+监督者（项目经理角色）。系统的唯一对接口和中心调度者——对上对接用户，对下管理Codex和Cursor，全程把控质量和进度。在独立IDE实例中运行，不参与任何设计或实现的执行。",
+    "role": "coordinator_supervisor",
     "agent": "openclaw",
     "ide_instance": "OpenClaw IDE（独立进程/窗口）",
-    "authority": "veto",
-    "poll_target": "/workspace/collaboration/deliverables/*/supervisor_checkpoints/",
+    "authority": "veto + dispatch + escalation",
+    "core_responsibilities": [
+      "第一道门禁：接收用户需求，判断可行性，必要时澄清",
+      "任务分配：将设计任务分配给Codex，将实现任务分配给Cursor",
+      "质量监督：8个检查点审核裁决（pass/fail）",
+      "异常处理：连续失败时阻断，必要时上报用户请求决策",
+      "结果交付：任务完成后统一通知用户"
+    ],
+    "communication": "三层通信架构的中心枢纽。通信协议详见 三IDE角色自动化联通协议_V2.1.md。",
     "root_goal_source": "项目级 Phase 1 产出的 spec.json.clarified_requirement.one_liner",
     "core_question": "这个节点的产出，能回到根目标吗？",
-    "on_pass": "写入 .result = pass。执行Agent继续下一Phase。",
-    "on_fail": "写入 .result = fail + failure_details。执行Agent重做当前Phase。",
-
+    "on_pass": "通过 Bridge 回复 checkpoint.result = pass。执行Agent继续下一Phase。",
+    "on_fail": "通过 Bridge 回复 checkpoint.result = fail + failure_details。执行Agent重做当前Phase。",
+    "on_blocked": "同一Phase连续3次fail → 广播error.blocked → 必要时上报用户",
     "checkpoints": {
       "checkpoint_0": {
         "id": "cp_0_phase_1_quality",
@@ -282,7 +1966,15 @@
           "path_endpoint_matches_root": "path.json 的路径终点是否等于根目标描述的最终产出"
         },
         "semantic_review": "路径能否反向追溯到根目标？",
-        "on_fail": "强制重做 Phase 2"
+        "on_fail": "强制重做 Phase 2",
+        "quantified_standard": {
+          "quantified_standard": {
+            "path_node_count": "节点数必须在 Phase 2 structural_parameters 范围内",
+            "connectivity": "prev/next 字段形成完整链，无断点",
+            "no_cycle": "无循环引用",
+            "endpoint_match": "路径终点描述与 spec.one_liner 一致"
+          }
+        }
       },
       "checkpoint_2": {
         "id": "cp_2_node_relevance",
@@ -294,7 +1986,14 @@
           "no_extraneous": "不存在无法对应 acceptance_criteria 的节点（标记为 extraneous）",
           "no_missing": "acceptance_criteria 中每个维度在 nodes.json 中都有对应节点（标记为 missing）"
         },
-        "on_fail": "强制重做 Phase 3"
+        "on_fail": "强制重做 Phase 3",
+        "quantified_standard": {
+          "quantified_standard": {
+            "node_count_per_level": "每层级节点数在 Phase 3 structural_parameters 范围内",
+            "no_overlap": "overlap_detection 无 redundancy 标记",
+            "full_coverage": "acceptance_criteria 每个维度有对应节点"
+          }
+        }
       },
       "checkpoint_3": {
         "id": "cp_3_interface_direction",
@@ -306,7 +2005,14 @@
           "numeric_consistency": "interfaces.json 中的数值约束（minItems, maxItems, enum）必须与 spec.json 的 scope 字段一致。比对项：章节数、伏笔数、人物数、卷数。不一致 → FAIL"
         },
         "iteration_rule": "每次 spec.json 被更新时，Phase 4 必须重新执行。Agent 不得跳过。",
-        "on_fail": "强制重做 Phase 4"
+        "on_fail": "强制重做 Phase 4",
+        "quantified_standard": {
+          "quantified_standard": {
+            "field_completeness": "consumer.consumes / producer.outputs >= 0.80",
+            "no_type_mismatch": "semantic_match 无 forbidden type_conversion",
+            "numeric_consistency": "数值约束与 spec.json scope 一致"
+          }
+        }
       },
       "checkpoint_4": {
         "id": "cp_4_decomposition_coverage",
@@ -317,7 +2023,14 @@
           "coverage_check": "子节点集合是否完整覆盖父节点功能需求",
           "no_extraneous_children": "有无多余子节点（过度拆解）"
         },
-        "on_fail": "强制重做 Phase 5"
+        "on_fail": "强制重做 Phase 5",
+        "quantified_standard": {
+          "quantified_standard": {
+            "atomicity": "所有叶节点满足 ATOM-1/2/3 全部三条",
+            "coverage": "子节点 coverage >= 1.0",
+            "recursion_depth": "递归深度 <= max_depth_by_task_type 且 >= Phase 0 L3 提取的最小层数"
+          }
+        }
       },
       "checkpoint_5": {
         "id": "cp_5_code_blueprint_match",
@@ -329,7 +2042,14 @@
           "deviation_rule": "实际 Section 数 < 蓝图数 → FAIL。实际 Section 数 > 蓝图数 → 标注'超出蓝图'并给出理由"
         },
         "semantic_review": "代码实现的功能是否与 spec 定义一致？是否实现了蓝图全部功能？是否超出蓝图（自行添加）？",
-        "on_fail": "强制重做 Phase 6"
+        "on_fail": "强制重做 Phase 6",
+        "quantified_standard": {
+          "quantified_standard": {
+            "section_count": "实际 Section 数 >= 蓝图数",
+            "quality_metrics": "所有 applicable quality_metrics 达标",
+            "deviation": "无 unauthorized deviation（未经标记的偏离）"
+          }
+        }
       },
       "checkpoint_6": {
         "id": "cp_6_test_alignment",
@@ -342,7 +2062,14 @@
           "pass_condition": "所有三项比对误差 < 30%"
         },
         "semantic_review": "测试用例验收标准是否对齐根目标？测试覆盖是否包含根目标所有核心功能？",
-        "on_fail": "强制重做 Phase 7"
+        "on_fail": "强制重做 Phase 7",
+        "quantified_standard": {
+          "quantified_standard": {
+            "coverage": "测试覆盖率 >= 80%",
+            "pass_rate": "所有层级测试 pass_rate = 100%",
+            "no_downgrade": "无降标声明，偏差 < 10%"
+          }
+        }
       },
       "checkpoint_7": {
         "id": "cp_7_delivery_traceability",
@@ -354,18 +2081,46 @@
           "output_vs_commitment": "实际产出是否 ≥ spec.json 承诺的 70%"
         },
         "semantic_review": "最终交付物能否完整回答根目标？能否从最终交付物反向追溯到根目标 one_liner？",
-        "on_fail": "强制重做 Phase 8"
+        "on_fail": "强制重做 Phase 8",
+        "quantified_standard": {
+          "quantified_standard": {
+            "all_files": "6 个核心文件全部存在",
+            "runnability": "所有 applicable runnability_check 通过",
+            "coverage_vs_commitment": "实际产出 >= spec 承诺的 70%"
+          }
+        }
       }
+    },
+    "unified_failure_policy": {
+      "description": "检查点失败统一处理规则。所有 8 个检查点适用同一套失败处理策略。",
+      "retry": {
+        "max_retries": 3,
+        "description": "同一 Phase 同一检查点最多重试 3 次"
+      },
+      "on_retry_exhausted": {
+        "action": "广播 error.blocked → 记录阻塞原因 → 若为关键路径则上报用户请求决策",
+        "critical_paths": [
+          "cp_0",
+          "cp_7"
+        ],
+        "non_critical_paths": [
+          "cp_1",
+          "cp_2",
+          "cp_3",
+          "cp_4",
+          "cp_5",
+          "cp_6"
+        ]
+      },
+      "escalation": "连续 3 次 fail 且为关键路径 → 上报用户。非关键路径 → 标记 blocked 但允许其他分支继续"
     }
   },
-
   "pass_boundary": {
     "description": "去程和回程的边界。叶节点是去程终点，也是回程起点。",
     "forward_pass_end": "叶节点（Level 4 开发类 / Level 2 创作类，不可再分）",
     "backward_pass_start": "叶节点（不可再分，转为回程 Phase 6-8）",
     "transition_rule": "到达叶节点后，不再递归，直接转为回程（Phase 6-8）"
   },
-
   "versioning": {
     "description": "产物版本化规则。每次 spec.json 被更新时，旧版本移动到 archive/。",
     "rule": "每次 spec.json 被更新时，旧版本移动到 archive/ 目录",
@@ -373,32 +2128,121 @@
     "current_path": "{task_dir}/spec.json（始终指向最新版本）",
     "manifest_tracking": "manifest.json 的 version_history 字段记录所有版本的关键参数变更"
   },
-
   "global_config": {
-    "tech_stack": { "language": "TypeScript", "runtime": "Node.js" },
-    "code_style": { "naming": "camelCase", "indent": 2, "file_structure": "src/nodes/{node_name}/index.ts" },
-    "test_standards": { "framework": "jest", "min_cases_per_node": 3, "auto_fix_retries": 3 },
-    "doc_standards": { "root": "/workspace/docs", "index_file": "/workspace/docs/INDEX.md", "archive_dir": "/workspace/docs/archive", "naming_rule": "禁止版本号后缀" },
-    "paths": { "intermediate": "/workspace/intermediate/{node_id}/output", "collaboration": "/workspace/collaboration" },
-    "external_services": { "ollama": "http://localhost:11434", "qdrant": "http://localhost:6333" },
-    "quality_thresholds": { "relevance_score": 0.6, "link_validity_rate": 1.0 }
+    "tech_stack": {
+      "language": "TypeScript",
+      "runtime": "Node.js"
+    },
+    "code_style": {
+      "naming": "camelCase",
+      "indent": 2,
+      "file_structure": "src/nodes/{node_name}/index.ts"
+    },
+    "test_standards": {
+      "framework": "jest",
+      "min_cases_per_node": 3,
+      "auto_fix_retries": 3
+    },
+    "doc_standards": {
+      "root": "/workspace/docs",
+      "index_file": "/workspace/docs/INDEX.md",
+      "archive_dir": "/workspace/docs/archive",
+      "naming_rule": "禁止版本号后缀"
+    },
+    "paths": {
+      "intermediate": "/workspace/intermediate/{node_id}/output",
+      "collaboration": "/workspace/collaboration"
+    },
+    "external_services": {
+      "ollama": "http://localhost:11434",
+      "qdrant": "http://localhost:6333"
+    },
+    "quality_thresholds": {
+      "relevance_score": 0.6,
+      "link_validity_rate": 1
+    }
   },
-
   "level_definitions": {
     "description": "递归树的层级定义。去程逐层拆解，回程逐层合成。所有层级 Phase 1 均为全自动。监督者检查点覆盖所有层级。创作类任务递归深度降至2层，开发类任务维持4层。",
     "task_type_grading": {
-      "创作类": { "max_depth": 2, "description": "项目级 → 卷/篇章级 → 叶节点。卷→章即到叶节点。", "examples": ["小说大纲", "报告生成", "文档撰写"] },
-      "开发类": { "max_depth": 4, "description": "项目级 → 宏观节点 → 模块 → 子节点 → 叶节点。", "examples": ["功能开发", "系统构建", "数据处理管线"] }
+      "创作类": {
+        "max_depth": 2,
+        "description": "项目级 → 卷/篇章级 → 叶节点。卷→章即到叶节点。",
+        "examples": [
+          "小说大纲",
+          "报告生成",
+          "文档撰写"
+        ]
+      },
+      "开发类": {
+        "max_depth": 4,
+        "description": "项目级 → 宏观节点 → 模块 → 子节点 → 叶节点。",
+        "examples": [
+          "功能开发",
+          "系统构建",
+          "数据处理管线"
+        ]
+      }
     },
     "levels": [
-      { "id": 0, "name": "项目级", "phase_1_mode": "autonomous_44_question_audit", "children": "macro_nodes", "direction": "去程起点，回程终点", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["创作类", "开发类"] },
-      { "id": 1, "name": "宏观节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": "modules", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"], "创作类_替代": "卷/篇章级" },
-      { "id": 2, "name": "模块级", "phase_1_mode": "self_qa_with_goal_trace", "children": "sub_nodes", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"], "创作类_替代": "叶节点（章级，不可再分）" },
-      { "id": 3, "name": "子节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": "leaf_nodes", "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"] },
-      { "id": 4, "name": "叶节点级", "phase_1_mode": "self_qa_with_goal_trace", "children": null, "terminal": true, "description": "不可再分，一个函数/一个内容单元能实现。去程终点，回程起点。", "supervisor_checkpoints": "cp_0, cp_5, cp_6, cp_7", "applicable_task_types": ["开发类"] }
+      {
+        "id": 0,
+        "name": "项目级",
+        "phase_1_mode": "autonomous_44_question_audit",
+        "children": "macro_nodes",
+        "direction": "去程起点，回程终点",
+        "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7",
+        "applicable_task_types": [
+          "创作类",
+          "开发类"
+        ]
+      },
+      {
+        "id": 1,
+        "name": "宏观节点级",
+        "phase_1_mode": "self_qa_with_goal_trace",
+        "children": "modules",
+        "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7",
+        "applicable_task_types": [
+          "开发类"
+        ],
+        "创作类_替代": "卷/篇章级"
+      },
+      {
+        "id": 2,
+        "name": "模块级",
+        "phase_1_mode": "self_qa_with_goal_trace",
+        "children": "sub_nodes",
+        "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7",
+        "applicable_task_types": [
+          "开发类"
+        ],
+        "创作类_替代": "叶节点（章级，不可再分）"
+      },
+      {
+        "id": 3,
+        "name": "子节点级",
+        "phase_1_mode": "self_qa_with_goal_trace",
+        "children": "leaf_nodes",
+        "supervisor_checkpoints": "cp_0, cp_1, cp_2, cp_3, cp_4, cp_5, cp_6, cp_7",
+        "applicable_task_types": [
+          "开发类"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "叶节点级",
+        "phase_1_mode": "self_qa_with_goal_trace",
+        "children": null,
+        "terminal": true,
+        "description": "不可再分，一个函数/一个内容单元能实现。去程终点，回程起点。",
+        "supervisor_checkpoints": "cp_0, cp_5, cp_6, cp_7",
+        "applicable_task_types": [
+          "开发类"
+        ]
+      }
     ]
   },
-
   "goal_trace_schema": {
     "description": "每个节点的 spec.json 必须包含 goal_trace 字段，形成从叶节点到根目标的完整追溯链。",
     "required_fields": {
@@ -410,7 +2254,6 @@
     },
     "validation_rule": "监督者沿着 trace_path 反向验证：my_goal → parent_goal → root_goal 是否形成连续的、无断点的语义链。"
   },
-
   "phase_1_autonomous": {
     "description": "Phase 1 — 所有层级全自动。Agent 自问自答，不询问用户，不等待确认，直接产出 spec.json（含 goal_trace）。",
     "id": "intent_anchor",
@@ -418,10 +2261,8 @@
     "pass": "forward",
     "type": "fully_autonomous",
     "goal": "Agent 调用自问自答深度检查清单，按 8 维度 44 问自审，产出 spec.json（含 goal_trace），自动进入检查点 0。",
-
     "self_audit_checklist": "/workspace/开发总纲_问答题框架.md",
     "self_audit_checklist_description": "Phase 1 自问自答深度检查清单。8维度44问：意图锚定(5问)、边界划定(5问)、架构建模(5问)、接口契约(5问)、模块拆解(5问)、实现路径(5问)、验证闭环(7问)、交付收尾(7问)。",
-
     "agent_workflow": {
       "step_1": "读取用户的一句话输入",
       "step_2": "调用自问自答深度检查清单，按 8 维度 44 问逐层自审。必须输出 44 个独立回答，不得合并为 8 维度摘要。缺 1 个 → cp_0 FAIL。",
@@ -430,26 +2271,75 @@
       "step_5": "自评置信度（inferred 比例 > 30% → 标记 low-confidence，但不阻塞）",
       "step_6": "写入 spec.json，自动进入检查点 0（不等待用户）"
     },
-
     "self_audit_log_format": {
       "强制格式": "44 个独立字段，不是 8 个维度摘要",
-      "dimension_1": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_2": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_3": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_4": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_5": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_6": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填" },
-      "dimension_7": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填", "q6": "必填", "q7": "必填" },
-      "dimension_8": { "q1": "必填", "q2": "必填", "q3": "必填", "q4": "必填", "q5": "必填", "q6": "必填", "q7": "必填" },
+      "dimension_1": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_2": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_3": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_4": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_5": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_6": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填"
+      },
+      "dimension_7": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填",
+        "q6": "必填",
+        "q7": "必填"
+      },
+      "dimension_8": {
+        "q1": "必填",
+        "q2": "必填",
+        "q3": "必填",
+        "q4": "必填",
+        "q5": "必填",
+        "q6": "必填",
+        "q7": "必填"
+      },
       "cp_0_check": "自动化检查：self_audit_log 中必须有 44 个独立字段，缺 1 个 → FAIL"
     },
-
     "quality_mechanism": {
       "description": "44 问自审 + 监督者检查点 0 双重保障。",
       "confidence_rule": "如果 inferred 比例 > 30%，在 spec.json 中标记 low_confidence_flags。监督者检查点 0 可能拒绝。",
       "no_user_interaction": "Phase 1 全程不输出任何内容给用户，不等待任何用户输入。"
     },
-
     "gate_to_phase_2": {
       "conditions": [
         "spec.json 存在且格式正确",
@@ -459,9 +2349,73 @@
         "监督者检查点 0 通过（OpenClaw 写入 .result = pass）"
       ],
       "auto_proceed": true
+    },
+    "consistency_check": {
+      "description": "44 问内部一致性校验。防止回答间矛盾（如 q12 说日更而 q28 说周更）。",
+      "rules": [
+        {
+          "id": "CC-1",
+          "name": "频率一致性",
+          "check": "q12(更新频率) 与 q28(交付节奏) 的数值必须一致。不一致 → FAIL",
+          "severity": "hard"
+        },
+        {
+          "id": "CC-2",
+          "name": "范围一致性",
+          "check": "q3(范围边界) 与 q44(交付物清单) 的枚举必须互不矛盾。边界外的东西出现在交付物中 → FAIL",
+          "severity": "hard"
+        },
+        {
+          "id": "CC-3",
+          "name": "格式一致性",
+          "check": "q22(输出格式) 与 q41(交付格式) 必须一致。不一致 → 标记 inconsistency",
+          "severity": "soft"
+        },
+        {
+          "id": "CC-4",
+          "name": "数量一致性",
+          "check": "q13(规模预估) 的数值 ≥ q35(最小交付量) 的数值。不满足 → FAIL",
+          "severity": "hard"
+        },
+        {
+          "id": "CC-5",
+          "name": "角色一致性",
+          "check": "q8(目标用户) 与 q19(接口消费者) 必须兼容。角色冲突 → 标记 inconsistency",
+          "severity": "soft"
+        }
+      ],
+      "execution": "Phase 1 step_3 之后、step_5 之前执行。任意 hard 规则 FAIL → 标记 cp_0 不通过。"
+    },
+    "hard_constraints": {
+      "description": "Phase 1 硬约束。违反任意一条 → cp_0 FAIL，强制重做 Phase 1。",
+      "constraints": [
+        {
+          "id": "HC-1",
+          "name": "核心维度不可全推断",
+          "rule": "dimension_1(意图锚定) 和 dimension_2(边界划定) 中，inferred 回答的比例不得同时 > 50%",
+          "rationale": "如果连做什么和边界在哪都是推断的，后续全部不可靠"
+        },
+        {
+          "id": "HC-2",
+          "name": "44 问完整性",
+          "rule": "self_audit_log 必须包含 44 个独立字段，缺 1 个 → FAIL",
+          "rationale": "44 问是 spec 的骨架，缺一问 = 维度缺失"
+        },
+        {
+          "id": "HC-3",
+          "name": "一致性校验零 hard 失败",
+          "rule": "consistency_check 中所有 severity=hard 的规则必须全部通过",
+          "rationale": "回答间矛盾 = spec 不可信"
+        },
+        {
+          "id": "HC-4",
+          "name": "one_liner 不可为空",
+          "rule": "clarified_requirement.one_liner 必须非空且 ≥ 10 个字符",
+          "rationale": "一句话精炼需求是整条链路的根锚点"
+        }
+      ]
     }
   },
-
   "phase_1_self_qa": {
     "description": "Phase 1 — 递归层级使用。Agent 基于父节点 spec 自问自答，写入 goal_trace。",
     "id": "intent_anchor_self",
@@ -469,7 +2423,6 @@
     "pass": "forward",
     "type": "autonomous",
     "goal": "基于父节点的 spec，自问自答确认本节点的唯一目标，并追溯回根目标。",
-
     "self_qa_template": {
       "q1": "父节点要求我做什么？（从父节点的 spec.interfaces 中读取）",
       "q2": "我的输入是什么格式？从哪个上游节点来？",
@@ -477,16 +2430,13 @@
       "q4": "我的唯一目标用一句话描述是什么？",
       "q5": "我的目标能否反向追溯到根目标？如果能，追溯路径是什么？（写入 goal_trace）"
     },
-
     "output": "本节点的 spec.json（包含 clarified_requirement、parent_spec_ref、self_qa_log、goal_trace）",
     "validation": "自我验证：我的目标和父节点对我的要求一致吗？我的 goal_trace 能回到根目标吗？"
   },
-
   "forward_pass": {
     "description": "去程（拆解程）：Phase 1-5。从项目级逐层拆解到叶节点。只设计，不写代码。每阶段产出后监督者校验。",
     "direction": "top_down",
     "rule": "去程不写代码，产出的是 spec、路径图、接口契约、拆解方案。",
-
     "phase_2": {
       "id": "path_anchor",
       "name": "路径锚定",
@@ -496,9 +2446,50 @@
       "output": "完整路径图（起点→经过哪些节点→终点）",
       "validation": "路径是否连通？有没有断点？",
       "artifact": "path.json",
-      "supervisor_checkpoint": "cp_1：路径终点是否等于根目标最终产出？路径能否反向追溯到根目标？"
+      "supervisor_checkpoint": "cp_1：路径终点是否等于根目标最终产出？路径能否反向追溯到根目标？",
+      "structural_parameters": {
+        "description": "路径节点结构参数。定义路径的量化范围，消除画一条路径的模糊性。",
+        "node_count": {
+          "min": 3,
+          "max": 15,
+          "rationale": "最少 3 个节点（起点→中间→终点），最多 15 个（防止过度拆分）。由 Phase 0 L3 结构参数动态调整。",
+          "override_by_L3": "若 Phase 0 L3 提取了具体数量（如 10 章），则 node_count.max = L3 提取值 × 1.5"
+        },
+        "granularity": {
+          "definition": "一个节点 = 一个独立可交付的产出物，有明确的输入和输出。不是一个步骤或一个想法。",
+          "test": "问：这个节点能独立交付吗？能 → 合格节点。不能 → 需要合并到相邻节点。"
+        }
+      },
+      "hard_constraints": {
+        "description": "路径完整性硬约束。违反任意一条 → cp_1 FAIL。",
+        "constraints": [
+          {
+            "id": "P2-HC-1",
+            "name": "连通性",
+            "rule": "路径从起点到终点必须连通，无断点。path.json 中每个节点的 prev 和 next 字段必须形成完整链",
+            "severity": "hard"
+          },
+          {
+            "id": "P2-HC-2",
+            "name": "无循环",
+            "rule": "路径中不得出现循环引用（A→B→C→A）。检测到循环 → FAIL",
+            "severity": "hard"
+          },
+          {
+            "id": "P2-HC-3",
+            "name": "终点对齐根目标",
+            "rule": "路径终点描述必须与 spec.json.one_liner 一致",
+            "severity": "hard"
+          },
+          {
+            "id": "P2-HC-4",
+            "name": "节点数范围",
+            "rule": "节点数必须在 structural_parameters.node_count 范围内",
+            "severity": "hard"
+          }
+        ]
+      }
     },
-
     "phase_3": {
       "id": "node_identification",
       "name": "节点识别",
@@ -514,9 +2505,35 @@
         "rule_3": "如果 acceptance_criteria 中某个维度在 nodes.json 中找不到对应节点，标记为 missing",
         "cp_2_check": "must not have extraneous AND must not have missing"
       },
-      "supervisor_checkpoint": "cp_2：每个节点是否映射到根目标的必要组成部分？有无无关节点？"
+      "supervisor_checkpoint": "cp_2：每个节点是否映射到根目标的必要组成部分？有无无关节点？",
+      "structural_parameters": {
+        "description": "每层级节点数量范围。防止节点数量无限膨胀或过度压缩。",
+        "per_level": {
+          "macro_node": {
+            "min": 2,
+            "max": 5,
+            "description": "宏观节点（Phase 3 产出）"
+          },
+          "module": {
+            "min": 2,
+            "max": 8,
+            "description": "模块级节点（递归第一层）"
+          },
+          "sub_node": {
+            "min": 2,
+            "max": 6,
+            "description": "子节点（递归第二层及以下）"
+          }
+        },
+        "override_by_L3": "若 Phase 0 L3 提取了具体数量，则 max = L3 提取值 × 1.5"
+      },
+      "overlap_detection": {
+        "description": "节点功能重叠检测。防止两个节点做同一件事。",
+        "rule": "若两个节点映射到同一个 acceptance_criteria 维度且无明确分工差异 → 标记 redundancy",
+        "check": "对 nodes.json 中所有节点的 maps_to_root_goal 字段做去重检查。同一维度有 ≥ 2 个节点映射 → 检查节点描述是否明确分工。无明确分工 → redundancy",
+        "on_redundancy": "合并冗余节点或标注分工差异，重做 Phase 3"
+      }
     },
-
     "phase_4": {
       "id": "interface_contract",
       "name": "接口契约",
@@ -528,9 +2545,60 @@
       "artifact": "interfaces.json",
       "iteration_rule": "每次 spec.json 被更新时，Phase 4 必须重新执行。Agent 不得跳过。",
       "numeric_consistency_check": "interfaces.json 中的数值约束（minItems, maxItems, enum）必须与 spec.json 的 scope 字段一致。示例：spec.scope.target_chapters=400 → interfaces 约束 minItems:350, maxItems:450。",
-      "supervisor_checkpoint": "cp_3：接口方向是否服务于根目标数据流？Schema是否匹配？数值约束是否与spec一致？"
+      "supervisor_checkpoint": "cp_3：接口方向是否服务于根目标数据流？Schema是否匹配？数值约束是否与spec一致？",
+      "field_completeness": {
+        "description": "接口字段完整性阈值。上游输出字段被下游消费的比例。",
+        "threshold": 0.8,
+        "rule": "interfaces.json 中每个连接的 consumer.consumes / producer.outputs ≥ 0.80。低于 80% → 标记 data_loss_risk",
+        "on_data_loss": "Agent 必须对未被消费的字段给出解释（未来扩展/冗余/设计遗漏）。无解释 → cp_3 FAIL"
+      },
+      "semantic_match": {
+        "description": "接口语义匹配规则。同义字段名识别和类型转换规则。",
+        "synonym_map": {
+          "description": "已知同义字段名映射。命中则视为匹配。",
+          "examples": [
+            [
+              "title",
+              "name",
+              "heading"
+            ],
+            [
+              "id",
+              "identifier",
+              "uuid"
+            ],
+            [
+              "content",
+              "body",
+              "text",
+              "description"
+            ],
+            [
+              "created_at",
+              "create_time",
+              "timestamp"
+            ],
+            [
+              "author",
+              "creator",
+              "writer",
+              "owner"
+            ]
+          ]
+        },
+        "type_conversion": {
+          "allowed": [
+            "string -> number (纯数字字符串)",
+            "number -> string"
+          ],
+          "forbidden": [
+            "object -> string (信息丢失)",
+            "array -> object (结构不兼容)"
+          ],
+          "rule": "允许的转换 → 自动匹配。禁止的转换 → 标记 type_mismatch → cp_3 FAIL"
+        }
+      }
     },
-
     "phase_5": {
       "id": "recursive_decomposition",
       "name": "递归拆解",
@@ -547,17 +2615,51 @@
       "minimum_requirement": "至少产出 1 个子节点的递归 spec.json，否则 cp_4 不通过",
       "recursion_rule": "对每个子节点创建新的递归上下文，执行Phase 1-5 + 检查点 0-4。子节点全部回程通路后返回。",
       "terminal_condition": "当前节点是叶节点（不可再分）→ 去程终点，跳过Phase 5，直接转为回程Phase 6",
-      "max_depth_by_task_type": { "创作类": 2, "开发类": 4 },
+      "max_depth_by_task_type": {
+        "创作类": 2,
+        "开发类": 4
+      },
       "artifact": "子节点递归结果（nodes/ 子目录）",
-      "supervisor_checkpoint": "cp_4：检查 nodes/ 子目录是否存在且包含至少 1 个 spec.json。子节点是否完整覆盖父节点需求？有无多余子节点？"
+      "supervisor_checkpoint": "cp_4：检查 nodes/ 子目录是否存在且包含至少 1 个 spec.json。子节点是否完整覆盖父节点需求？有无多余子节点？",
+      "atomicity_standard": {
+        "description": "原子性客观标准（V3.9.1 从主观判断升级为 3 条可验证标准）。与 Phase 0 收敛引擎的 L3 原子性标准一致。",
+        "source": "convergence_engine.layers.L3_structural.atomicity",
+        "criteria": [
+          {
+            "id": "ATOM-1",
+            "name": "单一交付物",
+            "rule": "有且仅有一个明确的业务交付物。不是一组东西或若干步骤。",
+            "test": "问：这个节点产出几个文件/文档/函数？回答 > 1 → 不是原子节点"
+          },
+          {
+            "id": "ATOM-2",
+            "name": "无跨节点前置依赖",
+            "rule": "可独立启动执行，不依赖其他子节点的中间产出。",
+            "test": "问：启动这个节点前，必须等另一个节点先完成吗？是 → 不是原子节点"
+          },
+          {
+            "id": "ATOM-3",
+            "name": "可量化验收",
+            "rule": "产出有清晰、可量化的验收指标（不是好、完整等主观词）。",
+            "test": "问：这个节点的验收标准能用数字表达吗？不能 → 不是原子节点"
+          }
+        ],
+        "all_must_pass": true,
+        "terminal_condition_update": "当前节点同时满足 ATOM-1、ATOM-2、ATOM-3 → 叶节点，去程终点。"
+      },
+      "coverage_check": {
+        "description": "子节点覆盖度量化校验。父节点所有需求维度必须被子节点完整覆盖。",
+        "rule": "对每个父节点，提取其 acceptance_criteria 维度。所有子节点 maps_to_root_goal 字段的并集必须覆盖父节点 100% 的维度。",
+        "threshold": 1,
+        "formula": "coverage = |子节点覆盖的维度并集| / |父节点 acceptance_criteria 维度|",
+        "on_insufficient": "coverage < 1.0 → 标记 uncovered_dimensions → 重做 Phase 5，补充缺失维度的子节点"
+      }
     }
   },
-
   "backward_pass": {
     "description": "回程（合成程）：Phase 6-8。从叶节点逐层合成到全链路。只实现，不设计。每阶段产出后监督者校验。",
     "direction": "bottom_up",
     "rule": "回程不重新设计，严格按去程的 spec + interfaces 蓝图执行。",
-
     "phase_6": {
       "id": "implementation",
       "name": "实现集成",
@@ -576,9 +2678,58 @@
       },
       "crucial_rule": "回程不重新设计。不去质疑去程的spec。如果发现去程设计有问题，标记并报告，但不自行修改设计。",
       "artifact": "代码",
-      "supervisor_checkpoint": "cp_5：代码行为是否匹配蓝图？是否实现全部功能？是否超出蓝图？Section 数是否对齐？"
+      "supervisor_checkpoint": "cp_5：代码行为是否匹配蓝图？是否实现全部功能？是否超出蓝图？Section 数是否对齐？",
+      "quality_metrics": {
+        "description": "实现质量量化指标。代码/内容产出后必须通过以下检查。",
+        "metrics": {
+          "test_coverage": {
+            "threshold": 0.8,
+            "description": "开发类：单元测试覆盖率 >= 80%",
+            "applicable": "development"
+          },
+          "lint_pass": {
+            "threshold": 1,
+            "description": "开发类：lint 检查零错误（warning 允许）",
+            "applicable": "development"
+          },
+          "content_word_count": {
+            "threshold": "±30%",
+            "description": "创作类：实际字数与 spec 承诺的字数偏差 <= 30%",
+            "applicable": "creative"
+          },
+          "chapter_count": {
+            "threshold": ">= spec 承诺的 80%",
+            "description": "创作类：实际章数与 spec 承诺的章数偏差 <= 20%",
+            "applicable": "creative"
+          },
+          "build_pass": {
+            "threshold": 1,
+            "description": "开发类：代码能编译/构建成功",
+            "applicable": "development"
+          }
+        },
+        "on_failure": "任一 applicable 指标不达标 → cp_5 FAIL，标注不达标的指标和实际值"
+      },
+      "deviation_classification": {
+        "description": "实现偏差分类规则。Agent 在实现时可能偏离蓝图，需区分正向纠偏和偏离。",
+        "categories": {
+          "positive_correction": {
+            "description": "Agent 发现蓝图遗漏重要功能，主动补充。",
+            "rule": "补充的功能必须标记为 [ADDED]，附带理由，且不影响蓝图已有功能。cp_5 标注正向纠偏 → 不 FAIL",
+            "requires": "supervisor 语义审查确认补充确实必要"
+          },
+          "deviation": {
+            "description": "Agent 未按蓝图实现，或擅自修改蓝图设计。",
+            "rule": "任何未标记 [ADDED] 且与蓝图不一致的实现 → cp_5 FAIL",
+            "examples": [
+              "跳过蓝图中的 Section",
+              "修改蓝图定义的接口签名",
+              "用不同技术栈实现"
+            ]
+          }
+        }
+      }
     },
-
     "phase_7": {
       "id": "connectivity_verification",
       "name": "通路验证",
@@ -594,19 +2745,86 @@
       "verification_order": "leaf → sub_node → module → macro_node → project（回程方向，自底向上）",
       "on_failure": "标记具体哪些指标不达标，返回 Phase 6 重做相关内容。不得下调验收标准。",
       "prohibition": "不得在验收不达标时写'完整 X 章概要已超出单个 HTML 的展示范围'等降标声明",
-      "supervisor_checkpoint": "cp_6：测试用例验收标准是否对齐根目标？实际产出内容是否达到承诺？"
+      "supervisor_checkpoint": "cp_6：测试用例验收标准是否对齐根目标？实际产出内容是否达到承诺？",
+      "verification_thresholds": {
+        "description": "验证阈值。每层验证的量化通过标准。",
+        "thresholds": {
+          "leaf_unit_test": {
+            "coverage": 0.8,
+            "min_test_cases": 3,
+            "description": "覆盖率 >= 80%，每个原子节点至少 3 个测试用例（正常/异常/边界）"
+          },
+          "sub_node_integration": {
+            "min_test_cases": 3,
+            "pass_rate": 1,
+            "description": "至少 3 个集成测试用例，通过率 100%"
+          },
+          "module_integration": {
+            "min_test_cases": 3,
+            "pass_rate": 1,
+            "description": "至少 3 个模块级集成测试用例，通过率 100%"
+          },
+          "macro_node": {
+            "pass_rate": 1,
+            "description": "所有模块集成测试通过率 100%"
+          },
+          "project_e2e": {
+            "pass_rate": 1,
+            "description": "所有端到端测试通过率 100%。全链路通路"
+          }
+        }
+      },
+      "downgrade_judgment": {
+        "description": "降标判定规则。区分合理调整与降标声明。",
+        "rule": "偏差 < 10% 且不影响核心 acceptance_criteria → 合理调整，记录偏差。偏差 >= 10% 或影响核心功能 → 降标，cp_6 FAIL",
+        "examples": {
+          "reasonable": "承诺 400 章，产出 380 章（偏差 5%），且 380 章已覆盖所有核心剧情 → 合理调整",
+          "downgrade": "承诺 400 章，产出 200 章（偏差 50%）→ 降标，FAIL",
+          "downgrade_wording": "禁止使用 完整 X 章概要已超出单个 HTML 的展示范围 等降标声明。这种声明 = 承认未达标 = cp_6 FAIL"
+        }
+      }
     },
-
     "phase_8": {
       "id": "delivery",
       "name": "交付收尾",
       "pass": "backward",
       "goal": "更新索引、生成manifest、归档、产物体检、标记本节点通路完成。",
-      "deliverables": ["manifest.json", "代码", "测试报告", "INDEX.md更新", "health_check.json"],
+      "deliverables": [
+        "manifest.json",
+        "代码",
+        "测试报告",
+        "INDEX.md更新",
+        "health_check.json"
+      ],
       "completion_signal": "本节点的通路验证通过 + 交付物就绪",
-      "supervisor_checkpoint": "cp_7：最终交付物能否完整回答根目标？goal_trace 全链路是否完整无断点？"
+      "supervisor_checkpoint": "cp_7：最终交付物能否完整回答根目标？goal_trace 全链路是否完整无断点？",
+      "runnability_check": {
+        "description": "交付物可运行性检查。文件完整不等于代码能跑。",
+        "checks": {
+          "build": {
+            "rule": "代码能编译/构建成功",
+            "applicable": "development",
+            "severity": "hard"
+          },
+          "startup": {
+            "rule": "应用能启动，无致命错误",
+            "applicable": "development",
+            "severity": "hard"
+          },
+          "key_path": {
+            "rule": "关键路径（登录→核心功能→退出）能跑通",
+            "applicable": "development",
+            "severity": "hard"
+          },
+          "content_parse": {
+            "rule": "创作类产出能正常解析（HTML 能打开、Markdown 能渲染）",
+            "applicable": "creative",
+            "severity": "hard"
+          }
+        },
+        "on_failure": "任一 hard 检查失败 → cp_7 FAIL，标注失败的检查项"
+      }
     },
-
     "phase_8_health_check": {
       "description": "产物体检报告。Phase 8 后自动执行，不依赖 Agent 自我评估。",
       "auto_checks": {
@@ -618,12 +2836,10 @@
       "output": "{task_dir}/health_check.json，包含所有检查项的 pass/fail 和具体偏差数据"
     }
   },
-
   "recursive_execution_algorithm": {
     "description": "双程递归执行核心算法。含监督者检查点。全自动：Phase 1 自问自答 → 去程拆解 → 回程合成。",
-
     "function_execute_node(node, level, parent_spec, root_goal)": {
-      "comment": "去程 Phase 1-5（拆解：只设计）",
+      "comment": "回程 Phase 6-8（合成：只实现）",
       "forward_step_1": "if level == 0: phase_1_autonomous() else: phase_1_self_qa(node, parent_spec, root_goal)",
       "forward_step_1_output": "spec.json（含 44 个独立字段的 self_audit_log + goal_trace）",
       "forward_step_1_signal": "写入 cp_0.pending → OpenClaw 轮询 → 写入 cp_0.result",
@@ -635,10 +2851,7 @@
       "forward_step_4_signal": "写入 cp_3.pending → OpenClaw 轮询 → 写入 cp_3.result",
       "forward_step_5": "if node.is_terminal: goto backward_step_1 else: for each child in node.children: execute_node(child, level+1, node.spec, root_goal)",
       "forward_step_5_signal": "写入 cp_4.pending → OpenClaw 轮询 → 写入 cp_4.result",
-
       "comment_transition": "去程终点 = 回程起点。",
-
-      "comment": "回程 Phase 6-8（合成：只实现）",
       "backward_step_1": "phase_6_implementation(node) — 含蓝图对照 step_0 + step_final",
       "backward_step_1_signal": "写入 cp_5.pending → OpenClaw 轮询 → 写入 cp_5.result",
       "backward_step_2": "phase_7_connectivity_verification(node) — 失败时标记具体指标，不降标",
@@ -647,7 +2860,6 @@
       "backward_step_3_signal": "写入 cp_7.pending → OpenClaw 轮询 → 写入 cp_7.result",
       "return": "node.status = 'connected_and_aligned'"
     },
-
     "execution_order": {
       "description": "全自动双程执行 + 三IDE监督者全程校验：一句话输入 → 全自动完成。",
       "order": [
@@ -672,7 +2884,6 @@
       ]
     }
   },
-
   "connectivity_rules": {
     "description": "通路验证规则。回程逐层验证，从叶节点到全链路。所有通路必须通过监督者检查点。",
     "single_node": "节点通路 = Phase 7测试全部通过 + 监督者检查点 6 通过 + 实际产出 ≥ 承诺量 70%",
@@ -680,7 +2891,6 @@
     "full_chain": "全链路通路 = 所有宏观节点通路 + 端到端测试通过 + 全部检查点通过 + health_check 全部通过",
     "verification_order": "leaf → sub_node → module → macro_node → full_chain（回程方向）"
   },
-
   "meta": {
     "version": "3.6.0",
     "created": "2026-07-13",
@@ -692,8 +2902,426 @@
       "/workspace/开发总纲_问答题框架.md",
       "/workspace/AGENT_INSTRUCTION.md",
       "/workspace/Agent子节点沟通模板.md",
-      "/workspace/三IDE角色自动化联通协议_V1.0.md",
+      "/workspace/三IDE角色自动化联通协议_V2.1.md",
+      "/workspace/ide-bridge.js",
+      "/workspace/ide-bridge-client.js",
       "/workspace/开发总纲_V3.5_优化方案.md"
     ]
+  },
+  "context_anxiety_defense": {
+    "description": "上下文焦虑防御机制（V4.2 新增）。借鉴 Anthropic 对 Sonnet 4.5 '上下文焦虑'的发现——Agent 在对话上下文接近上限时会仓促收尾。通过在递归树的每个节点强制上下文重置来解决。",
+    "version": "1.0.0",
+    "principle": "与其让 Agent 在拥挤的上下文里焦虑，不如直接给它一个干净的 slate。",
+    "rules": {
+      "max_rounds_per_node": 15,
+      "description": "每个节点执行超过 15 轮对话后，强制上下文重置。",
+      "reset_strategy": {
+        "preserve": [
+          "{task_dir}/spec.json",
+          "{task_dir}/sprint_contract.json",
+          "{task_dir}/path.json",
+          "{task_dir}/nodes.json",
+          "已产出的所有 produce_file"
+        ],
+        "discard": [
+          "对话历史",
+          "中间推理过程",
+          "Agent 的自我评估",
+          "非产出的临时文件"
+        ]
+      },
+      "reset_procedure": [
+        "1. 保存当前 Phase 的所有产出物到持久化目录",
+        "2. 写 status.json 记录当前进度（current_phase, retry_count, last_checkpoint_result）",
+        "3. 清空对话上下文",
+        "4. 重新加载 spec.json + sprint_contract.json + status.json",
+        "5. 从 status.json 的 current_phase 继续执行"
+      ],
+      "anxiety_detection": {
+        "indicators": [
+          "Agent 连续 3 轮对话没有产出新文件",
+          "Agent 输出的文字量明显下降（< 50% 平均值）",
+          "Agent 声称'完成'但 produce_file 不存在",
+          "Agent 在对话中频繁使用'总结'、'回顾'等收尾词汇"
+        ],
+        "action": "如果检测到 2 个以上指标同时出现 → 触发强制上下文重置"
+      }
+    }
+  },
+  "harness_degradation": {
+    "description": "Harness 退化机制（V4.2 新增）。借鉴 Anthropic 的发现：Harness 的每个组件编码了一个假设——'这个模型做不到什么'。模型升级后，假设会过期，组件可以退化。",
+    "version": "1.0.0",
+    "principle": "不是'去掉'检查点，而是'退化'检查点——从人工审核退化为自动化审核，从自动化审核退化为统计采样。",
+    "model_capability_profiles": [
+      {
+        "model": "sonnet_4.5",
+        "capabilities": {
+          "self_evaluation_reliable": false,
+          "long_context_stable": false,
+          "complex_decomposition": true,
+          "independent_verification": false
+        },
+        "active_checks": [
+          "cp_0",
+          "cp_1",
+          "cp_2",
+          "cp_3",
+          "cp_4",
+          "cp_5",
+          "cp_6",
+          "cp_7"
+        ],
+        "check_mode": "full",
+        "sprint_contract_mandatory": true,
+        "context_anxiety_defense_active": true,
+        "notes": "Sonnet 4.5 有上下文焦虑，需要完整检查点链 + Sprint Contract + 上下文重置"
+      },
+      {
+        "model": "opus_4.5",
+        "capabilities": {
+          "self_evaluation_reliable": true,
+          "long_context_stable": true,
+          "complex_decomposition": true,
+          "independent_verification": true
+        },
+        "active_checks": [
+          "cp_0",
+          "cp_3",
+          "cp_5",
+          "cp_7"
+        ],
+        "check_mode": "reduced",
+        "sprint_contract_mandatory": true,
+        "context_anxiety_defense_active": false,
+        "notes": "Opus 4.5 消除了上下文焦虑，可以跳过 cp_1/cp_2/cp_4/cp_6（自动化检查即可）"
+      },
+      {
+        "model": "opus_4.6",
+        "capabilities": {
+          "self_evaluation_reliable": true,
+          "long_context_stable": true,
+          "complex_decomposition": true,
+          "independent_verification": true,
+          "extended_context_trusted": true
+        },
+        "active_checks": [
+          "cp_0",
+          "cp_7"
+        ],
+        "check_mode": "minimal",
+        "sprint_contract_mandatory": false,
+        "context_anxiety_defense_active": false,
+        "notes": "Opus 4.6 可以连续 2 小时+稳定工作，只需起点和终点检查点，Sprint Contract 可选"
+      }
+    ],
+    "auto_apply_rule": "Agent 启动时，读取当前模型名称，自动匹配 model_capability_profiles 中的配置。如果模型不匹配任何 profile → 默认使用最严格的 full check 模式。",
+    "manual_override": "用户可以在 spec.json 中设置 model_capability_profile 字段，手动指定当前使用的 profile。"
+  },
+  "sprint_contract_engine": {
+    "description": "Sprint Contract 引擎。每次任务启动时自动生成验收契约。V3.9.1 新增：从 Phase 0 收敛引擎的 L4 硬约束中自动派生 acceptance_criteria。",
+    "version": "1.1.0",
+    "contract_schema": {
+      "task_id": "string",
+      "acceptance_criteria": "从 Phase 0 L4 硬约束 + Phase 1 spec.json 自动派生",
+      "max_retries": "按领域区分：creative=5, development=3, analysis=3, research=5",
+      "timeout": "按领域区分：creative=3600s, development=7200s, analysis=1800s, research=3600s",
+      "result_schema": {
+        "status": "pass|fail|blocked",
+        "evidence": "object",
+        "goal_trace": "string"
+      }
+    },
+    "phase_0_linkage": {
+      "description": "Contract 的 acceptance_criteria 自动从 Phase 0 收敛引擎输出中派生。",
+      "derivation": {
+        "L4_hard_constraints": "Phase 0 L4 的 hard 约束 → Contract 的 must_have 验收项",
+        "L4_soft_constraints": "Phase 0 L4 的 soft 约束 → Contract 的 should_have 验收项",
+        "L3_structural": "Phase 0 L3 的结构参数 → Contract 的 numeric_targets"
+      }
+    },
+    "validate_function": "orchestrator.js validateContract()",
+    "checkpoint": "contract 检查：acceptance_criteria 是否包含 Phase 0 L4 的所有 hard 约束？缺少 → 拒绝 contract"
+  },
+  "domain_variants": {
+    "description": "领域变体定义。每个 Phase 在不同领域（创作/开发/分析/研究）有不同的执行标准。V3.9.1 扩展至 Phase 1/2/3/6/8。",
+    "version": "1.1.0",
+    "phases": {
+      "phase_1": {
+        "creative": {
+          "question_weights": {
+            "dimension_1": 1.5,
+            "dimension_5": 1.3,
+            "dimension_7": 0.8
+          },
+          "note": "创作类：意图锚定和模块拆解权重更高，验证闭环相对灵活"
+        },
+        "development": {
+          "question_weights": {
+            "dimension_3": 1.5,
+            "dimension_4": 1.5,
+            "dimension_6": 1.3
+          },
+          "note": "开发类：架构和接口权重最高"
+        },
+        "analysis": {
+          "question_weights": {
+            "dimension_2": 1.5,
+            "dimension_7": 1.5
+          },
+          "note": "分析类：边界划定和验证闭环权重最高"
+        },
+        "research": {
+          "question_weights": {
+            "dimension_1": 1.2,
+            "dimension_2": 1.5
+          },
+          "note": "研究类：意图和边界最重要"
+        }
+      },
+      "phase_2": {
+        "creative": {
+          "node_count": {
+            "min": 3,
+            "max": 10
+          },
+          "node_type": "章节/场景/卷",
+          "note": "创作类路径 = 章节序列"
+        },
+        "development": {
+          "node_count": {
+            "min": 3,
+            "max": 15
+          },
+          "node_type": "模块/组件/服务",
+          "note": "开发类路径 = 架构拓扑"
+        },
+        "analysis": {
+          "node_count": {
+            "min": 3,
+            "max": 8
+          },
+          "node_type": "分析步骤/维度/指标",
+          "note": "分析类路径 = 分析管线"
+        },
+        "research": {
+          "node_count": {
+            "min": 3,
+            "max": 10
+          },
+          "node_type": "调研主题/子课题",
+          "note": "研究类路径 = 研究大纲"
+        }
+      },
+      "phase_3": {
+        "creative": {
+          "per_level": {
+            "macro_node": {
+              "min": 2,
+              "max": 4
+            },
+            "module": {
+              "min": 2,
+              "max": 6
+            },
+            "sub_node": {
+              "min": 2,
+              "max": 4
+            }
+          },
+          "note": "创作类节点更少但更聚焦"
+        },
+        "development": {
+          "per_level": {
+            "macro_node": {
+              "min": 2,
+              "max": 5
+            },
+            "module": {
+              "min": 2,
+              "max": 8
+            },
+            "sub_node": {
+              "min": 2,
+              "max": 6
+            }
+          },
+          "note": "开发类节点粒度更细"
+        },
+        "analysis": {
+          "per_level": {
+            "macro_node": {
+              "min": 2,
+              "max": 4
+            },
+            "module": {
+              "min": 2,
+              "max": 5
+            },
+            "sub_node": {
+              "min": 2,
+              "max": 4
+            }
+          },
+          "note": "分析类节点更紧凑"
+        },
+        "research": {
+          "per_level": {
+            "macro_node": {
+              "min": 2,
+              "max": 5
+            },
+            "module": {
+              "min": 2,
+              "max": 6
+            },
+            "sub_node": {
+              "min": 2,
+              "max": 5
+            }
+          },
+          "note": "研究类结构灵活"
+        }
+      },
+      "phase_4": {
+        "creative": {
+          "simplified": true,
+          "skip_condition": "创作类单文件产出时，可简化接口契约"
+        },
+        "development": {
+          "simplified": false,
+          "note": "开发类接口契约必须完整"
+        }
+      },
+      "phase_5": {
+        "creative": {
+          "max_depth": 2,
+          "atomicity": "一章/一个场景",
+          "note": "创作类递归深度较浅"
+        },
+        "development": {
+          "max_depth": 4,
+          "atomicity": "一个函数/一个组件",
+          "note": "开发类递归深度较深"
+        }
+      },
+      "phase_6": {
+        "creative": {
+          "quality_metrics": [
+            "content_word_count",
+            "chapter_count"
+          ],
+          "note": "创作类关注内容量和章节数"
+        },
+        "development": {
+          "quality_metrics": [
+            "test_coverage",
+            "lint_pass",
+            "build_pass"
+          ],
+          "note": "开发类关注代码质量和可构建性"
+        },
+        "analysis": {
+          "quality_metrics": [
+            "data_accuracy",
+            "visualization_completeness"
+          ],
+          "note": "分析类关注数据准确性和可视化完整性"
+        },
+        "research": {
+          "quality_metrics": [
+            "source_count",
+            "coverage_completeness"
+          ],
+          "note": "研究类关注来源数量和覆盖度"
+        }
+      },
+      "phase_7": {
+        "creative": {
+          "verification": "内容完整性 + 格式正确性",
+          "note": "创作类验证 = 内容+格式"
+        },
+        "development": {
+          "verification": "单元测试 + 集成测试 + E2E",
+          "note": "开发类验证 = 全链路测试"
+        }
+      },
+      "phase_8": {
+        "creative": {
+          "runnability": [
+            "content_parse"
+          ],
+          "note": "创作类可运行性 = 内容可正常解析"
+        },
+        "development": {
+          "runnability": [
+            "build",
+            "startup",
+            "key_path"
+          ],
+          "note": "开发类可运行性 = 构建+启动+关键路径"
+        }
+      }
+    }
+  },
+  "recursive_self_similar": {
+    "description": "递归自相似架构。总纲在每个层级重复 Phase 1-8。V3.9.1 新增：递归深度和终止条件与 Phase 0 收敛引擎联动。",
+    "version": "1.1.0",
+    "principle": "每个节点在它自己的层级上，重复完整的 Phase 1-8 流程。Phase 0 只在项目级执行一次，子节点继承父节点的领域分类。",
+    "depth_linkage": {
+      "description": "递归深度从 Phase 0 L3 结构参数动态派生，不再硬编码。",
+      "derivation": "max_depth = ceil(log2(L3_extracted_chapter_count)) + 1。例：L3 提取 10 章 → max_depth = ceil(log2(10)) + 1 = 5。L3 未提取 → 使用 domain_variants 的默认值",
+      "min_depth": 2,
+      "override": "domain_variants.phase_5 中的 max_depth 作为 fallback"
+    },
+    "termination_linkage": {
+      "description": "递归终止条件与 Phase 0 L3 原子性标准统一。不再使用两套独立定义。",
+      "unified_standard": "forward_pass.phase_5.atomicity_standard（与 convergence_engine.layers.L3_structural.atomicity 一致）",
+      "rule": "终止条件 = 原子性标准 ATOM-1/2/3 全部满足。不在 convergence_engine 之外定义第二套原子性标准。"
+    },
+    "cross_domain_handling": {
+      "description": "子节点跨领域边界情况处理。",
+      "rule": "若子节点的 maps_to_root_goal 指向的 acceptance_criteria 维度属于不同领域 → 重新执行 Phase 0 收敛引擎对子节点进行领域分类",
+      "example": "父节点是 creative（写小说），子节点是 development（开发小说配套网站）→ 子节点重新执行 Phase 0"
+    }
+  },
+  "dual_pass_rule": {
+    "description": "双程规则：去程只设计不写代码，回程只实现不设计。V3.9.1 新增：边界违规判定。",
+    "version": "1.1.0",
+    "forward": {
+      "phase": "Phase 1-5",
+      "rule": "只设计不写代码",
+      "allowed": [
+        "写设计文档",
+        "画架构图",
+        "定义接口",
+        "写伪代码"
+      ],
+      "forbidden": [
+        "写实现代码",
+        "写测试代码",
+        "写配置文件"
+      ]
+    },
+    "backward": {
+      "phase": "Phase 6-8",
+      "rule": "只实现不设计",
+      "allowed": [
+        "写实现代码",
+        "写测试",
+        "按蓝图集成"
+      ],
+      "forbidden": [
+        "修改 spec.json",
+        "重新定义接口",
+        "推翻 path.json 重画路径"
+      ]
+    },
+    "boundary_violation": {
+      "description": "边界违规判定。回程中发现去程设计错误时的处理。",
+      "rule": "回程 Agent 发现设计错误 → 不得自行修改设计。必须：1) 标记 suspect_design_issue → 2) 通过 Bridge 上报 supervisor → 3) supervisor 决定是否回退到去程重新设计",
+      "not_violation": "回程中补充蓝图未覆盖的实现细节（如错误处理、日志格式）— 这不属于设计修改",
+      "is_violation": "回程中修改 spec.json 的 acceptance_criteria、修改 path.json 的路径结构、修改 interfaces.json 的接口签名 — 这些属于设计修改，必须上报",
+      "escalation_path": "Agent → Bridge → supervisor → 评估 → 回退去程 or 标记为 known_issue 继续"
+    }
   }
 }
