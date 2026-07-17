@@ -1,54 +1,229 @@
 {
   "module": "00-governance",
   "role": "开发总纲唯一权威源(SSOT)",
-  "migrated_at": "2026-07-12T19:47:11",
-  "shared_root": "G:\\_AI_Interop_Hub",
-  "source_origin": "C:\\Users\\admin\\Desktop\\开发总纲指导文档",
-  "docs": [
-    {
-      "name": "AGENT_INSTRUCTION.md",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\AGENT_INSTRUCTION.md",
+  "manifest_version": "2.0.0",
+  "generated_at": "2026-07-17T16:06:15.214548",
+  "hub_version": "V3.9.1",
+  "description": "00-governance 权威文件清单。所有文件的 sha1 和 size 必须与磁盘一致。",
+  "files": {
+    "AGENT_INSTRUCTION.md": {
+      "type": "document",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "67cf2850a5aa",
-      "size": 6373
+      "size": 19166,
+      "sha1": "5afb6b61656b209d591d3a5b15f7e727438aa388"
     },
-    {
-      "name": "Agent子节点沟通模板.md",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\Agent子节点沟通模板.md",
+    "Agent子节点沟通模板.md": {
+      "type": "document",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "7e494fe33421",
-      "size": 46911
+      "size": 44131,
+      "sha1": "3b1dd0a33716ec40e930c487ff106ee825d53530"
     },
-    {
-      "name": "orchestrator.js",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\orchestrator.js",
+    "CHANGELOG.md": {
+      "type": "document",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "df7c06bbe322",
-      "size": 16083
+      "size": 15818,
+      "sha1": "3c959e02fd9d55aa2f53ee2c954f55bd9b98481a"
     },
-    {
-      "name": "开发总纲_人类可读版.md",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_人类可读版.md",
+    "INDEX.md": {
+      "type": "document",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "6c84e7f554a4",
-      "size": 8126
+      "size": 4255,
+      "sha1": "c5957788c95d5664e21e3286822514818bcaa635"
     },
-    {
-      "name": "开发总纲_可执行版.json",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_可执行版.json",
+    "README_FIRST.md": {
+      "type": "document",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "881cb3646c82",
-      "size": 25391
+      "size": 12592,
+      "sha1": "ffa8735efa2a538fbfabd752ef7e1a16bbece2a4"
     },
-    {
-      "name": "开发总纲_问答题框架.md",
-      "abs_path": "G:\\_AI_Interop_Hub\\00-governance\\开发总纲_问答题框架.md",
+    "ide-bridge-client.js": {
+      "type": "script",
+      "authority": "core",
       "status": "authoritative",
-      "sha1": "f7873b9c15cf",
-      "size": 19409,
-      "role": "提问回退协议(运行时组件，被JSON trigger_question_conditions引用)",
-      "version": "V3.0"
+      "size": 7480,
+      "sha1": "fbc5469c17098d28f84ec7eb79d284e89da6c0b8"
+    },
+    "ide-bridge.js": {
+      "type": "script",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 8596,
+      "sha1": "ee1751ad210f535efce72bd710edaa5a5fd91015"
+    },
+    "ontology.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 11453,
+      "sha1": "b5301d6699d3c0668b8e3ad2412eeac86008f56a"
+    },
+    "orchestrator.js": {
+      "type": "script",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 39193,
+      "sha1": "9ff82113ea3c55069b63e8ed458b66776882323d"
+    },
+    "package-lock.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 758,
+      "sha1": "e653a15ddf1694c3a7630763cb0070825c2ea040"
+    },
+    "package.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 48,
+      "sha1": "eed9afc5ae79bc0ca7b7314bfdf232d23c17b144"
+    },
+    "test-bridge-connection.js": {
+      "type": "script",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 7990,
+      "sha1": "abdb45e03c09c71c3e3dae2fadf5797549138ebf"
+    },
+    "三IDE角色自动化联通协议.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 23349,
+      "sha1": "36f0a3994eb0c0713d6cce45c476be69450f5300"
+    },
+    "三IDE通车指南.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 7222,
+      "sha1": "5ef15a8318da9a503b89fbfd521d9a2109b47d82"
+    },
+    "开发总纲_人类可读版.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 44154,
+      "sha1": "6e521b72c105ed83afac08e1efceb9433eecd586"
+    },
+    "开发总纲_可执行版.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 148279,
+      "sha1": "9734f906933d1ed89f4a0eb38fa2b66875f4f09d"
+    },
+    "开发总纲_问答题框架.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 12077,
+      "sha1": "f361b3947f12fce4b4cbf727f96bc42491e20c0e"
+    },
+    "项目全貌快速上手指南.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 15493,
+      "sha1": "1e872cba474d5921ba621b8b7c7c02fd38f3c170"
+    },
+    "scripts/gang_gate.py": {
+      "type": "script",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 19762,
+      "sha1": "f68adbf9b6ef18962f753804f19265d01dbe9410"
+    },
+    "scripts/gate_runner.py": {
+      "type": "script",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 13324,
+      "sha1": "3e58bf4fb452e16201051c8f0db69392ca4d0cba"
+    },
+    "convergence-engine/fix_gaps.js": {
+      "type": "script",
+      "authority": "support",
+      "status": "supporting",
+      "size": 29852,
+      "sha1": "1927795719051fc92168ddd3951b285dea6fe915"
+    },
+    "convergence-engine/收敛算法纠偏全记录_系统整合.md": {
+      "type": "document",
+      "authority": "support",
+      "status": "supporting",
+      "size": 50198,
+      "sha1": "ad0260b5a165533f93efc6f156e19750bb513ae1"
+    },
+    "convergence-engine/dictionaries/domain-dict.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 6872,
+      "sha1": "2975c04945804136195bd2272b5194ac5bd06fbc"
+    },
+    "convergence-engine/dictionaries/subtype-dict.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 23285,
+      "sha1": "4794b4e5660137989683c84cd7b9dc31bd84a999"
+    },
+    "rules/README.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 1766,
+      "sha1": "847fd90f4201158630650862bc9af462c65c0b6d"
+    },
+    "rules/global-layer-rules.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 7295,
+      "sha1": "638f507d5ba439f188bd6138f48cc2b30a107959"
+    },
+    "rules/project-layer-rules.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 2145,
+      "sha1": "b66057f601f40a779357b0a2d51056179b154dba"
+    },
+    "rules/rules-index.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 26257,
+      "sha1": "7fe71517f6b423048cb5663aa709b5239cb345ce"
+    },
+    "rules/rules.json": {
+      "type": "data",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 12672,
+      "sha1": "11ce6cf0452c057d37f45dfbfa4d8f6d0c59670f"
+    },
+    "rules/task-layer-rules.md": {
+      "type": "document",
+      "authority": "core",
+      "status": "authoritative",
+      "size": 1547,
+      "sha1": "93e8e571e52fd4af59aaa50b7c2db3d3b2eec2f1"
     }
-  ],
-  "updated_at": "2026-07-12T20:00:24"
+  },
+  "summary": {
+    "total_files": 30,
+    "core_files": 28,
+    "document_files": 15,
+    "script_files": 7,
+    "data_files": 8,
+    "deprecated_files": "见 _deprecated/ 目录（不计入活跃清单）",
+    "note": "manifest 自身不计入文件清单"
+  }
 }

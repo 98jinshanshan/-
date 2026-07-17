@@ -1,3 +1,12 @@
+---
+title: 三IDE角色自动化联通协议
+version: V2.1
+updated: 2026-07-15
+status: active
+authority: 唯一权威·三层通信架构
+supersedes: V2.0, V1.0
+---
+
 # 三 IDE 角色自动化联通协议 V2.1
 
 > **通信层唯一权威定义。** 任何关于三 IDE 如何通信的问题，以此文档为准。
